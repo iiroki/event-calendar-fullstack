@@ -14,7 +14,9 @@ const NavigationMenu = () => {
       <nav className='navbar navbar-expand-md navbar-dark'>
 
         <span className='navbar-brand'>
-          <Icon />
+          <Link className='link' to='/'>
+            <Icon />
+          </Link>
         </span>
 
         <button
