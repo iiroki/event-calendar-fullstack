@@ -1,14 +1,13 @@
 {
-  "name": "event-calendar-server",
-  "version": "1.1.0",
+  "name": "teekkarikalenteri-server",
+  "version": "1.0.0",
   "description": "",
   "author": "Iiro Kiviluoma",
   "license": "MIT",
   "main": "index.js",
   "scripts": {
     "start": "NODE_ENV=production node index.js",
-    "dev": "NODE_ENV=development nodemon index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "NODE_ENV=development nodemon index.js"
   },
   "dependencies": {
     "bcrypt": "^5.0.0",

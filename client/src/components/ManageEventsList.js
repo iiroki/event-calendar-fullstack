@@ -7,7 +7,7 @@ import {
   notificationTypes,
   expiredTokenNotification
 } from '../reducers/notificationReducer'
-import { EditIcon, DeleteIcon } from '../assets/icons'
+import { DeleteIcon } from '../assets/icons'
 import moment from 'moment'
 
 // List item for a single event including buttons

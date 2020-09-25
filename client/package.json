@@ -1,6 +1,6 @@
 {
-  "name": "event-calendar-client",
-  "version": "1.1.0",
+  "name": "teekkarikalenteri-client",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "start": "react-scripts start",
