@@ -13,7 +13,7 @@ Server has specific routes for event, user and login requests (see API below).
 
 | Method | Route | Description |
 | --- | --- | --- |
-| POST | /api/users | Add new user |
+| POST | /api/users | NOT IN USE |
 | POST | /api/users/:id | Modify an user |
 
 | Method | Route | Description |

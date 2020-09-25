@@ -20,7 +20,7 @@ userRouter.get('/', async (request, response, next) => {
 })
 
 // POST new user
-userRouter.post('/', async (request, response, next) => {
+/*userRouter.post('/', async (request, response, next) => {
   const reqBody = request.body
 
   if (!reqBody.password || reqBody.password.length < 3) {
@@ -45,7 +45,7 @@ userRouter.post('/', async (request, response, next) => {
   // Returning the newly added user
   const userResult = await db.query(getUserById, [result[0].insertId])
   response.status(201).json(userResult[0][0])
-})
+})*/
 
 // POST modify existing user
 userRouter.post('/:id', async (request, response, next) => {
