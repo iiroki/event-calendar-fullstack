@@ -69,7 +69,9 @@ export const updateLogin = userObject => (
       ...loggedUser,
       username: userObject.username,
       name: userObject.name,
-      link: userObject.link
+      link: userObject.link,
+      bgColor: userObject.bgColor,
+      fgColor: userObject.fgColor
     }
 
     window.localStorage.setItem('loggedUser', JSON.stringify(newLoggedUser))

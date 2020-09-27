@@ -18,6 +18,8 @@ const UserInformationForm = ({ profile, handleHide = null }) => {
   const [name, setName] = useState(profile.name)
   const [username, setUsername] = useState(profile.username)
   const [link, setLink] = useState(profile.link)
+  const [bgColor, setBgColor] = useState(profile.bgColor)
+  const [fgColor, setFgColor] = useState(profile.fgColor)
   const [password, setPassword] = useState('')
   const dispatch = useDispatch()
 
@@ -30,6 +32,8 @@ const UserInformationForm = ({ profile, handleHide = null }) => {
         name,
         username,
         link,
+        bgColor,
+        fgColor,
         password
       })
 
@@ -37,7 +41,9 @@ const UserInformationForm = ({ profile, handleHide = null }) => {
       dispatch(updateLogin({
         username,
         name,
-        link
+        link,
+        bgColor,
+        fgColor
       }))
 
       // Hide the form after successful submit
@@ -52,7 +58,8 @@ const UserInformationForm = ({ profile, handleHide = null }) => {
     } catch (error) {
       if (error.response.status === 400) {
         dispatch(setNotification(
-          'Virhe tietoja muokatessa: Nimi/käyttäjätunnus ei saa olla tyhjä ja käyttäjätunnuksen tulee olla uniikki!',
+          'Virhe tietoja muokatessa: Nimi/käyttäjätunnus ei saa olla tyhjä ja käyttäjätunnuksen tulee olla uniikki! ' +
+          'Tarkasta myös värien HEX-arvot.',
           notificationTypes.ERROR
         ))
       } else if (error.response.status === 401) {
@@ -125,6 +132,56 @@ const UserInformationForm = ({ profile, handleHide = null }) => {
           </small>
         </div>
       </div>
+
+      <div className='row form-row'>
+        <label className='col-lg-3 form-row-label'>
+          Taustaväri (HEX-arvo)
+        </label>
+        <div className='col-lg-4'>
+          <div className='input-group form-input-group'>
+            <div className='input-group-prepend'>
+              <div className='input-group-text preinput-label'>#</div>
+            </div>
+            <input
+              type='text'
+              className='form-control hex preinput-text'
+              id='editBgColorInput'
+              value={bgColor}
+              onChange={({ target }) => setBgColor(target.value)}
+              placeholder='ffffff'
+            />
+          </div>
+          
+        </div>
+      </div>
+
+      <div className='row form-row'>
+        <label className='col-lg-3 form-row-label'>
+          Tekstin väri (HEX-arvo)
+        </label>
+        <div className='col-lg-4'>
+          <div className='input-group form-input-group'>
+            <div className='input-group-prepend'>
+              <div className='input-group-text preinput-label'>#</div>
+            </div>
+            <input
+              type='text'
+              className='form-control hex preinput-text'
+              id='editFgColorInput'
+              value={fgColor}
+              onChange={({ target }) => setFgColor(target.value)}
+              placeholder='000000'
+            />
+          </div>
+        </div>
+      </div>
+
+      <div className='row form-row'>
+        <AlertIcon />
+        Tapahtumien värit päivittyvät sivun uudelleenlataamisen yhteydessä.
+      </div>
+
+      <br/><br/>
 
       <div className='row form-row'>
         <label className='col-lg-3 form-row-label'>

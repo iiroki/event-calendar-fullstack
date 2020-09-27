@@ -120,6 +120,12 @@ div.container {
   text-align: center;
 }
 
+.form-control.hex {
+  max-width: 100px;
+  font-family: 'Courier New', Courier, monospace;
+  font-weight: bold;
+}
+
 .form-row {
   justify-content: center;
   align-items: center;
@@ -128,6 +134,20 @@ div.container {
 .form-row-label {
   font-weight: bold;
   margin: 0px 5px;
+}
+
+.preinput-label {
+  font-weight: bold;
+  height: 38px;
+  margin-top: 3px;
+}
+
+.preinput-text {
+  margin-left: 0px;
+}
+
+.form-input-group {
+  justify-content: center;
 }
 
 /* Big texts in forms */
@@ -279,6 +299,7 @@ div.container {
   float: left;
   width: 20px;
   height: 20px;
+  border: 1px solid black;
 }
 
 /* React Big Calendar: react-big-calendar/lib/css/react-big-calendar.css */

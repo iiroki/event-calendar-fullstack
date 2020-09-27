@@ -84,7 +84,6 @@ const EventCalendar = () => {
   // Fetching events from Redux-store and mapping dates
   const events = useSelector(state => state.events)
     .map(e => {
-      console.log(e)
       if (!e.multi) {
         const start = new Date(e.start)
         start.setHours(start.getHours() - utcOffset)
