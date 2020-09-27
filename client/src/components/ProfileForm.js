@@ -176,11 +176,6 @@ const UserInformationForm = ({ profile, handleHide = null }) => {
         </div>
       </div>
 
-      <div className='row form-row'>
-        <AlertIcon />
-        Tapahtumien värit päivittyvät sivun uudelleenlataamisen yhteydessä.
-      </div>
-
       <br/><br/>
 
       <div className='row form-row'>
@@ -200,7 +195,8 @@ const UserInformationForm = ({ profile, handleHide = null }) => {
 
       <div className='row form-row'>
         <AlertIcon />
-        Nykyinen salasana vaaditaan muutosten vahvistamiseen.
+        Nykyinen salasana vaaditaan muutosten vahvistamiseen. Muokatut tiedot 
+        päivittyvät tapahtumiin sivun uudelleenlataamisen yhteydessä.
       </div>
 
       <div>
