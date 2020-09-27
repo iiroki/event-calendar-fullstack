@@ -9,7 +9,7 @@ const db = mysql.createPool({
 const createTables = async () => {
   const connection = await db.getConnection()
   // user-table
-  const userSql = 'CREATE TABLE IF NOT EXISTS user (id INT AUTO_INCREMENT PRIMARY KEY, username VARCHAR(20) UNIQUE NOT NULL CHECK (username!=\"\"), name VARCHAR(255) NOT NULL CHECK (name!=\"\"), password_hash VARCHAR(255) NOT NULL, link VARCHAR(255));'
+  const userSql = 'CREATE TABLE IF NOT EXISTS user (id INT AUTO_INCREMENT PRIMARY KEY, username VARCHAR(20) UNIQUE NOT NULL CHECK (username!=\"\"), name VARCHAR(255) NOT NULL CHECK (name!=\"\"), password_hash VARCHAR(255) NOT NULL, link VARCHAR(255), bg_color CHAR(6) CHECK (LENGTH(bg_color)=6), fg_color CHAR(6) CHECK (LENGTH(fg_color)=6));'
 
   try {
     connection.query(userSql)

@@ -1,6 +1,6 @@
 // MySQL queries
 
-const getAllEvents = 'SELECT event.id, title, location, start, end, multi, description, organizer_id FROM event INNER JOIN user ON event.organizer_id = user.id;'
+const getAllEvents = 'SELECT event.id, title, location, start, end, multi, description, organizer_id, bg_color, fg_color FROM event INNER JOIN user ON event.organizer_id = user.id;'
 
 const getEventById = 'SELECT * FROM event WHERE id = ?;'
 
@@ -12,13 +12,13 @@ const addNewUser = 'INSERT INTO user (username, name, link, password_hash) VALUE
 
 const getAllUsers = 'SELECT id, name, link FROM user;'
 
-const getUserById = 'SELECT id, username, name, link FROM user WHERE id = ?;'
+const getUserById = 'SELECT id, username, name, link, bg_color, fg_color FROM user WHERE id = ?;'
 
 const getUserAllById = 'SELECT * FROM user WHERE id = ?;'
 
 const getUserAllByUsername = 'SELECT * FROM user WHERE username = ?;'
 
-const modifyUserById = 'UPDATE user SET username = ?, name = ?, link = ? WHERE id = ?;'
+const modifyUserById = 'UPDATE user SET username = ?, name = ?, link = ?, bg_color = ?, fg_color = ? WHERE id = ?;'
 
 const modifyUserPasswordById = 'UPDATE user SET password_hash = ? WHERE id = ?;'
 

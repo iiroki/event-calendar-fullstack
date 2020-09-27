@@ -103,6 +103,8 @@ userRouter.post('/:id', async (request, response, next) => {
       reqBody.username,
       reqBody.name,
       link,
+      reqBody.bgColor,
+      reqBody.fgColor,
       id
     ])
 
