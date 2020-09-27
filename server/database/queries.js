@@ -2,7 +2,7 @@
 
 const getAllEvents = 'SELECT event.id, title, location, start, end, multi, description, organizer_id, bgColor, fgColor FROM event INNER JOIN user ON event.organizer_id = user.id;'
 
-const getEventById = 'SELECT * FROM event WHERE id = ?;'
+const getEventById = 'SELECT event.id, title, location, start, end, multi, description, organizer_id, bgColor, fgColor FROM event INNER JOIN user ON event.organizer_id = user.id WHERE event.id = ?;'
 
 const addNewEvent = 'INSERT INTO event (title, location, start, end, multi, description, organizer_id) VALUES (?, ?, ?, ?, ?, ?, ?);'
 
