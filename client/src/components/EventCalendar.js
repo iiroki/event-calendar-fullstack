@@ -70,10 +70,10 @@ const components = {
 }
 
 // Event custom styling
-const eventStyleGetter = e => ({
+const eventStyleGetter = (event, start, end, isSelected) => ({
   style: {
-    backgroundColor: '#' + e.bgColor,
-    color: '#' + e.fgColor
+    backgroundColor: '#' + event.bgColor,
+    color: '#' + event.fgColor
   }
 })
 
@@ -84,6 +84,7 @@ const EventCalendar = () => {
   // Fetching events from Redux-store and mapping dates
   const events = useSelector(state => state.events)
     .map(e => {
+      console.log(e)
       if (!e.multi) {
         const start = new Date(e.start)
         start.setHours(start.getHours() - utcOffset)
@@ -91,7 +92,9 @@ const EventCalendar = () => {
           id: e.id,
           title: e.title,
           start: start,
-          end: start
+          end: start,
+          bgColor: e.bgColor,
+          fgColor: e.fgColor
         })
       } else {
         const start = new Date(e.start)
@@ -103,7 +106,9 @@ const EventCalendar = () => {
           id: e.id,
           title: e.title,
           start,
-          end
+          end,
+          bgColor: e.bgColor,
+          fgColor: e.fgColor
         })
       }
     })
@@ -121,10 +126,10 @@ const EventCalendar = () => {
         views={['month']}
         messages={translationsFi}
         onSelectEvent={handleEventSelect}
-        popup={true}
-        components={components}
-        events={events}
         eventPropGetter={eventStyleGetter}
+        components={components}
+        popup={true}
+        events={events}
       />
     </div>
   )
