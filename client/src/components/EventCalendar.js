@@ -72,8 +72,8 @@ const components = {
 // Event custom styling
 const eventStyleGetter = e => ({
   style: {
-    backgroundColor: e.bgColor,
-    color: e.fgColor
+    backgroundColor: '#' + e.bgColor,
+    color: '#' + e.fgColor
   }
 })
 
@@ -103,8 +103,7 @@ const EventCalendar = () => {
           id: e.id,
           title: e.title,
           start,
-          end,
-
+          end
         })
       }
     })
