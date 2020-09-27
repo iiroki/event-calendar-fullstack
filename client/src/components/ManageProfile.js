@@ -31,6 +31,26 @@ const Profile = ({ profile }) => (
           : <i>(tyhjä)</i>
       }
     </div>
+
+    <div className='form-row'>
+      <label className='form-row-label'>
+        Taustaväri:
+      </label>
+      <div
+        className='color-square'
+        style={{backgroundColor: '#' + profile.bgColor}}
+      />
+    </div>
+
+    <div className='form-row'>
+      <label className='form-row-label'>
+        Tekstin väri:
+      </label>
+      <div
+        className='color-square'
+        style={{backgroundColor: '#' + profile.fgColor}}
+      />
+    </div>
   </div>
 )
 

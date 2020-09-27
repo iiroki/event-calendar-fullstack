@@ -17,6 +17,7 @@ Users with account:
   - [x] Update profile name
   - [x] Update profile username
   - [x] Update profile password
+  - [x] Custom color for own events
 
 Misc:
   - [x] Notifications when actions succeed/fail

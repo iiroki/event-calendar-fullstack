@@ -69,6 +69,14 @@ const components = {
   toolbar: CustomToolbar
 }
 
+// Event custom styling
+const eventStyleGetter = (event, start, end, isSelected) => ({
+  style: {
+    backgroundColor: '#' + event.bgColor,
+    color: '#' + event.fgColor
+  }
+})
+
 const EventCalendar = () => {
   const history = useHistory()
   // UTC-offset in hours used in dates for calendar
@@ -83,7 +91,9 @@ const EventCalendar = () => {
           id: e.id,
           title: e.title,
           start: start,
-          end: start
+          end: start,
+          bgColor: e.bgColor,
+          fgColor: e.fgColor
         })
       } else {
         const start = new Date(e.start)
@@ -95,7 +105,9 @@ const EventCalendar = () => {
           id: e.id,
           title: e.title,
           start,
-          end
+          end,
+          bgColor: e.bgColor,
+          fgColor: e.fgColor
         })
       }
     })
@@ -113,8 +125,9 @@ const EventCalendar = () => {
         views={['month']}
         messages={translationsFi}
         onSelectEvent={handleEventSelect}
-        popup={true}
+        eventPropGetter={eventStyleGetter}
         components={components}
+        popup={true}
         events={events}
       />
     </div>
