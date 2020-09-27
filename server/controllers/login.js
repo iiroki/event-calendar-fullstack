@@ -21,7 +21,7 @@ loginRouter.post('/', async (request, response, next) => {
   }
 
   const user = result[0][0]
-  const correctPw = await bcrypt.compare(reqBody.password, user.password_hash)
+  const correctPw = await bcrypt.compare(reqBody.password, user.passwordHash)
 
   // Password didn't match
   if (!correctPw) {

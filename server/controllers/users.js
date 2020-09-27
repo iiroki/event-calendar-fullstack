@@ -81,7 +81,7 @@ userRouter.post('/:id', async (request, response, next) => {
     return response.status(404).end()
   }
 
-  const correctPw = await bcrypt.compare(reqBody.password, result[0][0].password_hash)
+  const correctPw = await bcrypt.compare(reqBody.password, result[0][0].passwordHash)
 
   // Password didn't match
   if (!correctPw) {
