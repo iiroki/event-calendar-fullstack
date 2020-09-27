@@ -274,6 +274,13 @@ div.container {
   padding: 30px;
 }
 
+.color-square {
+  display: block;
+  float: left;
+  width: 20px;
+  height: 20px;
+}
+
 /* React Big Calendar: react-big-calendar/lib/css/react-big-calendar.css */
 /* Own modifications below have Own-comment, so calendar can be returned
  * to original state. */

@@ -11,6 +11,10 @@ import { AlertIcon } from '../assets/icons'
 // Form where user information can be changed
 // handleHide can be provided to hide the form after successful submit
 const UserInformationForm = ({ profile, handleHide = null }) => {
+  if (!profile.link) {
+    profile.link = ''
+  }
+
   const [name, setName] = useState(profile.name)
   const [username, setUsername] = useState(profile.username)
   const [link, setLink] = useState(profile.link)
