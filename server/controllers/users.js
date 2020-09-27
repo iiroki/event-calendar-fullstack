@@ -3,8 +3,8 @@ const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const { db } = require('../database/db')
 const {
-  addNewUser,
-  getAllEvents,
+  //addNewUser,
+  //getAllEvents,
   getUserById,
   getUserAllById,
   modifyUserById,
@@ -99,6 +99,18 @@ userRouter.post('/:id', async (request, response, next) => {
 
   // No password change
   if (reqBody.passwordChange === 0) {
+    // Testing if the HEX-values are valid
+    const re = new RegExp(/^[0-9A-F]{6}$/i)
+
+    if (!re.test(reqBody.bgColor) || !re.test(reqBody.fgColor)) {
+      return response.status(400).json({
+        error: {
+          code: 0,
+          message: 'Invalid HEX-color value'
+        }
+      })
+    }
+
     await db.query(modifyUserById, [
       reqBody.username,
       reqBody.name,
