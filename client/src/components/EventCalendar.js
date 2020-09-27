@@ -69,6 +69,14 @@ const components = {
   toolbar: CustomToolbar
 }
 
+// Event custom styling
+const eventStyleGetter = e => ({
+  style: {
+    backgroundColor: e.bgColor,
+    color: e.fgColor
+  }
+})
+
 const EventCalendar = () => {
   const history = useHistory()
   // UTC-offset in hours used in dates for calendar
@@ -95,7 +103,8 @@ const EventCalendar = () => {
           id: e.id,
           title: e.title,
           start,
-          end
+          end,
+
         })
       }
     })
@@ -116,6 +125,7 @@ const EventCalendar = () => {
         popup={true}
         components={components}
         events={events}
+        eventPropGetter={eventStyleGetter}
       />
     </div>
   )
