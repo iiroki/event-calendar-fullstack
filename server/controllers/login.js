@@ -37,7 +37,9 @@ loginRouter.post('/', async (request, response, next) => {
     username: user.username,
     id: user.id,
     name: user.name,
-    link: user.link
+    link: user.link,
+    bgColor: user.bgColor,
+    fgColor: user.fgColor
   }
   
   // Signing token with user info, expires in 1 hour
@@ -48,7 +50,9 @@ loginRouter.post('/', async (request, response, next) => {
     id: userForToken.id,
     username: userForToken.username,
     name: userForToken.name,
-    link: userForToken.link
+    link: userForToken.link,
+    bgColor: userForToken.bgColor,
+    fgColor: userForToken.fgColor
   }
 
   // Returning the login object to client
