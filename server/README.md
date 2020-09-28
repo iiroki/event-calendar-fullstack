@@ -13,7 +13,6 @@ Server has specific routes for event, user and login requests (see API below).
 
 | Method | Route | Description |
 | --- | --- | --- |
-| POST | /api/users | NOT IN USE |
 | POST | /api/users/:id | Modify an user |
 
 | Method | Route | Description |
@@ -38,6 +37,7 @@ Error codes:
   2: Expired token
   3: Access denied
   4: Wrong password/username
+  5: User inactive
  -1: Unknown error
 ```
 

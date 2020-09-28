@@ -26,7 +26,7 @@ loginRouter.post('/', async (request, response, next) => {
   if (!user.active) {
     return response.status(401).json({
       error: {
-        code: 3,
+        code: 5,
         message: 'Account not active'
       }
     })
