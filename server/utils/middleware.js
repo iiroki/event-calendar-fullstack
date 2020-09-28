@@ -44,20 +44,20 @@ const errorHandler = (error, request, response, next) => {
     || error.errno === 4025  // MySQL: Constraint failed
     || error.errno === 1292  // MySQL: Incorrect datetime value
     || error.errno === 1406) {  // MySQL: Data too long
-  return response.status(400).json({
-    error: {
-      code: 0,
-      message: error.sqlMessage
-    }
-  })
-} else if (error.errno === 1146){  // MySQL: Table not found
-  return response.status(500).json({
-    error: {
-      code: -1,
-      message: error.sqlMessage
-    }
-  })
-}
+    return response.status(400).json({
+      error: {
+        code: 0,
+        message: error.sqlMessage
+      }
+    })
+  } else if (error.errno === 1146){  // MySQL: Table not found
+    return response.status(500).json({
+      error: {
+        code: -1,
+        message: error.sqlMessage
+      }
+    })
+  }
 
   next(error)
 }

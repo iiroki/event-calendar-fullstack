@@ -8,8 +8,6 @@ const addNewEvent = 'INSERT INTO event (title, location, start, end, multi, desc
 
 const deleteEventById = 'DELETE FROM event WHERE id = ?;'
 
-const addNewUser = 'INSERT INTO user (username, name, link, passwordHash) VALUES (?, ?, ?, ?);'
-
 const getAllUsers = 'SELECT id, name, link FROM user;'
 
 const getUserById = 'SELECT id, username, name, link, bgColor, fgColor FROM user WHERE id = ?;'
@@ -27,7 +25,6 @@ module.exports = {
   getEventById,
   addNewEvent,
   deleteEventById,
-  addNewUser,
   getAllUsers,
   getUserById,
   getUserAllById,
