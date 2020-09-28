@@ -23,12 +23,19 @@ const LoginForm = () => {
         notificationTypes.GOOD
       ))
     } catch (error) {
-      // Wrong username/password
+      // Wrong username/password or inactive account
       if (error.response.status === 401) {
-        dispatch(setNotification(
-          'Virheellinen käyttäjätunnus ja/tai salasana.',
-          notificationTypes.ERROR
-        ))
+        if (error.response.data.error.code === 5) {
+          dispatch(setNotification(
+            'Ei-aktiivinen käyttäjätunnus.',
+            notificationTypes.ERROR
+          ))
+        } else {
+          dispatch(setNotification(
+            'Virheellinen käyttäjätunnus ja/tai salasana.',
+            notificationTypes.ERROR
+          ))
+        }
       } else {
         dispatch(setNotification(
           'Virhe kirjautumisen yhteydessä :(',
