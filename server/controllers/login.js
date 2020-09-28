@@ -21,6 +21,17 @@ loginRouter.post('/', async (request, response, next) => {
   }
 
   const user = result[0][0]
+
+  // Checking that the user account has active-status
+  if (!user.active) {
+    return response.status(401).json({
+      error: {
+        code: 3,
+        message: 'Account not active'
+      }
+    })
+  }
+
   const correctPw = await bcrypt.compare(reqBody.password, user.passwordHash)
 
   // Password didn't match
