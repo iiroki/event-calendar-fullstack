@@ -1,10 +1,11 @@
 import React from 'react'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { useHistory} from 'react-router-dom'
 import { Calendar, momentLocalizer } from 'react-big-calendar'
 import moment from 'moment'
 import 'moment/locale/fi'
 import { NextIcon, PrevIcon} from '../assets/icons'
+import { setSelectedDate } from '../reducers/selectedDateReducer'
 
 // Finnish translations for calendar to use
 const translationsFi = {
@@ -78,10 +79,13 @@ const eventStyleGetter = (event, start, end, isSelected) => ({
 })
 
 const EventCalendar = () => {
+  const dispatch = useDispatch()
   const history = useHistory()
   // UTC-offset in hours used in dates for calendar
   const utcOffset = moment().utcOffset() / 60
-  // Fetching events from Redux-store and mapping dates
+  // Fetching last viewed date from Redux
+  const selectedDate = useSelector(state => state.selectedDate)
+  // Fetching events from Redux and mapping dates
   const events = useSelector(state => state.events)
     .map(e => {
       if (!e.multi) {
@@ -124,10 +128,12 @@ const EventCalendar = () => {
         localizer={momentLocalizer(moment)}
         views={['month']}
         messages={translationsFi}
+        onNavigate={(d) => dispatch(setSelectedDate(d))}
         onSelectEvent={handleEventSelect}
         eventPropGetter={eventStyleGetter}
         components={components}
         popup={true}
+        date={selectedDate}
         events={events}
       />
     </div>
