@@ -8,7 +8,7 @@ This app has the frontend built with React + Redux and runs Node.js in the backe
 All users:
   - [x] View events on the calendar
   - [x] View detailed page of a specific event
-  - [ ] Remember the calendar month last viewed  
+  - [x] Remember the last viewed calendar month  
 
 Users with account:
   - [x] Log in/out
