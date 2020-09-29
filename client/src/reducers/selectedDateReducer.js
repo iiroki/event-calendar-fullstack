@@ -1,5 +1,3 @@
-const { act } = require("react-dom/test-utils");
-
 const selectedDateReducer = (state = null, action) => {
   switch (action.type) {
     case 'SET_SELECTED_DATE':

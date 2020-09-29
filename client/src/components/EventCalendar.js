@@ -71,7 +71,7 @@ const components = {
 }
 
 // Event custom styling
-const eventStyleGetter = (event, start, end, isSelected) => ({
+const eventStyleGetter = (event) => ({
   style: {
     backgroundColor: '#' + event.bgColor,
     color: '#' + event.fgColor
