@@ -11,7 +11,8 @@ hr {
 }
 
 .background {
-  height: 100%;
+  height: 100vh;
+  background-size: cover;
 }
 
 /* Banner on top of the page */
