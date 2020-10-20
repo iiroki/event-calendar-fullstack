@@ -11,8 +11,9 @@ hr {
 }
 
 .background {
-  height: 100vh;
+  min-height: 100vh;
   background-size: cover;
+  background-attachment: fixed;
 }
 
 /* Banner on top of the page */
@@ -344,7 +345,7 @@ button.rbc-input::-moz-focus-inner {
 .rbc-calendar {
   box-sizing: border-box;
   /*height: 100%;*/
-  height: 75vh;  /* Own */
+  height: 70vh;  /* Own */
   display: flex;
   flex-direction: column;
   align-items: stretch; }
@@ -424,7 +425,8 @@ button.rbc-input::-moz-focus-inner {
     /*padding: 0 10px;*/
     text-align: center;
     position: relative;
-    top: 5px; }
+    top: 5px;
+    font-size: 1.8rem; /* Own */ }
   .rbc-toolbar button {
     color: #373a3c;
     display: inline-block;
