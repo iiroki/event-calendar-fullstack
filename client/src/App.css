@@ -10,12 +10,24 @@ hr {
   color: #919191;
 }
 
+.background {
+  height: 100vh;
+  background-size: cover;
+}
+
 /* Banner on top of the page */
 .banner {
   display: block;
   max-width: 100%;
   margin-left: auto;
   margin-right: auto;
+}
+
+/* Little margins and curves */
+.nav-shape{
+  margin-left: 10px;
+  margin-right: 10px;
+  border-radius: 5px;
 }
 
 /* Navbar base style */
@@ -67,6 +79,12 @@ hr {
 .link:hover {
   text-decoration: none;
   color: #ffffff;
+}
+
+.background {
+  background-repeat: no-repeat;
+  background-attachment: fixed;  
+  background-size: cover;
 }
 
 /* Standard container of the app */

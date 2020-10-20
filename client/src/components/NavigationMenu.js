@@ -11,7 +11,7 @@ import {
 const NavigationMenu = () => {
   return (
     <div>
-      <nav className='navbar navbar-expand-md navbar-dark'>
+      <nav className='navbar navbar-expand-md navbar-dark nav-shape'>
 
         <span className='navbar-brand'>
           <Link className='link' to='/'>

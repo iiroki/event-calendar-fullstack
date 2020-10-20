@@ -52,56 +52,59 @@ const App = () => {
     : null
 
   return (
-    <div>
+    <div className='background' style={{ backgroundImage: 'url(bg.png)' }}>
 
       <Banner />
 
       <NavigationMenu />
 
-      <div className='container'>
-        <Notification />
+      <div>
 
-        <Switch>
+        <div className='container'>
+          <Notification />
 
-          <Route path='/events/:id'>
-            {
-              init
-                ? <EventPage id={eventId} />
-                : <LoadingIcon />
-            }
-          </Route>
+          <Switch>
 
-          <Route path='/about'>
-            <AboutPage />
-          </Route>
+            <Route path='/events/:id'>
+              {
+                init
+                  ? <EventPage id={eventId} />
+                  : <LoadingIcon />
+              }
+            </Route>
 
-          <Route path='/links'>
-            <LinksPage />
-          </Route>
+            <Route path='/about'>
+              <AboutPage />
+            </Route>
 
-          <Route path='/manage'>
-            <ManagePage />
-          </Route>
+            <Route path='/links'>
+              <LinksPage />
+            </Route>
 
-          <Route path='/login'>
-            <LoginPage />
-          </Route>
+            <Route path='/manage'>
+              <ManagePage />
+            </Route>
 
-          <Route path='/'>
-            {
-              init
-                ? <EventCalendar />
-                : <LoadingIcon />
-            }
-          </Route>
+            <Route path='/login'>
+              <LoginPage />
+            </Route>
 
-        </Switch>
+            <Route path='/'>
+              {
+                init
+                  ? <EventCalendar />
+                  : <LoadingIcon />
+              }
+            </Route>
 
-        <hr/>
-        <AdBox />
-        <hr/>
-        <Footer />
+          </Switch>
+
+          <hr/>
+          <Footer />
+        </div>
+
       </div>
+
     </div>
   )
 }
