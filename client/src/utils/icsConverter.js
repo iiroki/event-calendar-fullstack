@@ -8,9 +8,8 @@ export const eventToIcs = (eventObject, organizer) => {
   const eventForIcs = {
     title: eventObject.title,
     location: eventObject.location,
-    organizer: { name: organizer.name },
-    start: [s.year(), s.month(), s.date(), s.hour(), s.minute()],
-    end: [e.year(), e.month(), e.date(), e.hour(), e.minute()],
+    start: [s.year(), s.month() + 1, s.date(), s.hour(), s.minute()],
+    end: [e.year(), e.month() + 1, e.date(), e.hour(), e.minute()],
     description: eventObject.description,
     productId: 'teekkarikalenteri/ics'
   }
