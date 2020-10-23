@@ -1,6 +1,7 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
 import moment from 'moment'
+import { eventToIcs } from '../utils/icsConverter'
 
 const EventPage = ({ id }) => {
   const event = useSelector(state => state.events)
@@ -32,8 +33,29 @@ const EventPage = ({ id }) => {
     }
   }
 
+  const downloadIcs = () => {
+    const eventIcs = eventToIcs(event, organizer)
+    console.log(eventIcs)
+    const fileName = event.title.replace(/[^a-zA-Z]/g, '')
+
+    const linkElement = document.createElement('a')
+
+    const file = new Blob([eventIcs],    
+      { type: 'text/calendar;charset=utf-8' })
+
+    linkElement.href = window.URL.createObjectURL(file)
+    linkElement.setAttribute('download', `${fileName}_import.ics`)
+
+    document.body.appendChild(linkElement)
+    linkElement.click()
+  }
+
   return (
     <div className='event-page-wrapper'>
+      <button onClick={downloadIcs}>
+        Lisää tapahtuma omaan kalenteriin
+      </button>
+
       <h1>{event.title}</h1>
 
       <div className='event-information-box'>
