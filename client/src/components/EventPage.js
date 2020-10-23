@@ -1,12 +1,16 @@
 import React from 'react'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import moment from 'moment'
+import { setNotification, notificationTypes } from '../reducers/notificationReducer'
+import { eventToIcs } from '../utils/icsConverter'
 
 const EventPage = ({ id }) => {
   const event = useSelector(state => state.events)
     .find(e => e.id.toString() === id)
 
   const users = useSelector(state => state.users)
+
+  const dispatch = useDispatch()
   
   // No event found
   if (!event) {
@@ -32,8 +36,45 @@ const EventPage = ({ id }) => {
     }
   }
 
+  const downloadIcs = () => {
+    const eventIcs = eventToIcs(event, organizer)
+
+    if (!eventIcs) {
+        dispatch(setNotification(
+          'Virhe .ics-tiedoston lataamisessa.',
+          notificationTypes.ERROR)
+        )
+      return
+    }
+
+    const fileName = event.title.replace(/[^a-zA-Z]/g, '')
+
+    const linkElement = document.createElement('a')
+
+    const file = new Blob([eventIcs],    
+      { type: 'text/calendar;charset=utf-8' })
+
+    linkElement.href = window.URL.createObjectURL(file)
+    linkElement.setAttribute('download', `${fileName}_import.ics`)
+
+    document.body.appendChild(linkElement)
+    linkElement.click()
+
+    dispatch(setNotification(
+      '.ics-tiedosto ladattu onnistuneesti.',
+      notificationTypes.GOOD)
+    )
+  }
+
   return (
     <div className='event-page-wrapper'>
+      <button
+        className='download-button'
+        onClick={downloadIcs}
+      >
+        + VIE TAPAHTUMA OMAAN KALENTERIIN
+      </button>
+
       <h1>{event.title}</h1>
 
       <div className='event-information-box'>

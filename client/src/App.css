@@ -259,6 +259,14 @@ div.container {
   outline: none;
 }
 
+/* Download button */
+.download-button {
+  border: none;
+  color: #616161;
+  font-size: 0.8rem;
+  font-weight: bold;
+}
+
 /* Wrapper for a single event page */
 .event-page-wrapper {
   align-items: center;

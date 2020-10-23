@@ -52,7 +52,7 @@ const App = () => {
     : null
 
   return (
-    <div className='background' style={{ backgroundImage: 'url(bg.png)' }}>
+    <div className='background' style={{ backgroundImage: 'url(/bg.png)' }}>
 
       <Banner />
 
