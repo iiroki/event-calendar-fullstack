@@ -1,6 +1,7 @@
 import React from 'react'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import moment from 'moment'
+import { setNotification, notificationTypes } from '../reducers/notificationReducer'
 import { eventToIcs } from '../utils/icsConverter'
 
 const EventPage = ({ id }) => {
@@ -8,6 +9,8 @@ const EventPage = ({ id }) => {
     .find(e => e.id.toString() === id)
 
   const users = useSelector(state => state.users)
+
+  const dispatch = useDispatch()
   
   // No event found
   if (!event) {
@@ -35,7 +38,15 @@ const EventPage = ({ id }) => {
 
   const downloadIcs = () => {
     const eventIcs = eventToIcs(event, organizer)
-    console.log(eventIcs)
+
+    if (!eventIcs) {
+        dispatch(setNotification(
+          'Virhe .ics-tiedoston lataamisessa.',
+          notificationTypes.ERROR)
+        )
+      return
+    }
+
     const fileName = event.title.replace(/[^a-zA-Z]/g, '')
 
     const linkElement = document.createElement('a')
@@ -48,12 +59,20 @@ const EventPage = ({ id }) => {
 
     document.body.appendChild(linkElement)
     linkElement.click()
+
+    dispatch(setNotification(
+      '.ics-tiedosto ladattu onnistuneesti.',
+      notificationTypes.GOOD)
+    )
   }
 
   return (
     <div className='event-page-wrapper'>
-      <button onClick={downloadIcs}>
-        Lisää tapahtuma omaan kalenteriin
+      <button
+        className='download-button'
+        onClick={downloadIcs}
+      >
+        + VIE TAPAHTUMA OMAAN KALENTERIIN
       </button>
 
       <h1>{event.title}</h1>
