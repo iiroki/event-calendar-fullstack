@@ -13,15 +13,15 @@ const {
 // Input sanitization is done with mysql2's placeholders!
 
 // GET all events
-eventRouter.get('/', async (request, response, next) => {
+eventRouter.get('/', async (request, response, next) => { //eslint-disable-line
   const result = await db.query(getAllEvents)
   response.json(result[0])
 })
 
 // GET specific event
-eventRouter.get('/:id', async (request, response, next) => {
+eventRouter.get('/:id', async (request, response, next) => { //eslint-disable-line
   const result = await db.query(getEventById, [request.params.id])
-  
+
   // Event not found
   if (result[0].length === 0) {
     return response.status(404).end()
@@ -31,7 +31,7 @@ eventRouter.get('/:id', async (request, response, next) => {
 })
 
 // POST new event with jsonwebtoken
-eventRouter.post('/', async (request, response, next) => {
+eventRouter.post('/', async (request, response, next) => { //eslint-disable-line
   const reqBody = request.body
   const decodedToken = jwt.verify(request.token, JWT_SERCET)
   const userResult = await db.query(getUserById, [decodedToken.id])
@@ -49,7 +49,7 @@ eventRouter.post('/', async (request, response, next) => {
       }
     })
   }
-  
+
   // Organizer id from decoded token
   const addEventResult = await db.query(addNewEvent, [
     reqBody.title,
@@ -69,7 +69,7 @@ eventRouter.post('/', async (request, response, next) => {
   response.status(201).json(eventResult[0][0])
 })
 
-eventRouter.delete('/:id', async (request, response, next) => {
+eventRouter.delete('/:id', async (request, response, next) => { //eslint-disable-line
   const eventResult = await db.query(getEventById, [request.params.id])
 
   // No event found with the given id

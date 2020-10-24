@@ -12,13 +12,13 @@ const {
 const { JWT_SERCET, SALT_ROUNDS } = require('../utils/config')
 
 // GET all users
-userRouter.get('/', async (request, response, next) => {
+userRouter.get('/', async (request, response, next) => { //eslint-disable-line
   const result = await db.query(getAllUsers)
   response.json(result[0])
 })
 
 // POST modify existing user
-userRouter.post('/:id', async (request, response, next) => {
+userRouter.post('/:id', async (request, response, next) => { //eslint-disable-line
   const reqBody = request.body
 
   // 400 if passwordChange not provided
@@ -31,7 +31,7 @@ userRouter.post('/:id', async (request, response, next) => {
     })
   }
 
-  const id = request.params.id
+  const { id } = request.params
   const decodedToken = jwt.verify(request.token, JWT_SERCET)
 
   // Checking that request is sent by the right user

@@ -1,6 +1,6 @@
 require('dotenv').config()
 
-const PORT = process.env.PORT
+const PORT = process.env.PORT //eslint-disable-line
 
 const DB_CREDENTIALS = {
   host: process.env.DB_HOST,

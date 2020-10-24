@@ -6,9 +6,9 @@ const { getUserAllByUsername } = require('../database/queries')
 const { JWT_SERCET } = require('../utils/config')
 
 // POST new login
-loginRouter.post('/', async (request, response, next) => {
+loginRouter.post('/', async (request, response, next) => { //eslint-disable-line
   const reqBody = request.body
-  const result = await db.query(getUserAllByUsername, [ reqBody.username])
+  const result = await db.query(getUserAllByUsername, [reqBody.username])
 
   // Username not found
   if (result[0].length === 0) {
@@ -52,7 +52,7 @@ loginRouter.post('/', async (request, response, next) => {
     bgColor: user.bgColor,
     fgColor: user.fgColor
   }
-  
+
   // Signing token with user info, expires in 1 hour
   const token = jwt.sign(userForToken, JWT_SERCET, { expiresIn: '1h' })
 
@@ -71,7 +71,7 @@ loginRouter.post('/', async (request, response, next) => {
 })
 
 // GET check if token is expired
-loginRouter.get('/', async (request, response, next) => {
+loginRouter.get('/', async (request, response, next) => { //eslint-disable-line
   jwt.verify(request.token, JWT_SERCET)
   response.status(204).end()
 })

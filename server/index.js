@@ -1,6 +1,5 @@
 const express = require('express')
 require('express-async-errors')
-const app = express()
 const { createTables } = require('./database/db')
 const middleware = require('./utils/middleware')
 const { PORT } = require('./utils/config')
@@ -8,6 +7,7 @@ const eventRouter = require('./controllers/events')
 const userRouter = require('./controllers/users')
 const loginRouter = require('./controllers/login')
 
+const app = express()
 app.use(express.json())
 app.use(middleware.tokenExtractor)
 

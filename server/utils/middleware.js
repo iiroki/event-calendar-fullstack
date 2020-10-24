@@ -22,48 +22,51 @@ const tokenExtractor = (request, response, next) => {
 }
 
 // Own custom error handler middleware
-const errorHandler = (error, request, response, next) => {
-  //console.log(error)
+const errorHandler = (error, request, response, next) => { //eslint-disable-line
+  switch (true) {
+    case error.name === 'JsonWebTokenError':
+      return response.status(401).json({
+        error: {
+          code: 1,
+          message: 'Invalid token'
+        }
+      })
 
-  if (error.name === 'JsonWebTokenError') {
-    return response.status(401).json({
-      error: {
-        code: 1,
-        message: 'Invalid token'
-      }
-    })
-  } else if (error.name === 'TokenExpiredError') {
-    return response.status(401).json({
-      error: {
-        code: 2,
-        message: 'Expired token'
-      }
-    })
-  } else if (error.errno === 1048  // MySQL: Validation failed
-    || error.errno === 1062  // MySQL: Duplicate unique value
-    || error.errno === 4025  // MySQL: Constraint failed
-    || error.errno === 1292  // MySQL: Incorrect datetime value
-    || error.errno === 1406) {  // MySQL: Data too long
-    return response.status(400).json({
-      error: {
-        code: 0,
-        message: error.sqlMessage
-      }
-    })
-  } else if (error.errno === 1146){  // MySQL: Table not found
-    return response.status(500).json({
-      error: {
-        code: -1,
-        message: error.sqlMessage
-      }
-    })
+    case error.name === 'TokenExpiredError':
+      return response.status(401).json({
+        error: {
+          code: 2,
+          message: 'Expired token'
+        }
+      })
+
+    case error.errno === 1048: // MySQL: Validation failed
+    case error.errno === 1062: // MySQL: Duplicate unique value
+    case error.errno === 4025: // MySQL: Constraint failed
+    case error.errno === 1292: // MySQL: Incorrect datetime value
+    case error.errno === 1406: // MySQL: Data too long
+      return response.status(400).json({
+        error: {
+          code: 0,
+          message: error.sqlMessage
+        }
+      })
+
+    case error.errno === 1146: // MySQL: Table not found
+      return response.status(500).json({
+        error: {
+          code: -1,
+          message: 'Wanted resource not found'
+        }
+      })
+
+    default:
+      next(error) // Express error handler
   }
-
-  next(error)
 }
 
 const unknownEndpoint = (request, response) => {
-  response.status(404).json({ 'error': 'Unknown endpoint' })
+  response.status(404).json({ error: 'Unknown endpoint' })
 }
 
 module.exports = {
