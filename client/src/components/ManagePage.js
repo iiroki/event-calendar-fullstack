@@ -34,7 +34,7 @@ const ManagePage = () => {
     <div>
       <h2>
         Terve
-        {loggedUser.name}
+        {` ${loggedUser.name}`}
         !
       </h2>
 
