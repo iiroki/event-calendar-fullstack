@@ -71,10 +71,10 @@ const EventPage = ({ id }) => {
   return (
     <div className='event-page-wrapper'>
       <button
-        className='download-button'
+        className='btn download-button'
         onClick={downloadIcs}
       >
-        + VIE TAPAHTUMA OMAAN KALENTERIIN
+        + VIE OMAAN KALENTERIIN
       </button>
 
       <h1>{event.title}</h1>

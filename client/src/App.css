@@ -261,10 +261,13 @@ div.container {
 
 /* Download button */
 .download-button {
-  border: none;
   color: #616161;
   font-size: 0.8rem;
   font-weight: bold;
+}
+
+.download-button:focus {
+  box-shadow: none;
 }
 
 /* Wrapper for a single event page */

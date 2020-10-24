@@ -2,11 +2,8 @@ import * as ics from 'ics'
 import moment from 'moment'
 
 export const eventToIcs = (eventObject, organizer) => {
-  const utcOffset = moment().utcOffset() / 60
-  const s = moment(eventObject.start) // start date
-  const e = moment(eventObject.end) // end date
-  s.hour(s.hour() - utcOffset)
-  e.hour(e.hour() - utcOffset)
+  const s = moment(eventObject.start).utc() // start date in UTC
+  const e = moment(eventObject.end).utc() // end date in UTC
 
   const eventForIcs = {
     title: eventObject.title,
@@ -19,6 +16,7 @@ export const eventToIcs = (eventObject, organizer) => {
 
   const { error, value } = ics.createEvent(eventForIcs)
 
+  // Error creating the ics-file
   if (error) {
     console.log(error)
     return null
