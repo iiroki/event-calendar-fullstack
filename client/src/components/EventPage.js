@@ -2,7 +2,7 @@ import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import moment from 'moment'
 import { setNotification, notificationTypes } from '../reducers/notificationReducer'
-import { eventToIcs } from '../utils/icsConverter'
+import eventToIcs from '../utils/icsConverter'
 
 const EventPage = ({ id }) => {
   const event = useSelector(state => state.events)
@@ -11,7 +11,7 @@ const EventPage = ({ id }) => {
   const users = useSelector(state => state.users)
 
   const dispatch = useDispatch()
-  
+
   // No event found
   if (!event) {
     return (
@@ -27,13 +27,17 @@ const EventPage = ({ id }) => {
   const formatDate = () => {
     if (moment(event.start).utc().format('D') === moment(event.end).utc().format('D')) {
       return (
-        moment(event.start).utc().format('dd D.M.YYYY H:mm') + ' - ' + moment(event.end).utc().format('H:mm')
-      )
-    } else {
-      return (
-        moment(event.start).utc().format('dd D.M.YYYY H:mm') + ' - ' + moment(event.end).utc().format('dd D.M.YYYY H:mm')
+        `${moment(event.start).utc().format('dd D.M.YYYY H:mm')}
+         - 
+         ${moment(event.end).utc().format('H:mm')}`
       )
     }
+
+    return (
+      `${moment(event.start).utc().format('dd D.M.YYYY H:mm')}
+       - 
+       ${moment(event.end).utc().format('dd D.M.YYYY H:mm')}`
+    )
   }
 
   const downloadIcs = () => {
@@ -41,10 +45,11 @@ const EventPage = ({ id }) => {
     const eventIcs = eventToIcs(event, organizer)
 
     if (!eventIcs) {
-        dispatch(setNotification(
-          'Virhe .ics-tiedoston luomisessa.',
-          notificationTypes.ERROR)
-        )
+      dispatch(setNotification(
+        'Virhe .ics-tiedoston luomisessa.',
+        notificationTypes.ERROR
+      ))
+
       return
     }
 
@@ -53,7 +58,7 @@ const EventPage = ({ id }) => {
 
     const linkElement = document.createElement('a')
 
-    const file = new Blob([eventIcs],    
+    const file = new Blob([eventIcs],
       { type: 'text/calendar;charset=utf-8' })
 
     linkElement.href = window.URL.createObjectURL(file)
@@ -64,20 +69,23 @@ const EventPage = ({ id }) => {
 
     dispatch(setNotification(
       '.ics-tiedosto luotu onnistuneesti.',
-      notificationTypes.GOOD)
-    )
+      notificationTypes.GOOD
+    ))
   }
 
   return (
     <div className='event-page-wrapper'>
       <button
+        type='button'
         className='btn download-button'
         onClick={downloadIcs}
       >
         + VIE OMAAN KALENTERIIN
       </button>
 
-      <h1>{event.title}</h1>
+      <h1>
+        {event.title}
+      </h1>
 
       <div className='event-information-box'>
         <div>
@@ -85,17 +93,22 @@ const EventPage = ({ id }) => {
         </div>
 
         <div className='form-row'>
-          <label className='form-row-label'>
+          <label // eslint-disable-line
+            className='form-row-label'
+          >
             Paikka:
           </label>
           {event.location}
         </div>
 
         <div className='form-row'>
-          <label className='form-row-label'>
+          <label
+            htmlFor='organizerLink'
+            className='form-row-label'
+          >
             Järjestäjä:
           </label>
-          <a href={organizer.link}>
+          <a id='organizerLink' href={organizer.link}>
             {organizer.name}
           </a>
         </div>
@@ -104,9 +117,11 @@ const EventPage = ({ id }) => {
       {
         !event.description
           ? null
-          : <div className='event-description-box'>
+          : (
+            <div className='event-description-box'>
               {event.description}
             </div>
+          )
       }
     </div>
   )

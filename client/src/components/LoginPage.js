@@ -8,8 +8,8 @@ const LoginPage = () => {
 
   // Redirect to manage page if already logged in
   if (loggedUser) {
-    return(
-      <Redirect to={'/manage'} />
+    return (
+      <Redirect to='/manage' />
     )
   }
 

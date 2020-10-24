@@ -9,7 +9,7 @@ const initialNotification = {
   type: notificationTypes.NONE
 }
 
-const notificationTime = 10000  // ms
+const notificationTime = 10000 // ms
 let timer = null
 
 const scrollToNotification = () => {
@@ -22,10 +22,10 @@ const scrollToNotification = () => {
 }
 
 const notificationReducer = (state = initialNotification, action) => {
-  switch (action.type){
+  switch (action.type) {
     case 'SET_NOTIFICATION':
       return action.data
-    
+
     case 'RESET_NOTIFICATION':
       return initialNotification
 

@@ -6,10 +6,10 @@ const eventReducer = (state = initialEvents, action) => {
   switch (action.type) {
     case 'INIT_EVENTS':
       return action.data
-    
+
     case 'ADD_EVENT':
       return state.concat(action.data)
-    
+
     case 'DELETE_EVENT':
       return state.filter(e => e.id !== action.data)
 

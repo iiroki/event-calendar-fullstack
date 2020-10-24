@@ -51,36 +51,42 @@ const LoginForm = () => {
         <table>
           <tbody>
 
-            <tr><td>
-              <input
-                type='text'
-                className='form-control'
-                id='usernameInput'
-                value={username}
-                onChange={({ target }) => setUsername(target.value)}
-                placeholder='Käyttäjätunnus'
-              />
-            </td></tr>
+            <tr>
+              <td>
+                <input
+                  type='text'
+                  className='form-control'
+                  id='usernameInput'
+                  value={username}
+                  onChange={({ target }) => setUsername(target.value)}
+                  placeholder='Käyttäjätunnus'
+                />
+              </td>
+            </tr>
 
-            <tr><td>
-              <input
-                type='password'
-                className='form-control'
-                id='passwordInput'
-                value={password}
-                onChange={({ target }) => setPassword(target.value)}
-                placeholder='Salasana'
-              />
-            </td></tr>
+            <tr>
+              <td>
+                <input
+                  type='password'
+                  className='form-control'
+                  id='passwordInput'
+                  value={password}
+                  onChange={({ target }) => setPassword(target.value)}
+                  placeholder='Salasana'
+                />
+              </td>
+            </tr>
 
-            <tr><td>
-              <button
-                type='submit'
-                className='btn btn-danger login-form-button'
-              >
+            <tr>
+              <td>
+                <button
+                  type='submit'
+                  className='btn btn-danger login-form-button'
+                >
                   Kirjaudu
-              </button>
-            </td></tr>
+                </button>
+              </td>
+            </tr>
 
           </tbody>
         </table>

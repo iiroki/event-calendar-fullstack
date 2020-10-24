@@ -1,5 +1,6 @@
 import axios from 'axios'
 import tokenService from './token'
+
 const baseUrl = '/api/events'
 
 const getAll = async () => {

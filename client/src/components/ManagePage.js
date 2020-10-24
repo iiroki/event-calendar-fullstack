@@ -15,7 +15,7 @@ const ManagePage = () => {
   // If there's no active login at the moment
   if (!loggedUser) {
     return (
-      <Redirect to={'/login'} />
+      <Redirect to='/login' />
     )
   }
 
@@ -23,7 +23,7 @@ const ManagePage = () => {
   const handleLogout = event => {
     event.preventDefault()
     dispatch(logOut())
-    
+
     dispatch(setNotification(
       'Kirjauduttu ulos.',
       notificationTypes.GOOD
@@ -32,7 +32,11 @@ const ManagePage = () => {
 
   return (
     <div>
-      <h2>Terve {loggedUser.name}!</h2>
+      <h2>
+        Terve
+        {loggedUser.name}
+        !
+      </h2>
 
       <button
         className='btn btn-danger'
@@ -71,7 +75,7 @@ const ManagePage = () => {
           <EventForm />
         </div>
       </div>
-      
+
       <div className='collapsible-wrapper'>
         <a
           className='btn btn-light collapsible-menu-button'
@@ -84,9 +88,8 @@ const ManagePage = () => {
         </a>
         <div className='collapse collapsible' id='userEventsCollapsible'>
           <ManageEventsList />
-        </div>  
+        </div>
       </div>
-          
     </div>
   )
 }

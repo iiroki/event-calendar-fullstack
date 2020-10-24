@@ -1,6 +1,7 @@
 import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
+import moment from 'moment'
 import { deleteExistingEvent } from '../reducers/eventReducer'
 import {
   setNotification,
@@ -8,7 +9,6 @@ import {
   expiredTokenNotification
 } from '../reducers/notificationReducer'
 import { DeleteIcon } from '../assets/icons'
-import moment from 'moment'
 
 // List item for a single event including buttons
 const ManageEventsListItem = ({ eventObject, deleteHandler }) => (
@@ -16,13 +16,16 @@ const ManageEventsListItem = ({ eventObject, deleteHandler }) => (
     <Link className='link-manage' to={`/events/${eventObject.id}`}>
       <b>{eventObject.title}</b>
     </Link>
-    ({moment(eventObject.start).format('DD.MM.YYYY')})
+    (
+    {moment(eventObject.start).format('DD.MM.YYYY')}
+    )
     [
-    {/*<button className='manage-event-button'>
+    {/* <button className='manage-event-button'>
       <EditIcon />
-    </button>*/}
+    </button> */}
 
     <button
+      type='button'
       className='manage-event-button'
       onClick={() => deleteHandler(eventObject)}
     >
@@ -39,14 +42,14 @@ const ManageEventsList = () => {
     .filter(e => e.organizer_id === userId)
     // Sort by dates (descending)
     .sort((e1, e2) => new Date(e1.start) - new Date(e2.start))
-  
+
   const dispatch = useDispatch()
 
   const handleDelete = async blogToDelete => {
     const msg = `Poista tapahtuma "${blogToDelete.title}"?`
 
     // Confirmation that the event is to be deleted
-    if (!window.confirm(msg)) {
+    if (!window.confirm(msg)) { // eslint-disable-line
       return
     }
 
@@ -74,28 +77,32 @@ const ManageEventsList = () => {
     }
   }
 
-  return(
+  return (
     <div>
       Tapahtumat lajiteltu päivämäärän mukaan laskevasti.
-      {/*<br/>
-      <EditIcon />= Muokkaa tapahtumaa (TBD)*/}
-      <br/>
-      <DeleteIcon />= Poista tapahtuma
+      {/* <br/>
+      <EditIcon />= Muokkaa tapahtumaa (TBD) */}
+      <br />
+      <DeleteIcon />
+      = Poista tapahtuma
       <hr />
       {
         events.length === 0
-          ? <div className='form-row'>
+          ? (
+            <div className='form-row'>
               <b>Ei tapahtumia :(</b>
             </div>
-          : events.map(e =>
+          )
+          : (
+            events.map(e => (
               <ManageEventsListItem
                 key={e.id}
                 eventObject={e}
                 deleteHandler={handleDelete}
               />
-            )
+            ))
+          )
         }
-      
     </div>
   )
 }

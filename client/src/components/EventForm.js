@@ -1,12 +1,12 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
+import moment from 'moment'
 import { addNewEvent } from '../reducers/eventReducer'
 import {
   setNotification,
   expiredTokenNotification,
   notificationTypes
 } from '../reducers/notificationReducer'
-import moment from 'moment'
 import { HelpIcon, AlertIcon } from '../assets/icons'
 
 // Event form for adding new event
@@ -23,27 +23,27 @@ const EventForm = () => {
 
   // Checks that given dates are valid
   const validateDate = dateArray => {
-    for (let date of dateArray) {
+    dateArray.forEach(date => {
       if (!moment(date, 'D.M.YYYY', true).isValid()) {
         throw Error('Date validation failed')
-      } 
-    }
+      }
+    })
   }
 
   // Checks that given times are valid
   const validateTime = timeArray => {
-    for (let time of timeArray) {
+    timeArray.forEach(time => {
       if (!moment(time, 'H:mm', true).isValid()) {
         throw Error('Time validation failed')
       }
-    }
+    })
   }
 
   // Parses Dates and times to correct form for the server
   const parseDateTime = (date, time) => {
     const d = date.split('.').reverse().join('-')
     const t = time.split('.').join(':')
-    return d + ' ' + t
+    return `${d} ${t}`
   }
 
   const handleSubmit = async event => {
@@ -99,7 +99,10 @@ const EventForm = () => {
       <form className='input-form' onSubmit={handleSubmit}>
 
         <div className='row form-row'>
-          <label className='col-lg-3 form-row-label'>
+          <label
+            htmlFor='titleInput'
+            className='col-lg-3 form-row-label'
+          >
             Nimi*
           </label>
           <div className='col-lg-4'>
@@ -112,11 +115,13 @@ const EventForm = () => {
               placeholder='Colours'
             />
           </div>
-          
         </div>
 
         <div className='row form-row'>
-          <label className='col-lg-3 form-row-label'>
+          <label
+            htmlFor='locationInput'
+            className='col-lg-3 form-row-label'
+          >
             Paikka*
           </label>
           <div className='col-lg-4'>
@@ -132,7 +137,10 @@ const EventForm = () => {
         </div>
 
         <div className='row form-row'>
-          <label className='col-lg-3 form-row-label'>
+          <label
+            htmlFor='startDateInput startTimeInput'
+            className='col-lg-3 form-row-label'
+          >
             Alkamisajankohta*
           </label>
           <div className='col-lg-4'>
@@ -158,7 +166,10 @@ const EventForm = () => {
         </div>
 
         <div className='row form-row'>
-          <label className='col-lg-3 form-row-label'>
+          <label
+            htmlFor='endDateInput endTimeInput'
+            className='col-lg-3 form-row-label'
+          >
             Päättymisajankohta*
           </label>
           <div className='col-lg-4'>
@@ -184,7 +195,9 @@ const EventForm = () => {
         </div>
 
         <div className='row form-row form-row-checkbox'>
-          <label className='form-row-label'>
+          <label
+            className='form-row-label'
+          >
             Näytä tapahtuma kalenterissa monipäiväisenä
             <button
               type='button'
@@ -205,7 +218,10 @@ const EventForm = () => {
           </div>
         </div>
 
-        <label className='form-row-label'>
+        <label
+          htmlFor='descriptionInput'
+          className='form-row-label'
+        >
           Kuvaus
         </label>
         <div>
@@ -221,7 +237,7 @@ const EventForm = () => {
         <div className='alert-message'>
           <AlertIcon />
           Kuvaus-laatikkoa voi venyttää suuremmaksi oikeasta alakulmasta!
-          <br/>
+          <br />
           * = Pakollinen kenttä
         </div>
 
@@ -243,14 +259,14 @@ const EventForm = () => {
 
             <div className='modal-header modal-center'>
               <h5 className='modal-title' id='exampleModalLabel'>
-              Näytä tapahtuma kalenterissa monipäiväisenä
+                Näytä tapahtuma kalenterissa monipäiväisenä
               </h5>
             </div>
 
             <div className='modal-body modal-text-content'>
-              Esimerkki: Tapahtuma alkaa 22.00 ja päättyy seuraavan päivän puolella 3.00. 
-              Mikäli valintaruutua ei ole valittu, näkyy tapahtuma ainoastaan aloituspäivän 
-              kohdalla kalenterissa. Jos valintaruutu on valittuna, näkyy tapahtuma kalenterissa 
+              Esimerkki: Tapahtuma alkaa 22.00 ja päättyy seuraavan päivän puolella 3.00.
+              Mikäli valintaruutua ei ole valittu, näkyy tapahtuma ainoastaan aloituspäivän
+              kohdalla kalenterissa. Jos valintaruutu on valittuna, näkyy tapahtuma kalenterissa
               molempien päivien kohdalla. Tilanteet kuvattu alla olevassa kuvassa.
             </div>
 
@@ -261,12 +277,12 @@ const EventForm = () => {
             />
 
             <div className='modal-body modal-text-content'>
-              Valintaruutu suositellaan jättämään tyhjäksi esimerkiksi baaribileiden kohdalla 
-              (tapahtuma ajoittuu selkeästi aloituspäivän puolelle), kun taas oikeasti usean 
-              päivän tapahtumien tapauksessa (esimerkiksi vuosijuhlaviikonloppu) toimintoa 
+              Valintaruutu suositellaan jättämään tyhjäksi esimerkiksi baaribileiden kohdalla
+              (tapahtuma ajoittuu selkeästi aloituspäivän puolelle), kun taas oikeasti usean
+              päivän tapahtumien tapauksessa (esimerkiksi vuosijuhlaviikonloppu) toimintoa
               voi hyödyntää.
             </div>
-            
+
             <div className='modal-footer modal-center'>
               <button
                 type='button'

@@ -23,7 +23,7 @@ const Notification = () => {
           {msg}
         </div>
       )
-    
+
     case notificationTypes.ERROR:
       return (
         <div className='alert alert-danger' id='notification'>

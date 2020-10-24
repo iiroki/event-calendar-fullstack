@@ -4,10 +4,10 @@ import tokenService from '../services/token'
 const initialLogin = null
 
 const loginReducer = (state = initialLogin, action) => {
-  switch(action.type) {
+  switch (action.type) {
     case 'SET_LOGIN':
       return action.data
-    
+
     case 'LOG_OUT':
       return null
 
@@ -31,7 +31,7 @@ export const checkLogin = () => (
           type: 'SET_LOGIN',
           data: loggedUser
         })
-      } catch {
+      } catch (error) {
         // Removing login if token wasn't valid
         window.localStorage.removeItem('loggedUser')
         thunk({ type: 'LOG_OUT' })

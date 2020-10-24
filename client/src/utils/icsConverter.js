@@ -1,7 +1,7 @@
 import * as ics from 'ics'
 import moment from 'moment'
 
-export const eventToIcs = (eventObject, organizer) => {
+const eventToIcs = eventObject => {
   const s = moment(eventObject.start).utc() // start date in UTC
   const e = moment(eventObject.end).utc() // end date in UTC
 
@@ -18,9 +18,10 @@ export const eventToIcs = (eventObject, organizer) => {
 
   // Error creating the ics-file
   if (error) {
-    console.log(error)
     return null
   }
-  
+
   return value
 }
+
+export default eventToIcs

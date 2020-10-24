@@ -5,14 +5,15 @@ import { updateLogin } from '../reducers/loginReducer'
 import {
   setNotification,
   expiredTokenNotification,
-  notificationTypes } from '../reducers/notificationReducer'
+  notificationTypes
+} from '../reducers/notificationReducer'
 import { AlertIcon } from '../assets/icons'
 
 // Form where user information can be changed
 // handleHide can be provided to hide the form after successful submit
 const UserInformationForm = ({ profile, handleHide = null }) => {
   if (!profile.link) {
-    profile.link = ''
+    profile.link = '' // eslint-disable-line
   }
 
   const [name, setName] = useState(profile.name)
@@ -58,12 +59,12 @@ const UserInformationForm = ({ profile, handleHide = null }) => {
     } catch (error) {
       if (error.response.status === 400) {
         dispatch(setNotification(
-          'Virhe tietoja muokatessa: Nimi/käyttäjätunnus ei saa olla tyhjä ja käyttäjätunnuksen tulee olla uniikki! ' +
-          'Tarkasta myös värien HEX-arvot.',
+          'Virhe tietoja muokatessa: Nimi/käyttäjätunnus ei saa olla tyhjä ja '
+          + 'käyttäjätunnuksen tulee olla uniikki! Tarkasta myös värien HEX-arvot.',
           notificationTypes.ERROR
         ))
       } else if (error.response.status === 401) {
-        if (error.response.data.error.code === 2) {  // Token expired
+        if (error.response.data.error.code === 2) { // Token expired
           dispatch(expiredTokenNotification())
         } else {
           dispatch(setNotification(
@@ -71,7 +72,6 @@ const UserInformationForm = ({ profile, handleHide = null }) => {
             notificationTypes.ERROR
           ))
         }
-        
       } else {
         dispatch(setNotification(
           'Virhe tietojen päivittämisen yhteydessä.',
@@ -84,7 +84,10 @@ const UserInformationForm = ({ profile, handleHide = null }) => {
   return (
     <form className='input-form' onSubmit={handleSubmit}>
       <div className='row form-row'>
-        <label className='col-lg-3 form-row-label'>
+        <label
+          htmlFor='editNameInput'
+          className='col-lg-3 form-row-label'
+        >
           Nimi
         </label>
         <div className='col-lg-4'>
@@ -96,11 +99,13 @@ const UserInformationForm = ({ profile, handleHide = null }) => {
             onChange={({ target }) => setName(target.value)}
           />
         </div>
-        
       </div>
 
       <div className='row form-row'>
-        <label className='col-lg-3 form-row-label'>
+        <label
+          htmlFor='editUsernameInput'
+          className='col-lg-3 form-row-label'
+        >
           Käyttäjätunnus
         </label>
         <div className='col-lg-4'>
@@ -115,7 +120,10 @@ const UserInformationForm = ({ profile, handleHide = null }) => {
       </div>
 
       <div className='row form-row'>
-        <label className='col-lg-3 form-row-label'>
+        <label
+          htmlFor='editLinkInput'
+          className='col-lg-3 form-row-label'
+        >
           Linkki
         </label>
         <div className='col-lg-4'>
@@ -134,7 +142,10 @@ const UserInformationForm = ({ profile, handleHide = null }) => {
       </div>
 
       <div className='row form-row'>
-        <label className='col-lg-3 form-row-label'>
+        <label
+          htmlFor='editBgColorInput'
+          className='col-lg-3 form-row-label'
+        >
           Taustaväri (HEX-arvo)
         </label>
         <div className='col-lg-4'>
@@ -151,12 +162,14 @@ const UserInformationForm = ({ profile, handleHide = null }) => {
               placeholder='ffffff'
             />
           </div>
-          
         </div>
       </div>
 
       <div className='row form-row'>
-        <label className='col-lg-3 form-row-label'>
+        <label
+          htmlFor='editFgColorInput'
+          className='col-lg-3 form-row-label'
+        >
           Tekstin väri (HEX-arvo)
         </label>
         <div className='col-lg-4'>
@@ -176,17 +189,21 @@ const UserInformationForm = ({ profile, handleHide = null }) => {
         </div>
       </div>
 
-      <br/><br/>
+      <br />
+      <br />
 
       <div className='row form-row'>
-        <label className='col-lg-3 form-row-label'>
+        <label
+          htmlFor='passwordConfirmInput'
+          className='col-lg-3 form-row-label'
+        >
           Nykyinen salasana
         </label>
         <div className='col-lg-4'>
           <input
             type='password'
             className='form-control'
-            id='editPasswordInput'
+            id='passwordConfirmInput'
             value={password}
             onChange={({ target }) => setPassword(target.value)}
           />
@@ -195,7 +212,7 @@ const UserInformationForm = ({ profile, handleHide = null }) => {
 
       <div className='row form-row'>
         <AlertIcon />
-        Nykyinen salasana vaaditaan muutosten vahvistamiseen. Muokatut tiedot 
+        Nykyinen salasana vaaditaan muutosten vahvistamiseen. Muokatut tiedot
         päivittyvät tapahtumiin sivun uudelleenlataamisen yhteydessä.
       </div>
 
@@ -257,7 +274,7 @@ const NewPasswordForm = ({ id, handleHide = null }) => {
     } catch (error) {
       // Wrong current password
       if (error.response.status === 401) {
-        if (error.response.data.error.code === 2) {  // Token expired
+        if (error.response.data.error.code === 2) { // Token expired
           dispatch(expiredTokenNotification())
         } else {
           dispatch(setNotification(
@@ -270,64 +287,72 @@ const NewPasswordForm = ({ id, handleHide = null }) => {
           'Virhe salasanan vaihdon yhteydessä :(',
           notificationTypes.ERROR
         ))
-      }      
+      }
     }
   }
 
   return (
     <form className='input-form' onSubmit={handleSubmit}>
-        <div className='row form-row'>
-          <label className='col-lg-3 form-row-label'>
-            Nykyinen salasana
-          </label>
-          <div className='col-lg-4'>
-            <input
-              type='password'
-              className='form-control'
-              id='editPasswordInput'
-              value={password}
-              onChange={({ target }) => setPassword(target.value)}
-            />
-          </div>
-          
+      <div className='row form-row'>
+        <label
+          htmlFor='editPasswordInput'
+          className='col-lg-3 form-row-label'
+        >
+          Nykyinen salasana
+        </label>
+        <div className='col-lg-4'>
+          <input
+            type='password'
+            className='form-control'
+            id='editPasswordInput'
+            value={password}
+            onChange={({ target }) => setPassword(target.value)}
+          />
         </div>
+      </div>
 
-        <div className='row form-row'>
-          <label className='col-lg-3 form-row-label'>
-            Uusi salasana
-          </label>
-          <div className='col-lg-4'>
-            <input
-              type='password'
-              className='form-control'
-              id='editnewPasswordInput'
-              value={newPassword}
-              onChange={({ target }) => setnewPassword(target.value)}
-            />
-          </div>
+      <div className='row form-row'>
+        <label
+          htmlFor='editNewPasswordInput'
+          className='col-lg-3 form-row-label'
+        >
+          Uusi salasana
+        </label>
+        <div className='col-lg-4'>
+          <input
+            type='password'
+            className='form-control'
+            id='editNewPasswordInput'
+            value={newPassword}
+            onChange={({ target }) => setnewPassword(target.value)}
+          />
         </div>
+      </div>
 
-        <div className='row form-row'>
-          <label className='col-lg-3 form-row-label'>
-            Vahvista uusi salasana
-          </label>
-          <div className='col-lg-4'>
-            <input
-              type='password'
-              className='form-control'
-              id='editnewPasswordVerificationInput'
-              value={newPasswordVerification}
-              onChange={({ target }) => setnewPasswordVerification(target.value)}
-            />
-          </div>
+      <div className='row form-row'>
+        <label
+          htmlFor='editNewPasswordConfirmInput'
+          className='col-lg-3 form-row-label'
+        >
+          Vahvista uusi salasana
+        </label>
+        <div className='col-lg-4'>
+          <input
+            type='password'
+            className='form-control'
+            id='editNewPasswordConfirmInput'
+            value={newPasswordVerification}
+            onChange={({ target }) => setnewPasswordVerification(target.value)}
+          />
         </div>
+      </div>
 
-        <div>
-          <button type='submit' className='btn btn-danger'>
-            Vahvista
-          </button>
-        </div>
-      </form>
+      <div>
+        <button type='submit' className='btn btn-danger'>
+          Vahvista
+        </button>
+      </div>
+    </form>
   )
 }
 
@@ -339,12 +364,20 @@ const ProfileForm = ({ profile, handleHide }) => {
   return (
     <div>
       <div className='btn-group btn-group-toggle button-group' data-toggle='buttons'>
-        <label className='btn btn-danger active' onClick={() => setEditPassword(false)}>
-          <input type='radio' name='options' id='option1' autoComplete='off'/> Tiedot
+        <label // eslint-disable-line
+          className='btn btn-danger active'
+          onClick={() => setEditPassword(false)}
+        >
+          <input type='radio' name='options' id='option1' autoComplete='off' />
+          Tiedot
         </label>
 
-        <label className='btn btn-danger' onClick={() => setEditPassword(true)}>
-          <input type='radio' name='options' id='option2' autoComplete='off' /> Salasana
+        <label // eslint-disable-line
+          className='btn btn-danger'
+          onClick={() => setEditPassword(true)}
+        >
+          <input type='radio' name='options' id='option2' autoComplete='off' />
+          Salasana
         </label>
       </div>
 

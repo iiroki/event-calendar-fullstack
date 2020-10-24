@@ -1,5 +1,6 @@
 import axios from 'axios'
 import tokenService from './token'
+
 const baseUrl = '/api/users'
 
 const getAll = async () => {

@@ -1,5 +1,6 @@
 import axios from 'axios'
 import tokenService from './token'
+
 const baseUrl = '/api/login'
 
 const login = async loginCredentials => {
@@ -9,7 +10,7 @@ const login = async loginCredentials => {
 
 const checkValidity = async () => {
   const config = {
-    headers: { Authorization: tokenService.getToken()}
+    headers: { Authorization: tokenService.getToken() }
   }
 
   await axios.get(baseUrl, config)

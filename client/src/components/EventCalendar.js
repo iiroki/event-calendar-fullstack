@@ -1,10 +1,10 @@
 import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { useHistory} from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import { Calendar, momentLocalizer } from 'react-big-calendar'
 import moment from 'moment'
 import 'moment/locale/fi'
-import { NextIcon, PrevIcon} from '../assets/icons'
+import { NextIcon, PrevIcon } from '../assets/icons'
 import { setSelectedDate } from '../reducers/selectedDateReducer'
 
 // Finnish translations for calendar to use
@@ -20,25 +20,28 @@ const translationsFi = {
   event: 'Tapahtuma',
   showMore: total => `+ ${total} tapahtumaa`
 }
- 
+
 // Custom toolbar layout for calendar
 class CustomToolbar extends React.Component {
   navigate = action => {
-    this.props.onNavigate(action)
-  } 
+    const { onNavigate } = this.props
+    onNavigate(action)
+  }
 
   render() {
+    const { label } = this.props
     return (
       <div className='rbc-toolbar row'>
         <div className='col-lg-4'>
           <h2 className='rbc-toolbar-label'>
-            {this.props.label.toUpperCase()}  
+            {label.toUpperCase()}
           </h2>
         </div>
 
         <div className='col-lg-4'>
           <span className='rbc-btn-group'>
             <button
+              type='button'
               className='rbc-toolbar button'
               onClick={() => this.navigate('PREV')}
             >
@@ -46,19 +49,21 @@ class CustomToolbar extends React.Component {
             </button>
 
             <button
+              type='button'
               className='rbc-toolbar button'
               onClick={() => this.navigate('TODAY')}
             >
               Tänään
             </button>
-            
+
             <button
+              type='button'
               className='rbc-toolbar button'
               onClick={() => this.navigate('NEXT')}
             >
               <NextIcon />
             </button>
-          </span>    
+          </span>
         </div>
       </div>
     )
@@ -71,10 +76,10 @@ const components = {
 }
 
 // Event custom styling
-const eventStyleGetter = (event) => ({
+const eventStyleGetter = event => ({
   style: {
-    backgroundColor: '#' + event.bgColor,
-    color: '#' + event.fgColor
+    backgroundColor: `#${event.bgColor}`,
+    color: `#${event.fgColor}`
   }
 })
 
@@ -94,28 +99,28 @@ const EventCalendar = () => {
         return ({
           id: e.id,
           title: e.title,
-          start: start,
+          start,
           end: start,
           bgColor: e.bgColor,
           fgColor: e.fgColor
         })
-      } else {
-        const start = new Date(e.start)
-        const end = new Date(e.end)
-        start.setHours(start.getHours() - utcOffset)
-        end.setHours(end.getHours() - utcOffset)
-
-        return ({
-          id: e.id,
-          title: e.title,
-          start,
-          end,
-          bgColor: e.bgColor,
-          fgColor: e.fgColor
-        })
       }
+
+      const start = new Date(e.start)
+      const end = new Date(e.end)
+      start.setHours(start.getHours() - utcOffset)
+      end.setHours(end.getHours() - utcOffset)
+
+      return ({
+        id: e.id,
+        title: e.title,
+        start,
+        end,
+        bgColor: e.bgColor,
+        fgColor: e.fgColor
+      })
     })
-    
+
   // Fired after event is clicked inside the calendar
   const handleEventSelect = e => {
     // Redirect to the event page
@@ -128,11 +133,11 @@ const EventCalendar = () => {
         localizer={momentLocalizer(moment)}
         views={['month']}
         messages={translationsFi}
-        onNavigate={(d) => dispatch(setSelectedDate(d))}
+        onNavigate={d => dispatch(setSelectedDate(d))}
         onSelectEvent={handleEventSelect}
         eventPropGetter={eventStyleGetter}
         components={components}
-        popup={true}
+        popup
         date={selectedDate}
         events={events}
       />

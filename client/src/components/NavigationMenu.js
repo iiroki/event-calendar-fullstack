@@ -8,83 +8,81 @@ import {
   AboutIcon
 } from '../assets/icons'
 
-const NavigationMenu = () => {
-  return (
-    <div>
-      <nav className='navbar navbar-expand-md navbar-dark nav-shape'>
+const NavigationMenu = () => (
+  <div>
+    <nav className='navbar navbar-expand-md navbar-dark nav-shape'>
 
-        <span className='navbar-brand'>
+      <span className='navbar-brand'>
+        <Link className='link' to='/'>
+          <Icon />
+        </Link>
+      </span>
+
+      <button
+        className='navbar-toggler'
+        type='button'
+        data-toggle='collapse'
+        data-target='#navbar'
+        aria-controls='navbar'
+        aria-expanded='false'
+        aria-label='Toggle navigation'
+      >
+        <span className='navbar-toggler-icon' />
+      </button>
+
+      <div className='collapse navbar-collapse' id='navbar'>
+
+        <span>
+          <hr />
+        </span>
+
+        <span
+          className='nav-item nav-item-first'
+          data-toggle='collapse'
+          data-target='.navbar-collapse.show'
+        >
           <Link className='link' to='/'>
-            <Icon />
+            <CalendarIcon />
+            Kalenteri
           </Link>
         </span>
 
-        <button
-          className='navbar-toggler'
-          type='button'
+        <span
+          className='nav-item'
           data-toggle='collapse'
-          data-target='#navbar'
-          aria-controls='navbar'
-          aria-expanded='false'
-          aria-label='Toggle navigation'
+          data-target='.navbar-collapse.show'
         >
-          <span className='navbar-toggler-icon'></span>
-        </button>
+          <Link className='link' to='/about'>
+            <AboutIcon />
+            Yleistä
+          </Link>
+        </span>
 
-        <div className='collapse navbar-collapse' id='navbar'>
+        <span
+          className='nav-item'
+          data-toggle='collapse'
+          data-target='.navbar-collapse.show'
+        >
+          <Link className='link' to='/links'>
+            <CompassIcon />
+            Linkkejä
+          </Link>
+        </span>
 
-          <span>
-            <hr/>
-          </span>
+        <span
+          className='nav-item ml-auto'
+          data-toggle='collapse'
+          data-target='.navbar-collapse.show'
+        >
+          <Link className='link' to='/manage'>
+            <ManageIcon />
+            Hallinta
+          </Link>
+        </span>
 
-          <span
-            className='nav-item nav-item-first'
-            data-toggle='collapse'
-            data-target='.navbar-collapse.show'
-          >
-            <Link className='link' to='/'>
-              <CalendarIcon />
-              Kalenteri
-            </Link>
-          </span>
-
-          <span
-            className='nav-item'
-            data-toggle='collapse'
-            data-target='.navbar-collapse.show'
-          >
-            <Link className='link' to='/about'>
-              <AboutIcon />
-                Yleistä
-              </Link>
-          </span>
-
-          <span
-            className='nav-item'
-            data-toggle='collapse'
-            data-target='.navbar-collapse.show'
-          >
-            <Link className='link' to='/links'>
-              <CompassIcon />
-              Linkkejä
-            </Link>
-          </span>
-
-          <span
-            className='nav-item ml-auto'
-            data-toggle='collapse'
-            data-target='.navbar-collapse.show'
-          >
-            <Link className='link' to='/manage'>
-              <ManageIcon />
-              Hallinta
-            </Link>
-          </span>
-
-        </div>
-      </nav>
-    </div>
-  )
-}
+      </div>
+    </nav>
+  </div>
+)
 
 export default NavigationMenu

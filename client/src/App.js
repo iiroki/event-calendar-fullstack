@@ -16,7 +16,7 @@ import Banner from './components/Banner'
 import Notification from './components/Notification'
 import AboutPage from './components/AboutPage'
 import LinksPage from './components/LinksPage'
-//import AdBox from './components/AdBox'
+// import AdBox from './components/AdBox'
 import Footer from './components/Footer'
 import LoadingIcon from './components/LoadingIcon'
 
@@ -28,20 +28,20 @@ const App = () => {
 
   // Fetching active login and events after the first render
   useEffect(() => {
-    const init = async () => {
+    const initState = async () => {
       try {
         await dispatch(checkLogin())
         await dispatch(initEvents())
         await dispatch(initUsers())
         dispatch(initialized())
-      } catch {
+      } catch (error) {
         dispatch(setNotification(
           'Virhe ladattaessa kalenteria.',
           notificationTypes.ERROR
         ))
       }
     }
-    init()
+    initState()
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
   // Checking if the route matches -> single event page
@@ -99,7 +99,7 @@ const App = () => {
 
           </Switch>
 
-          <hr/>
+          <hr />
           <Footer />
         </div>
 
@@ -109,4 +109,4 @@ const App = () => {
   )
 }
 
-export default App;
+export default App
