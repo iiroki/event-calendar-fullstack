@@ -37,16 +37,18 @@ const EventPage = ({ id }) => {
   }
 
   const downloadIcs = () => {
+    // Create .ics-file
     const eventIcs = eventToIcs(event, organizer)
 
     if (!eventIcs) {
         dispatch(setNotification(
-          'Virhe .ics-tiedoston lataamisessa.',
+          'Virhe .ics-tiedoston luomisessa.',
           notificationTypes.ERROR)
         )
       return
     }
 
+    // Create a proper file name
     const fileName = event.title.replace(/[^a-zA-Z]/g, '')
 
     const linkElement = document.createElement('a')
@@ -61,7 +63,7 @@ const EventPage = ({ id }) => {
     linkElement.click()
 
     dispatch(setNotification(
-      '.ics-tiedosto ladattu onnistuneesti.',
+      '.ics-tiedosto luotu onnistuneesti.',
       notificationTypes.GOOD)
     )
   }
