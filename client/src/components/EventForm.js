@@ -43,7 +43,6 @@ const getFieldValues = eventObject => {
 // Event form for adding new event
 const EventForm = ({ eventoToModify = null }) => {
   const values = getFieldValues(eventoToModify)
-  console.log(values)
 
   const [title, setTitle] = useState(values.title)
   const [location, setLocation] = useState(values.location)
@@ -81,7 +80,7 @@ const EventForm = ({ eventoToModify = null }) => {
     return `${d} ${t}`
   }
 
-  const handleSubmit = async event => {
+  const handleAddNew = async event => {
     event.preventDefault()
 
     try {
@@ -129,9 +128,20 @@ const EventForm = ({ eventoToModify = null }) => {
     }
   }
 
+  const handleEdit = async event => {
+    event.preventDefault()
+  }
+
   return (
     <div>
-      <form className='input-form' onSubmit={handleSubmit}>
+      <form
+        className='input-form'
+        onSubmit={
+          eventoToModify === null
+            ? handleAddNew
+            : handleEdit
+        }
+      >
 
         <div className='row form-row'>
           <label

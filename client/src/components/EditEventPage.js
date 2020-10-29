@@ -14,8 +14,9 @@ const EditEventPage = ({ eventToModify, backHandler }) => (
     <hr />
 
     <h5>
+      Muokataan tapahtumaa:
       <b>
-        {`Muokataan tapahtumaa: ${eventToModify.title}`}
+        {` ${eventToModify.title}`}
       </b>
     </h5>
 

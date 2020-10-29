@@ -103,7 +103,7 @@ const ManageEventsList = () => {
       Tapahtumat lajiteltu päivämäärän mukaan laskevasti.
       <br />
       <EditIcon />
-      = Muokkaa tapahtumaa (TBD)
+      = Muokkaa tapahtumaa
       <br />
       <DeleteIcon />
       = Poista tapahtuma
