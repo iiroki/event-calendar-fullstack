@@ -5,14 +5,19 @@ const EditEventPage = ({ eventToModify, backHandler }) => (
   <div>
     <button
       type='button'
+      className='btn btn-danger'
       onClick={backHandler}
     >
-      Back
+      Takaisin
     </button>
 
-    <h1>
-      {`Muokataan tapahtumaa: ${eventToModify.title}`}
-    </h1>
+    <hr />
+
+    <h5>
+      <b>
+        {`Muokataan tapahtumaa: ${eventToModify.title}`}
+      </b>
+    </h5>
 
     <EventForm eventoToModify={eventToModify} />
   </div>

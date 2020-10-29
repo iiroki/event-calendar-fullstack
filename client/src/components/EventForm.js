@@ -9,18 +9,51 @@ import {
 } from '../reducers/notificationReducer'
 import { HelpIcon, AlertIcon } from '../assets/icons'
 
+const defaultValues = {
+  title: '',
+  location: '',
+  startDate: '',
+  startTime: '',
+  endDate: '',
+  endTime: '',
+  multi: false,
+  description: ''
+}
+
+const getFieldValues = eventObject => {
+  if (!eventObject) {
+    return defaultValues
+  }
+
+  const start = moment(eventObject.start).utc()
+  const end = moment(eventObject.end).utc()
+
+  return {
+    title: eventObject.title,
+    location: eventObject.location,
+    startDate: start.format('DD.MM.YYYY'),
+    startTime: start.format('HH:mm'),
+    endDate: end.format('DD.MM.YYYY'),
+    endTime: end.format('HH:mm'),
+    multi: eventObject.multi,
+    description: eventObject.description
+  }
+}
+
 // Event form for adding new event
 const EventForm = ({ eventoToModify = null }) => {
-  console.log('eventToModify:', eventoToModify)
+  const values = getFieldValues(eventoToModify)
+  console.log(values)
 
-  const [title, setTitle] = useState('')
-  const [location, setLocation] = useState('')
-  const [startDate, setStartDate] = useState('')
-  const [startTime, setStartTime] = useState('')
-  const [endDate, setEndDate] = useState('')
-  const [endTime, setEndTime] = useState('')
-  const [multi, setMulti] = useState(false)
-  const [description, setDescription] = useState('')
+  const [title, setTitle] = useState(values.title)
+  const [location, setLocation] = useState(values.location)
+  const [startDate, setStartDate] = useState(values.startDate)
+  const [startTime, setStartTime] = useState(values.startTime)
+  const [endDate, setEndDate] = useState(values.endDate)
+  const [endTime, setEndTime] = useState(values.endTime)
+  const [multi, setMulti] = useState(values.multi)
+  const [description, setDescription] = useState(values.description)
+
   const dispatch = useDispatch()
 
   // Checks that given dates are valid
@@ -244,7 +277,11 @@ const EventForm = ({ eventoToModify = null }) => {
         </div>
 
         <button type='submit' className='btn btn-danger'>
-          Lisää tapahtuma
+          {
+            eventoToModify === null
+              ? 'Lisää tapahtuma'
+              : 'Vahvista'
+          }
         </button>
       </form>
 
