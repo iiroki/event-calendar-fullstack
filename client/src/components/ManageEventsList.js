@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
 import moment from 'moment'
+import EditEventPage from './EditEventPage'
 import { deleteExistingEvent } from '../reducers/eventReducer'
 import {
   setNotification,
@@ -50,11 +51,10 @@ const ManageEventsList = () => {
     // Sort by dates (descending)
     .sort((e1, e2) => new Date(e1.start) - new Date(e2.start))
 
+  const [eventToEdit, setEventToEdit] = useState(null)
   const dispatch = useDispatch()
 
-  const handleEdit = async eventToModify => {
-    console.log('Edit!')
-  }
+  const backHandler = () => setEventToEdit(null)
 
   const handleDelete = async eventToDelete => {
     const msg = `Poista tapahtuma "${eventToDelete.title}"?`
@@ -88,6 +88,16 @@ const ManageEventsList = () => {
     }
   }
 
+  // If editing an event
+  if (eventToEdit) {
+    return (
+      <EditEventPage
+        eventToModify={eventToEdit}
+        backHandler={backHandler}
+      />
+    )
+  }
+
   return (
     <div>
       Tapahtumat lajiteltu päivämäärän mukaan laskevasti.
@@ -110,7 +120,7 @@ const ManageEventsList = () => {
               <ManageEventsListItem
                 key={e.id}
                 eventObject={e}
-                editHandler={handleEdit}
+                editHandler={setEventToEdit}
                 deleteHandler={handleDelete}
               />
             ))

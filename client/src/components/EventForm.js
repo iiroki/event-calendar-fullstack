@@ -13,15 +13,7 @@ import { HelpIcon, AlertIcon } from '../assets/icons'
 const EventForm = ({ eventoToModify = null }) => {
   console.log('eventToModify:', eventoToModify)
 
-  let initTitle = ''
-
-  if (eventoToModify) {
-    initTitle = eventoToModify.title
-  }
-
-  console.log(initTitle)
-
-  const [title, setTitle] = useState(initTitle)
+  const [title, setTitle] = useState('')
   const [location, setLocation] = useState('')
   const [startDate, setStartDate] = useState('')
   const [startTime, setStartTime] = useState('')
