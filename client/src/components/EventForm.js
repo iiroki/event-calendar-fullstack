@@ -1,7 +1,10 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import moment from 'moment'
-import { addNewEvent } from '../reducers/eventReducer'
+import {
+  addNewEvent,
+  editExistingEvent
+} from '../reducers/eventReducer'
 import {
   setNotification,
   expiredTokenNotification,
@@ -41,7 +44,7 @@ const getFieldValues = eventObject => {
 }
 
 // Event form for adding new event
-const EventForm = ({ eventoToModify = null }) => {
+const EventForm = ({ eventoToModify = null, backHandler }) => {
   const values = getFieldValues(eventoToModify)
 
   const [title, setTitle] = useState(values.title)
@@ -130,6 +133,26 @@ const EventForm = ({ eventoToModify = null }) => {
 
   const handleEdit = async event => {
     event.preventDefault()
+
+    try {
+      validateDate([startDate, endDate])
+      validateTime([startTime, endTime])
+      const start = parseDateTime(startDate, startTime)
+      const end = parseDateTime(endDate, endTime)
+
+      await dispatch(editExistingEvent({
+        title,
+        location,
+        start,
+        end,
+        multi,
+        description
+      }))
+
+      backHandler()
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   return (

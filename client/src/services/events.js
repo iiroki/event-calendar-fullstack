@@ -17,6 +17,10 @@ const addNew = async eventObject => {
   return response.data
 }
 
+const editExisting = async eventObject => {
+  // TBD
+}
+
 const deleteExisting = async id => {
   const config = {
     headers: { Authorization: tokenService.getToken() }
@@ -30,5 +34,6 @@ const deleteExisting = async id => {
 export default {
   getAll,
   addNew,
+  editExisting,
   deleteExisting
 }

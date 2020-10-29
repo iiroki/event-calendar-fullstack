@@ -49,7 +49,7 @@ const ManageEventsList = () => {
   const events = useSelector(state => state.events)
     .filter(e => e.organizer_id === userId)
     // Sort by dates (descending)
-    .sort((e1, e2) => new Date(e1.start) - new Date(e2.start))
+    .sort((e1, e2) => new Date(e2.start) - new Date(e1.start))
 
   const [eventToEdit, setEventToEdit] = useState(null)
   const dispatch = useDispatch()

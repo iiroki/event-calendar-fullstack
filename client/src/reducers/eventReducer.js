@@ -40,6 +40,17 @@ export const addNewEvent = eventObject => (
   }
 )
 
+export const editExistingEvent = eventObject => (
+  async thunk => {
+    const editedEvent = await eventService.editExisting(eventObject)
+
+    thunk({
+      type: 'EDIT_EVENT',
+      data: editedEvent
+    })
+  }
+)
+
 export const deleteExistingEvent = id => (
   async thunk => {
     await eventService.deleteExisting(id)
