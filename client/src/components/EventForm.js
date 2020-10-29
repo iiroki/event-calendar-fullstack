@@ -10,8 +10,18 @@ import {
 import { HelpIcon, AlertIcon } from '../assets/icons'
 
 // Event form for adding new event
-const EventForm = () => {
-  const [title, setTitle] = useState('')
+const EventForm = ({ eventoToModify = null }) => {
+  console.log('eventToModify:', eventoToModify)
+
+  let initTitle = ''
+
+  if (eventoToModify) {
+    initTitle = eventoToModify.title
+  }
+
+  console.log(initTitle)
+
+  const [title, setTitle] = useState(initTitle)
   const [location, setLocation] = useState('')
   const [startDate, setStartDate] = useState('')
   const [startTime, setStartTime] = useState('')

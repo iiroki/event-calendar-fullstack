@@ -8,10 +8,13 @@ import {
   notificationTypes,
   expiredTokenNotification
 } from '../reducers/notificationReducer'
-import { DeleteIcon } from '../assets/icons'
+import {
+  EditIcon,
+  DeleteIcon
+} from '../assets/icons'
 
 // List item for a single event including buttons
-const ManageEventsListItem = ({ eventObject, deleteHandler }) => (
+const ManageEventsListItem = ({ eventObject, editHandler, deleteHandler }) => (
   <div className='form-row'>
     <Link className='link-manage' to={`/events/${eventObject.id}`}>
       <b>{eventObject.title}</b>
@@ -20,9 +23,13 @@ const ManageEventsListItem = ({ eventObject, deleteHandler }) => (
     {moment(eventObject.start).format('DD.MM.YYYY')}
     )
     [
-    {/* <button className='manage-event-button'>
+    <button
+      type='button'
+      className='manage-event-button'
+      onClick={() => editHandler(eventObject)}
+    >
       <EditIcon />
-    </button> */}
+    </button>
 
     <button
       type='button'
@@ -45,8 +52,12 @@ const ManageEventsList = () => {
 
   const dispatch = useDispatch()
 
-  const handleDelete = async blogToDelete => {
-    const msg = `Poista tapahtuma "${blogToDelete.title}"?`
+  const handleEdit = async eventToModify => {
+    console.log('Edit!')
+  }
+
+  const handleDelete = async eventToDelete => {
+    const msg = `Poista tapahtuma "${eventToDelete.title}"?`
 
     // Confirmation that the event is to be deleted
     if (!window.confirm(msg)) { // eslint-disable-line
@@ -54,10 +65,10 @@ const ManageEventsList = () => {
     }
 
     try {
-      await dispatch(deleteExistingEvent(blogToDelete.id))
+      await dispatch(deleteExistingEvent(eventToDelete.id))
 
       dispatch(setNotification(
-        `Tapahtuma "${blogToDelete.title}" poistettu.`,
+        `Tapahtuma "${eventToDelete.title}" poistettu.`,
         notificationTypes.GOOD
       ))
     } catch (error) {
@@ -80,8 +91,9 @@ const ManageEventsList = () => {
   return (
     <div>
       Tapahtumat lajiteltu päivämäärän mukaan laskevasti.
-      {/* <br/>
-      <EditIcon />= Muokkaa tapahtumaa (TBD) */}
+      <br />
+      <EditIcon />
+      = Muokkaa tapahtumaa (TBD)
       <br />
       <DeleteIcon />
       = Poista tapahtuma
@@ -98,6 +110,7 @@ const ManageEventsList = () => {
               <ManageEventsListItem
                 key={e.id}
                 eventObject={e}
+                editHandler={handleEdit}
                 deleteHandler={handleDelete}
               />
             ))
