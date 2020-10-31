@@ -10,6 +10,9 @@ const eventReducer = (state = initialEvents, action) => {
     case 'ADD_EVENT':
       return state.concat(action.data)
 
+    case 'EDIT_EVENT':
+      return state.map(e => e.id === action.data.id ? action.data : e)
+
     case 'DELETE_EVENT':
       return state.filter(e => e.id !== action.data)
 
@@ -42,7 +45,6 @@ export const addNewEvent = eventObject => (
 
 export const editExistingEvent = eventObject => (
   async thunk => {
-    console.log(eventObject)
     const editedEvent = await eventService.editExisting(eventObject)
 
     thunk({

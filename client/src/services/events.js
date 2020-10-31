@@ -24,7 +24,6 @@ const editExisting = async eventObject => {
 
   const url = `${baseUrl}/${eventObject.id}`
   const response = await axios.post(url, eventObject, config)
-  console.log(response.data)
   return response.data
 }
 

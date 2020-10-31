@@ -150,6 +150,11 @@ const EventForm = ({ eventoToModify = null, editDoneHandler = null }) => {
         description
       }))
 
+      dispatch(setNotification(
+        `Tapahtumaa ${title} muokattu onnistuneesti.`,
+        notificationTypes.GOOD
+      ))
+
       if (editDoneHandler) {
         editDoneHandler()
       }

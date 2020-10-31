@@ -22,7 +22,7 @@ const EditEventPage = ({ eventToModify, backHandler }) => (
 
     <EventForm
       eventoToModify={eventToModify}
-      backHandler={backHandler}
+      editDoneHandler={backHandler}
     />
   </div>
 )
