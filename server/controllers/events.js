@@ -69,6 +69,16 @@ eventRouter.post('/', async (request, response, next) => { //eslint-disable-line
   response.status(201).json(eventResult[0][0])
 })
 
+// POST edit existing event
+eventRouter.post('/:id', async (request, response, next) => {
+  const reqBody = request.body
+  const decodedToken = jwt.verify(request.token, JWT_SERCET)
+  console.log(decodedToken)
+
+  response.status(204).end()
+})
+
+// DELETE existing event
 eventRouter.delete('/:id', async (request, response, next) => { //eslint-disable-line
   const eventResult = await db.query(getEventById, [request.params.id])
 

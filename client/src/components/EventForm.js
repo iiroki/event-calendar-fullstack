@@ -44,7 +44,7 @@ const getFieldValues = eventObject => {
 }
 
 // Event form for adding new event
-const EventForm = ({ eventoToModify = null, backHandler }) => {
+const EventForm = ({ eventoToModify = null, backHandler = null }) => {
   const values = getFieldValues(eventoToModify)
 
   const [title, setTitle] = useState(values.title)
@@ -149,7 +149,9 @@ const EventForm = ({ eventoToModify = null, backHandler }) => {
         description
       }))
 
-      backHandler()
+      if (backHandler) {
+        backHandler()
+      }
     } catch (error) {
       console.log(error)
     }

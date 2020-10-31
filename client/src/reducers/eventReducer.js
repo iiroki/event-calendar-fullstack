@@ -42,6 +42,7 @@ export const addNewEvent = eventObject => (
 
 export const editExistingEvent = eventObject => (
   async thunk => {
+    console.log(eventObject)
     const editedEvent = await eventService.editExisting(eventObject)
 
     thunk({
