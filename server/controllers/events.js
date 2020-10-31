@@ -7,7 +7,8 @@ const {
   getEventById,
   addNewEvent,
   deleteEventById,
-  getUserById
+  getUserById,
+  modifyEventById
 } = require('../database/queries')
 
 // Input sanitization is done with mysql2's placeholders!
@@ -70,10 +71,32 @@ eventRouter.post('/', async (request, response, next) => { //eslint-disable-line
 })
 
 // POST edit existing event
-eventRouter.post('/:id', async (request, response, next) => {
-  const reqBody = request.body
+eventRouter.post('/:id', async (request, response, next) => { // eslint-disable-line
+  const eventResult = await db.query(getEventById, [request.params.id])
+
+  // No event found with the given id
+  if (eventResult[0].length === 0) {
+    return response.status(404).end()
+  }
+
+  const event = eventResult[0][0]
+  console.log('Event:', event)
+
   const decodedToken = jwt.verify(request.token, JWT_SERCET)
-  console.log(decodedToken)
+
+  // Request was made by someone else than the organizer
+  if (event.organizer_id !== decodedToken.id) {
+    return response.status(401).json({
+      error: {
+        code: 3,
+        message: 'Access denied'
+      }
+    })
+  }
+
+  const reqBody = request.body
+
+  // TBD: Update the event
 
   response.status(204).end()
 })

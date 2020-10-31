@@ -44,7 +44,7 @@ const getFieldValues = eventObject => {
 }
 
 // Event form for adding new event
-const EventForm = ({ eventoToModify = null, backHandler = null }) => {
+const EventForm = ({ eventoToModify = null, editDoneHandler = null }) => {
   const values = getFieldValues(eventoToModify)
 
   const [title, setTitle] = useState(values.title)
@@ -141,6 +141,7 @@ const EventForm = ({ eventoToModify = null, backHandler = null }) => {
       const end = parseDateTime(endDate, endTime)
 
       await dispatch(editExistingEvent({
+        id: eventoToModify.id,
         title,
         location,
         start,
@@ -149,8 +150,8 @@ const EventForm = ({ eventoToModify = null, backHandler = null }) => {
         description
       }))
 
-      if (backHandler) {
-        backHandler()
+      if (editDoneHandler) {
+        editDoneHandler()
       }
     } catch (error) {
       console.log(error)
