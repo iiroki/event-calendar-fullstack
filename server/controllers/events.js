@@ -80,7 +80,6 @@ eventRouter.post('/:id', async (request, response, next) => { // eslint-disable-
   }
 
   const event = eventResult[0][0]
-  console.log('Event:', event)
 
   const decodedToken = jwt.verify(request.token, JWT_SERCET)
 
@@ -105,7 +104,7 @@ eventRouter.post('/:id', async (request, response, next) => { // eslint-disable-
     })
   }
 
-  const modifyEventResult = await db.query(addNewEvent, [
+  await db.query(modifyEventById, [
     reqBody.title,
     reqBody.location,
     reqBody.start,
@@ -117,7 +116,7 @@ eventRouter.post('/:id', async (request, response, next) => { // eslint-disable-
 
   // Returning the recently edited event
   const modifiedEventResult = await db.query(getEventById, [
-    modifyEventResult[0].insertId
+    event.id
   ])
 
   response.json(modifiedEventResult[0][0])
