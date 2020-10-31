@@ -96,9 +96,31 @@ eventRouter.post('/:id', async (request, response, next) => { // eslint-disable-
 
   const reqBody = request.body
 
-  // TBD: Update the event
+  if (new Date(reqBody.start) > new Date(reqBody.end)) {
+    return response.status(400).json({
+      error: {
+        code: 0,
+        message: 'Start date cannot be greater than end date'
+      }
+    })
+  }
 
-  response.status(204).end()
+  const modifyEventResult = await db.query(addNewEvent, [
+    reqBody.title,
+    reqBody.location,
+    reqBody.start,
+    reqBody.end,
+    reqBody.multi,
+    reqBody.description,
+    event.id
+  ])
+
+  // Returning the recently edited event
+  const modifiedEventResult = await db.query(getEventById, [
+    modifyEventResult[0].insertId
+  ])
+
+  response.json(modifiedEventResult[0][0])
 })
 
 // DELETE existing event
