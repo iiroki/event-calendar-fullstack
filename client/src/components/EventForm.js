@@ -144,16 +144,11 @@ const EventForm = ({ eventoToModify = null, editDoneHandler = null }) => {
       setMulti(false)
       setDescription('')
     } catch (error) {
-      if (error.response && error.response.status === 500) {
-        dispatch(setNotification(
-          'Virhe lisättäessä tapahtumaa.',
-          notificationTypes.ERROR
-        ))
-      } else if (error.response && error.response.status === 401) {
+      if (error.response && error.response.status === 401) {
         dispatch(expiredTokenNotification())
       } else {
         dispatch(setNotification(
-          'Tapahtuman tiedoissa virheitä, tarkista tiedot!',
+          'Virhe tapahtumaa lisättäessä.',
           notificationTypes.ERROR
         ))
       }
@@ -220,10 +215,14 @@ const EventForm = ({ eventoToModify = null, editDoneHandler = null }) => {
         editDoneHandler()
       }
     } catch (error) {
-      dispatch(setNotification(
-        'Virhe tapahtumaa muokatessa.',
-        notificationTypes.ERROR
-      ))
+      if (error.response && error.response.status === 401) {
+        dispatch(expiredTokenNotification())
+      } else {
+        dispatch(setNotification(
+          'Virhe tapahtumaa muokatessa.',
+          notificationTypes.ERROR
+        ))
+      }
     }
   }
 
