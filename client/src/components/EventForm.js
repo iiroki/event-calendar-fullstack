@@ -58,40 +58,69 @@ const EventForm = ({ eventoToModify = null, editDoneHandler = null }) => {
 
   const dispatch = useDispatch()
 
-  // Checks that given dates are valid
-  const validateDate = dateArray => {
-    dateArray.forEach(date => {
-      if (!moment(date, 'D.M.YYYY', true).isValid()) {
-        throw Error('Date validation failed')
-      }
-    })
-  }
-
-  // Checks that given times are valid
-  const validateTime = timeArray => {
-    timeArray.forEach(time => {
-      if (!moment(time, 'H:mm', true).isValid()) {
-        throw Error('Time validation failed')
-      }
-    })
-  }
-
   // Parses Dates and times to correct form for the server
   const parseDateTime = (date, time) => {
     const d = date.split('.').reverse().join('-')
     const t = time.split('.').join(':')
     return `${d} ${t}`
   }
+  // Checks that given date is valid
+  const validateDate = date => moment(date, 'D.M.YYYY', true).isValid()
+
+  // Checks that given time is valid
+  const validateTime = time => moment(time, 'H:mm', true).isValid()
+
+  // Validates all the fields and returns all errors in array
+  const validateFields = () => {
+    const errors = []
+
+    if (title.length === 0) {
+      errors.push('Tapahtuman nimi nimi ei voi olla tyhjä')
+    }
+
+    if (location.length === 0) {
+      errors.push('Tapahtumapaikka ei voi olla tyhjä')
+    }
+
+    if (!validateDate(startDate)) {
+      errors.push('Virheellinen alkamispäivämäärä')
+    }
+
+    if (!validateTime(startTime)) {
+      errors.push('Virheellinen alkamiskellonaika')
+    }
+
+    if (!validateDate(endDate)) {
+      errors.push('Virheellinen päättymispäivämäärä')
+    }
+
+    if (!validateTime(endTime)) {
+      errors.push('Virheellinen päättymiskellonaika')
+    }
+
+    return errors
+  }
 
   const handleAddNew = async event => {
     event.preventDefault()
 
-    try {
-      validateDate([startDate, endDate])
-      validateTime([startTime, endTime])
-      const start = parseDateTime(startDate, startTime)
-      const end = parseDateTime(endDate, endTime)
+    const errors = validateFields()
 
+    if (errors.length !== 0) {
+      const errorMsgs = errors.join('\n')
+
+      dispatch(setNotification(
+        `Tapahtuman tiedoissa virheitä:\n${errorMsgs}`,
+        notificationTypes.ERROR
+      ))
+
+      return
+    }
+
+    const start = parseDateTime(startDate, startTime)
+    const end = parseDateTime(endDate, endTime)
+
+    try {
       await dispatch(addNewEvent({
         title,
         location,
@@ -134,12 +163,44 @@ const EventForm = ({ eventoToModify = null, editDoneHandler = null }) => {
   const handleEdit = async event => {
     event.preventDefault()
 
-    try {
-      validateDate([startDate, endDate])
-      validateTime([startTime, endTime])
-      const start = parseDateTime(startDate, startTime)
-      const end = parseDateTime(endDate, endTime)
+    // No values changed
+    if (values.title === title
+        && values.location === location
+        && values.startDate === startDate
+        && values.startTime === startTime
+        && values.endDate === endDate
+        && values.endTime === endTime
+        && values.multi === multi
+        && values.description === description) {
+      dispatch(setNotification(
+        `Ei muutoksia tapahtumaan ${title}.`,
+        notificationTypes.GOOD
+      ))
 
+      if (editDoneHandler) {
+        editDoneHandler()
+      }
+
+      return
+    }
+
+    const errors = validateFields()
+
+    if (errors.length !== 0) {
+      const errorMsgs = errors.join('\n')
+
+      dispatch(setNotification(
+        `Tapahtuman tiedoissa virheitä:\n${errorMsgs}`,
+        notificationTypes.ERROR
+      ))
+
+      return
+    }
+
+    const start = parseDateTime(startDate, startTime)
+    const end = parseDateTime(endDate, endTime)
+
+    try {
       await dispatch(editExistingEvent({
         id: eventoToModify.id,
         title,
@@ -159,7 +220,10 @@ const EventForm = ({ eventoToModify = null, editDoneHandler = null }) => {
         editDoneHandler()
       }
     } catch (error) {
-      console.log(error)
+      dispatch(setNotification(
+        'Virhe tapahtumaa muokatessa.',
+        notificationTypes.ERROR
+      ))
     }
   }
 

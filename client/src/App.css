@@ -96,6 +96,10 @@ div.container {
   text-align: center;
 }
 
+.notification-msg {
+  white-space: pre-wrap;
+}
+
 .login-page {
   text-align: center;
   display: inline-block;
