@@ -1,6 +1,6 @@
 const express = require('express')
 require('express-async-errors')
-const { createTables } = require('./database/db')
+const { initDb } = require('./database/db')
 const middleware = require('./utils/middleware')
 const { PORT } = require('./utils/config')
 const eventRouter = require('./controllers/events')
@@ -24,8 +24,8 @@ app.use('/api/login', loginRouter)
 app.use(middleware.unknownEndpoint)
 app.use(middleware.errorHandler)
 
-// Create database tables if needed
-createTables()
+// Create database tables if needed, exit process if error occurs
+initDb()
 
 app.listen(PORT, () => {
   console.log(`Server running - PORT: ${PORT}`)
