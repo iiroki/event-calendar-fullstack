@@ -1,17 +1,21 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
 import moment from 'moment'
+import EditEventPage from './EditEventPage'
 import { deleteExistingEvent } from '../reducers/eventReducer'
 import {
   setNotification,
   notificationTypes,
   expiredTokenNotification
 } from '../reducers/notificationReducer'
-import { DeleteIcon } from '../assets/icons'
+import {
+  EditIcon,
+  DeleteIcon
+} from '../assets/icons'
 
 // List item for a single event including buttons
-const ManageEventsListItem = ({ eventObject, deleteHandler }) => (
+const ManageEventsListItem = ({ eventObject, editHandler, deleteHandler }) => (
   <div className='form-row'>
     <Link className='link-manage' to={`/events/${eventObject.id}`}>
       <b>{eventObject.title}</b>
@@ -20,9 +24,13 @@ const ManageEventsListItem = ({ eventObject, deleteHandler }) => (
     {moment(eventObject.start).format('DD.MM.YYYY')}
     )
     [
-    {/* <button className='manage-event-button'>
+    <button
+      type='button'
+      className='manage-event-button'
+      onClick={() => editHandler(eventObject)}
+    >
       <EditIcon />
-    </button> */}
+    </button>
 
     <button
       type='button'
@@ -41,12 +49,15 @@ const ManageEventsList = () => {
   const events = useSelector(state => state.events)
     .filter(e => e.organizer_id === userId)
     // Sort by dates (descending)
-    .sort((e1, e2) => new Date(e1.start) - new Date(e2.start))
+    .sort((e1, e2) => new Date(e2.start) - new Date(e1.start))
 
+  const [eventToEdit, setEventToEdit] = useState(null)
   const dispatch = useDispatch()
 
-  const handleDelete = async blogToDelete => {
-    const msg = `Poista tapahtuma "${blogToDelete.title}"?`
+  const backHandler = () => setEventToEdit(null)
+
+  const handleDelete = async eventToDelete => {
+    const msg = `Poista tapahtuma "${eventToDelete.title}"?`
 
     // Confirmation that the event is to be deleted
     if (!window.confirm(msg)) { // eslint-disable-line
@@ -54,10 +65,10 @@ const ManageEventsList = () => {
     }
 
     try {
-      await dispatch(deleteExistingEvent(blogToDelete.id))
+      await dispatch(deleteExistingEvent(eventToDelete.id))
 
       dispatch(setNotification(
-        `Tapahtuma "${blogToDelete.title}" poistettu.`,
+        `Tapahtuma "${eventToDelete.title}" poistettu.`,
         notificationTypes.GOOD
       ))
     } catch (error) {
@@ -77,11 +88,22 @@ const ManageEventsList = () => {
     }
   }
 
+  // If editing an event
+  if (eventToEdit) {
+    return (
+      <EditEventPage
+        eventToModify={eventToEdit}
+        backHandler={backHandler}
+      />
+    )
+  }
+
   return (
     <div>
       Tapahtumat lajiteltu päivämäärän mukaan laskevasti.
-      {/* <br/>
-      <EditIcon />= Muokkaa tapahtumaa (TBD) */}
+      <br />
+      <EditIcon />
+      = Muokkaa tapahtumaa
       <br />
       <DeleteIcon />
       = Poista tapahtuma
@@ -98,6 +120,7 @@ const ManageEventsList = () => {
               <ManageEventsListItem
                 key={e.id}
                 eventObject={e}
+                editHandler={setEventToEdit}
                 deleteHandler={handleDelete}
               />
             ))

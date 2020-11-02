@@ -18,7 +18,7 @@ const Notification = () => {
   switch (type) {
     case notificationTypes.GOOD:
       return (
-        <div className='alert alert-success' id='notification'>
+        <div className='alert alert-success notification-msg' id='notification'>
           <ThumbUpIcon />
           {msg}
         </div>
@@ -26,7 +26,7 @@ const Notification = () => {
 
     case notificationTypes.ERROR:
       return (
-        <div className='alert alert-danger' id='notification'>
+        <div className='alert alert-danger notification-msg' id='notification'>
           <ThumbDownIcon />
           {msg}
         </div>

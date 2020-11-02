@@ -7,7 +7,8 @@ const {
   getEventById,
   addNewEvent,
   deleteEventById,
-  getUserById
+  getUserById,
+  modifyEventById
 } = require('../database/queries')
 
 // Input sanitization is done with mysql2's placeholders!
@@ -69,6 +70,59 @@ eventRouter.post('/', async (request, response, next) => { //eslint-disable-line
   response.status(201).json(eventResult[0][0])
 })
 
+// POST edit existing event
+eventRouter.post('/:id', async (request, response, next) => { // eslint-disable-line
+  const eventResult = await db.query(getEventById, [request.params.id])
+
+  // No event found with the given id
+  if (eventResult[0].length === 0) {
+    return response.status(404).end()
+  }
+
+  const event = eventResult[0][0]
+
+  const decodedToken = jwt.verify(request.token, JWT_SERCET)
+
+  // Request was made by someone else than the organizer
+  if (event.organizer_id !== decodedToken.id) {
+    return response.status(401).json({
+      error: {
+        code: 3,
+        message: 'Access denied'
+      }
+    })
+  }
+
+  const reqBody = request.body
+
+  if (new Date(reqBody.start) > new Date(reqBody.end)) {
+    return response.status(400).json({
+      error: {
+        code: 0,
+        message: 'Start date cannot be greater than end date'
+      }
+    })
+  }
+
+  await db.query(modifyEventById, [
+    reqBody.title,
+    reqBody.location,
+    reqBody.start,
+    reqBody.end,
+    reqBody.multi,
+    reqBody.description,
+    event.id
+  ])
+
+  // Returning the recently edited event
+  const modifiedEventResult = await db.query(getEventById, [
+    event.id
+  ])
+
+  response.json(modifiedEventResult[0][0])
+})
+
+// DELETE existing event
 eventRouter.delete('/:id', async (request, response, next) => { //eslint-disable-line
   const eventResult = await db.query(getEventById, [request.params.id])
 
