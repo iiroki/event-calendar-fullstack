@@ -11,7 +11,11 @@ const eventReducer = (state = initialEvents, action) => {
       return state.concat(action.data)
 
     case 'EDIT_EVENT':
-      return state.map(e => e.id === action.data.id ? action.data : e)
+      return state.map(e => (
+        e.id === action.data.id
+          ? action.data
+          : e
+      ))
 
     case 'DELETE_EVENT':
       return state.filter(e => e.id !== action.data)

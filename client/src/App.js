@@ -4,7 +4,11 @@ import { Switch, Route, useRouteMatch } from 'react-router-dom'
 import { checkLogin } from './reducers/loginReducer'
 import { initEvents } from './reducers/eventReducer'
 import { initUsers } from './reducers/userReducer'
-import { setNotification, notificationTypes } from './reducers/notificationReducer'
+import {
+  setNotification,
+  expiredTokenNotification,
+  notificationTypes
+} from './reducers/notificationReducer'
 import { initialized } from './reducers/initReducer'
 
 import NavigationMenu from './components/NavigationMenu'
@@ -31,6 +35,11 @@ const App = () => {
     const initState = async () => {
       try {
         await dispatch(checkLogin())
+      } catch (error) {
+        dispatch(expiredTokenNotification())
+      }
+
+      try {
         await dispatch(initEvents())
         await dispatch(initUsers())
         dispatch(initialized())
@@ -74,19 +83,35 @@ const App = () => {
             </Route>
 
             <Route path='/about'>
-              <AboutPage />
+              {
+                init
+                  ? <AboutPage />
+                  : <LoadingIcon />
+              }
             </Route>
 
             <Route path='/links'>
-              <LinksPage />
+              {
+                init
+                  ? <LinksPage />
+                  : <LoadingIcon />
+              }
             </Route>
 
             <Route path='/manage'>
-              <ManagePage />
+              {
+                init
+                  ? <ManagePage />
+                  : <LoadingIcon />
+              }
             </Route>
 
             <Route path='/login'>
-              <LoginPage />
+              {
+                init
+                  ? <LoginPage />
+                  : <LoadingIcon />
+              }
             </Route>
 
             <Route path='/'>
