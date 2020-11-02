@@ -81,7 +81,7 @@ const ManageProfile = () => {
     <div>
       <button
         type='button'
-        className='btn btn-danger'
+        className='btn btn-treekkari'
         onClick={() => handleSetEdit()}
       >
         {
