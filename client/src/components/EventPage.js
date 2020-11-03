@@ -2,6 +2,7 @@ import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import moment from 'moment'
 import { setNotification, notificationTypes } from '../reducers/notificationReducer'
+import urlify from '../utils/urlify'
 import eventToIcs from '../utils/icsConverter'
 
 const EventPage = ({ id }) => {
@@ -40,6 +41,7 @@ const EventPage = ({ id }) => {
     )
   }
 
+  // Allows .ics-file downloads
   const downloadIcs = () => {
     // Create .ics-file
     const eventIcs = eventToIcs(event, organizer)

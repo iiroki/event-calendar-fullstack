@@ -135,9 +135,6 @@ const UserInformationForm = ({ profile, handleHide = null }) => {
             onChange={({ target }) => setLink(target.value)}
             placeholder='ei linkkiä'
           />
-          <small className='form-text text-muted form-help-text'>
-            Linkin tulee alkaa http:// tai https:// (esim. https://www.linkki.fi)
-          </small>
         </div>
       </div>
 
