@@ -24,9 +24,45 @@ const UserInformationForm = ({ profile, handleHide = null }) => {
   const [password, setPassword] = useState('')
   const dispatch = useDispatch()
 
+  const validateFields = () => {
+    const hexRegex = new RegExp(/^[0-9A-F]{6}$/i)
+    const errors = []
+
+    if (name.trim().length === 0) {
+      errors.push('Nimi ei voi olla tyhjä')
+    }
+
+    if (username.trim().length === 0) {
+      errors.push('Käyttäjätunnus ei voi olla tyhjä')
+    }
+
+    if (bgColor.length !== 6 || fgColor.length !== 6) {
+      errors.push('Värien HEX-arvot tulee olla kuusimerkkisiä')
+    }
+
+    else if (!hexRegex.test(bgColor) || !hexRegex.test(fgColor)) {
+      errors.push('Virheellinen värin HEX-arvo')
+    }
+
+    return errors
+  }
+
   // Event handler for submitting the form
   const handleSubmit = async event => {
     event.preventDefault()
+
+    const errors = validateFields()
+
+    if (errors.length !== 0) {
+      const errorMsgs = errors.join('\n')
+
+      dispatch(setNotification(
+        `Tapahtuman tiedoissa virheitä:\n${errorMsgs}`,
+        notificationTypes.ERROR
+      ))
+
+      return
+    }
 
     try {
       await userService.updateInformation(profile.id, {
