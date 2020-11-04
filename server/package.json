@@ -1,7 +1,7 @@
 {
   "name": "teekkarikalenteri-server",
   "version": "1.0.0",
-  "description": "",
+  "description": "Server of Teekkarikalenteri made with Node.js + Express",
   "author": "Iiro Kiviluoma",
   "license": "MIT",
   "main": "index.js",

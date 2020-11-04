@@ -1,7 +1,10 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import moment from 'moment'
-import { addNewEvent } from '../reducers/eventReducer'
+import {
+  addNewEvent,
+  editExistingEvent
+} from '../reducers/eventReducer'
 import {
   setNotification,
   expiredTokenNotification,
@@ -9,35 +12,51 @@ import {
 } from '../reducers/notificationReducer'
 import { HelpIcon, AlertIcon } from '../assets/icons'
 
+const defaultValues = {
+  title: '',
+  location: '',
+  startDate: '',
+  startTime: '',
+  endDate: '',
+  endTime: '',
+  multi: false,
+  description: ''
+}
+
+const getFieldValues = eventObject => {
+  if (!eventObject) {
+    return defaultValues
+  }
+
+  const start = moment(eventObject.start).utc()
+  const end = moment(eventObject.end).utc()
+
+  return {
+    title: eventObject.title,
+    location: eventObject.location,
+    startDate: start.format('DD.MM.YYYY'),
+    startTime: start.format('HH:mm'),
+    endDate: end.format('DD.MM.YYYY'),
+    endTime: end.format('HH:mm'),
+    multi: eventObject.multi,
+    description: eventObject.description
+  }
+}
+
 // Event form for adding new event
-const EventForm = () => {
-  const [title, setTitle] = useState('')
-  const [location, setLocation] = useState('')
-  const [startDate, setStartDate] = useState('')
-  const [startTime, setStartTime] = useState('')
-  const [endDate, setEndDate] = useState('')
-  const [endTime, setEndTime] = useState('')
-  const [multi, setMulti] = useState(false)
-  const [description, setDescription] = useState('')
+const EventForm = ({ eventoToModify = null, editDoneHandler = null }) => {
+  const values = getFieldValues(eventoToModify)
+
+  const [title, setTitle] = useState(values.title)
+  const [location, setLocation] = useState(values.location)
+  const [startDate, setStartDate] = useState(values.startDate)
+  const [startTime, setStartTime] = useState(values.startTime)
+  const [endDate, setEndDate] = useState(values.endDate)
+  const [endTime, setEndTime] = useState(values.endTime)
+  const [multi, setMulti] = useState(values.multi)
+  const [description, setDescription] = useState(values.description)
+
   const dispatch = useDispatch()
-
-  // Checks that given dates are valid
-  const validateDate = dateArray => {
-    dateArray.forEach(date => {
-      if (!moment(date, 'D.M.YYYY', true).isValid()) {
-        throw Error('Date validation failed')
-      }
-    })
-  }
-
-  // Checks that given times are valid
-  const validateTime = timeArray => {
-    timeArray.forEach(time => {
-      if (!moment(time, 'H:mm', true).isValid()) {
-        throw Error('Time validation failed')
-      }
-    })
-  }
 
   // Parses Dates and times to correct form for the server
   const parseDateTime = (date, time) => {
@@ -45,16 +64,63 @@ const EventForm = () => {
     const t = time.split('.').join(':')
     return `${d} ${t}`
   }
+  // Checks that given date is valid
+  const validateDate = date => moment(date, 'D.M.YYYY', true).isValid()
 
-  const handleSubmit = async event => {
+  // Checks that given time is valid
+  const validateTime = time => moment(time, 'H:mm', true).isValid()
+
+  // Validates all the fields and returns all errors in array
+  const validateFields = () => {
+    const errors = []
+
+    if (title.length === 0) {
+      errors.push('Tapahtuman nimi nimi ei voi olla tyhjä')
+    }
+
+    if (location.length === 0) {
+      errors.push('Tapahtumapaikka ei voi olla tyhjä')
+    }
+
+    if (!validateDate(startDate)) {
+      errors.push('Virheellinen alkamispäivämäärä')
+    }
+
+    if (!validateTime(startTime)) {
+      errors.push('Virheellinen alkamiskellonaika')
+    }
+
+    if (!validateDate(endDate)) {
+      errors.push('Virheellinen päättymispäivämäärä')
+    }
+
+    if (!validateTime(endTime)) {
+      errors.push('Virheellinen päättymiskellonaika')
+    }
+
+    return errors
+  }
+
+  const handleAddNew = async event => {
     event.preventDefault()
 
-    try {
-      validateDate([startDate, endDate])
-      validateTime([startTime, endTime])
-      const start = parseDateTime(startDate, startTime)
-      const end = parseDateTime(endDate, endTime)
+    const errors = validateFields()
 
+    if (errors.length !== 0) {
+      const errorMsgs = errors.join('\n')
+
+      dispatch(setNotification(
+        `Tapahtuman tiedoissa virheitä:\n${errorMsgs}`,
+        notificationTypes.ERROR
+      ))
+
+      return
+    }
+
+    const start = parseDateTime(startDate, startTime)
+    const end = parseDateTime(endDate, endTime)
+
+    try {
       await dispatch(addNewEvent({
         title,
         location,
@@ -78,16 +144,82 @@ const EventForm = () => {
       setMulti(false)
       setDescription('')
     } catch (error) {
-      if (error.response && error.response.status === 500) {
-        dispatch(setNotification(
-          'Virhe lisättäessä tapahtumaa.',
-          notificationTypes.ERROR
-        ))
-      } else if (error.response && error.response.status === 401) {
+      if (error.response && error.response.status === 401) {
         dispatch(expiredTokenNotification())
       } else {
         dispatch(setNotification(
-          'Tapahtuman tiedoissa virheitä, tarkista tiedot!',
+          'Virhe tapahtumaa lisättäessä.',
+          notificationTypes.ERROR
+        ))
+      }
+    }
+  }
+
+  const handleEdit = async event => {
+    event.preventDefault()
+
+    // No values changed
+    if (values.title === title
+        && values.location === location
+        && values.startDate === startDate
+        && values.startTime === startTime
+        && values.endDate === endDate
+        && values.endTime === endTime
+        && values.multi === multi
+        && values.description === description) {
+      dispatch(setNotification(
+        `Ei muutoksia tapahtumaan ${title}.`,
+        notificationTypes.GOOD
+      ))
+
+      if (editDoneHandler) {
+        editDoneHandler()
+      }
+
+      return
+    }
+
+    const errors = validateFields()
+
+    if (errors.length !== 0) {
+      const errorMsgs = errors.join('\n')
+
+      dispatch(setNotification(
+        `Tapahtuman tiedoissa virheitä:\n${errorMsgs}`,
+        notificationTypes.ERROR
+      ))
+
+      return
+    }
+
+    const start = parseDateTime(startDate, startTime)
+    const end = parseDateTime(endDate, endTime)
+
+    try {
+      await dispatch(editExistingEvent({
+        id: eventoToModify.id,
+        title,
+        location,
+        start,
+        end,
+        multi,
+        description
+      }))
+
+      dispatch(setNotification(
+        `Tapahtumaa ${title} muokattu onnistuneesti.`,
+        notificationTypes.GOOD
+      ))
+
+      if (editDoneHandler) {
+        editDoneHandler()
+      }
+    } catch (error) {
+      if (error.response && error.response.status === 401) {
+        dispatch(expiredTokenNotification())
+      } else {
+        dispatch(setNotification(
+          'Virhe tapahtumaa muokatessa.',
           notificationTypes.ERROR
         ))
       }
@@ -96,7 +228,14 @@ const EventForm = () => {
 
   return (
     <div>
-      <form className='input-form' onSubmit={handleSubmit}>
+      <form
+        className='input-form'
+        onSubmit={
+          eventoToModify === null
+            ? handleAddNew
+            : handleEdit
+        }
+      >
 
         <div className='row form-row'>
           <label
@@ -242,7 +381,11 @@ const EventForm = () => {
         </div>
 
         <button type='submit' className='btn btn-danger'>
-          Lisää tapahtuma
+          {
+            eventoToModify === null
+              ? 'Lisää tapahtuma'
+              : 'Vahvista'
+          }
         </button>
       </form>
 

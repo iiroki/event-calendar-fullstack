@@ -21,10 +21,9 @@ export const checkLogin = () => (
     const loggedUserString = window.localStorage.getItem('loggedUser')
 
     if (loggedUserString) {
-      const loggedUser = JSON.parse(loggedUserString)
-      tokenService.setToken(loggedUser.token)
-
       try {
+        const loggedUser = JSON.parse(loggedUserString)
+        tokenService.setToken(loggedUser.token)
         await loginService.checkValidity()
 
         thunk({
@@ -35,6 +34,8 @@ export const checkLogin = () => (
         // Removing login if token wasn't valid
         window.localStorage.removeItem('loggedUser')
         thunk({ type: 'LOG_OUT' })
+        // Error that can be catched to show notification
+        throw Error('Invalid login token/object')
       }
     }
   }

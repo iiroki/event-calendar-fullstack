@@ -33,9 +33,7 @@ const ManagePage = () => {
   return (
     <div>
       <h2>
-        Terve
-        {` ${loggedUser.name}`}
-        !
+        {`Terve ${loggedUser.name}!`}
       </h2>
 
       <button

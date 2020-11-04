@@ -1,5 +1,6 @@
 import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
+import Linkify from 'react-linkify'
 import moment from 'moment'
 import { setNotification, notificationTypes } from '../reducers/notificationReducer'
 import eventToIcs from '../utils/icsConverter'
@@ -40,6 +41,7 @@ const EventPage = ({ id }) => {
     )
   }
 
+  // Allows .ics-file downloads
   const downloadIcs = () => {
     // Create .ics-file
     const eventIcs = eventToIcs(event, organizer)
@@ -108,7 +110,7 @@ const EventPage = ({ id }) => {
           >
             Järjestäjä:
           </label>
-          <a id='organizerLink' href={organizer.link}>
+          <a id='organizerLink' href={`//${organizer.link}`}>
             {organizer.name}
           </a>
         </div>
@@ -119,7 +121,9 @@ const EventPage = ({ id }) => {
           ? null
           : (
             <div className='event-description-box'>
-              {event.description}
+              <Linkify>
+                {event.description}
+              </Linkify>
             </div>
           )
       }

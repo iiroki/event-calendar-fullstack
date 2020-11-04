@@ -31,7 +31,7 @@ const Profile = ({ profile }) => (
           ? (
             <a
               id='profileLink'
-              href={profile.link}
+              href={`//${profile.link}`}
             >
               {profile.link}
             </a>

@@ -20,6 +20,8 @@ const modifyUserById = 'UPDATE user SET username = ?, name = ?, link = ?, bgColo
 
 const modifyUserPasswordById = 'UPDATE user SET passwordHash = ? WHERE id = ?;'
 
+const modifyEventById = 'UPDATE event SET title = ?, location = ?, start = ?, end = ?, multi = ?, description = ? WHERE id = ?'
+
 module.exports = {
   getAllEvents,
   getEventById,
@@ -30,5 +32,6 @@ module.exports = {
   getUserAllById,
   getUserAllByUsername,
   modifyUserById,
-  modifyUserPasswordById
+  modifyUserPasswordById,
+  modifyEventById
 }

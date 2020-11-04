@@ -17,6 +17,16 @@ const addNew = async eventObject => {
   return response.data
 }
 
+const editExisting = async eventObject => {
+  const config = {
+    headers: { Authorization: tokenService.getToken() }
+  }
+
+  const url = `${baseUrl}/${eventObject.id}`
+  const response = await axios.post(url, eventObject, config)
+  return response.data
+}
+
 const deleteExisting = async id => {
   const config = {
     headers: { Authorization: tokenService.getToken() }
@@ -30,5 +40,6 @@ const deleteExisting = async id => {
 export default {
   getAll,
   addNew,
+  editExisting,
   deleteExisting
 }
