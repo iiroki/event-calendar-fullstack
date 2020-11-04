@@ -110,7 +110,14 @@ const EventPage = ({ id }) => {
           >
             Järjestäjä:
           </label>
-          <a id='organizerLink' href={`//${organizer.link}`}>
+          <a
+            id='organizerLink'
+            href={
+              organizer.link === null
+                ? null
+                : `//${organizer.link}`
+            }
+          >
             {organizer.name}
           </a>
         </div>
