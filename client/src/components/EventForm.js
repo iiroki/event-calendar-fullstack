@@ -98,6 +98,13 @@ const EventForm = ({ eventoToModify = null, editDoneHandler = null }) => {
       errors.push('Virheellinen päättymiskellonaika')
     }
 
+    const s = moment(`${startDate} ${startTime}`, 'D.M.YYYY H:mm').utc()
+    const e = moment(`${endDate} ${endTime}`, 'D.M.YYYY H:mm').utc()
+
+    if (s.isAfter(e)) {
+      errors.push('Päättymisajankohta ennen alkamisajankohtaa')
+    }
+
     return errors
   }
 
