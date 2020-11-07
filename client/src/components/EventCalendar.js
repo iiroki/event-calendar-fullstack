@@ -1,9 +1,10 @@
 import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useHistory } from 'react-router-dom'
-import { Calendar, momentLocalizer } from 'react-big-calendar'
-import moment from 'moment'
-import 'moment/locale/fi'
+import { Calendar } from 'react-big-calendar'
+import format from 'date-fns/format'
+import { fi } from 'date-fns/locale'
+import calendarLocalizer from '../utils/calendarLocalizer'
 import { NextIcon, PrevIcon } from '../assets/icons'
 import { setSelectedDate } from '../reducers/selectedDateReducer'
 
@@ -29,7 +30,9 @@ class CustomToolbar extends React.Component {
   }
 
   render() {
-    const { label } = this.props
+    const { date } = this.props
+    const label = format(date, 'MMM yyyy', { locale: fi })
+
     return (
       <div className='rbc-toolbar row'>
         <div className='col-lg-4'>
@@ -87,7 +90,7 @@ const EventCalendar = () => {
   const dispatch = useDispatch()
   const history = useHistory()
   // UTC-offset in hours used in dates for calendar
-  const utcOffset = moment().utcOffset() / 60
+  const utcOffset = new Date().getTimezoneOffset() / 60
   // Fetching last viewed date from Redux
   const selectedDate = useSelector(state => state.selectedDate)
   // Fetching events from Redux and mapping dates
@@ -95,7 +98,7 @@ const EventCalendar = () => {
     .map(e => {
       if (!e.multi) {
         const start = new Date(e.start)
-        start.setHours(start.getHours() - utcOffset)
+        start.setHours(start.getHours() + utcOffset)
         return ({
           id: e.id,
           title: e.title,
@@ -108,8 +111,8 @@ const EventCalendar = () => {
 
       const start = new Date(e.start)
       const end = new Date(e.end)
-      start.setHours(start.getHours() - utcOffset)
-      end.setHours(end.getHours() - utcOffset)
+      start.setHours(start.getHours() + utcOffset)
+      end.setHours(end.getHours() + utcOffset)
 
       return ({
         id: e.id,
@@ -130,7 +133,8 @@ const EventCalendar = () => {
   return (
     <div>
       <Calendar
-        localizer={momentLocalizer(moment)}
+        culture='fi'
+        localizer={calendarLocalizer}
         views={['month']}
         messages={translationsFi}
         onNavigate={d => dispatch(setSelectedDate(d))}
