@@ -28,8 +28,8 @@ const getFieldValues = eventObject => {
     return defaultValues
   }
 
-  const start = moment(eventObject.start).utc()
-  const end = moment(eventObject.end).utc()
+  const start = moment(eventObject.start)
+  const end = moment(eventObject.end)
 
   return {
     title: eventObject.title,
@@ -98,8 +98,8 @@ const EventForm = ({ eventoToModify = null, editDoneHandler = null }) => {
       errors.push('Virheellinen päättymiskellonaika')
     }
 
-    const s = moment(`${startDate} ${startTime}`, 'D.M.YYYY H:mm').utc()
-    const e = moment(`${endDate} ${endTime}`, 'D.M.YYYY H:mm').utc()
+    const s = moment(`${startDate} ${startTime}`, 'D.M.YYYY H:mm')
+    const e = moment(`${endDate} ${endTime}`, 'D.M.YYYY H:mm')
 
     if (s.isAfter(e)) {
       errors.push('Päättymisajankohta ennen alkamisajankohtaa')

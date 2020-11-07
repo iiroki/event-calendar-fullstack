@@ -89,8 +89,6 @@ const eventStyleGetter = event => ({
 const EventCalendar = () => {
   const dispatch = useDispatch()
   const history = useHistory()
-  // UTC-offset in hours used in dates for calendar
-  const utcOffset = new Date().getTimezoneOffset() / 60
   // Fetching last viewed date from Redux
   const selectedDate = useSelector(state => state.selectedDate)
   // Fetching events from Redux and mapping dates
@@ -98,7 +96,6 @@ const EventCalendar = () => {
     .map(e => {
       if (!e.multi) {
         const start = new Date(e.start)
-        start.setHours(start.getHours() + utcOffset)
         return ({
           id: e.id,
           title: e.title,
@@ -111,8 +108,6 @@ const EventCalendar = () => {
 
       const start = new Date(e.start)
       const end = new Date(e.end)
-      start.setHours(start.getHours() + utcOffset)
-      end.setHours(end.getHours() + utcOffset)
 
       return ({
         id: e.id,

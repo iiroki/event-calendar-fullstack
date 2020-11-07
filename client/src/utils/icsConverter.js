@@ -2,8 +2,8 @@ import * as ics from 'ics'
 import moment from 'moment'
 
 const eventToIcs = eventObject => {
-  const s = moment(eventObject.start).utc() // start date in UTC
-  const e = moment(eventObject.end).utc() // end date in UTC
+  const s = moment(eventObject.start) // start date in UTC
+  const e = moment(eventObject.end) // end date in UTC
 
   const eventForIcs = {
     title: eventObject.title,
