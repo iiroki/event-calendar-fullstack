@@ -1,15 +1,27 @@
 import * as ics from 'ics'
-import moment from 'moment'
+import { parseISO } from 'date-fns'
 
 const eventToIcs = eventObject => {
-  const s = moment(eventObject.start) // start date in UTC
-  const e = moment(eventObject.end) // end date in UTC
+  const s = parseISO(eventObject.start) // start date in UTC
+  const e = parseISO(eventObject.end) // end date in UTC
 
   const eventForIcs = {
     title: eventObject.title,
     location: eventObject.location,
-    start: [s.year(), s.month() + 1, s.date(), s.hour(), s.minute()],
-    end: [e.year(), e.month() + 1, e.date(), e.hour(), e.minute()],
+    start: [
+      s.getFullYear(),
+      s.getMonth() + 1,
+      s.getDate(),
+      s.getHours(),
+      s.getMinutes()
+    ],
+    end: [
+      e.getFullYear(),
+      e.getMonth() + 1,
+      e.getDate(),
+      e.getHours(),
+      e.getMinutes()
+    ],
     description: eventObject.description,
     productId: 'teekkarikalenteri/ics'
   }
