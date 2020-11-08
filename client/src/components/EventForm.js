@@ -1,6 +1,12 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { parseISO, format } from 'date-fns'
+import {
+  parseISO,
+  parse,
+  format,
+  isValid,
+  isAfter
+} from 'date-fns'
 import moment from 'moment'
 import {
   addNewEvent,
@@ -99,10 +105,10 @@ const EventForm = ({ eventoToModify = null, editDoneHandler = null }) => {
       errors.push('Virheellinen päättymiskellonaika')
     }
 
-    const s = moment(`${startDate} ${startTime}`, 'D.M.YYYY H:mm')
-    const e = moment(`${endDate} ${endTime}`, 'D.M.YYYY H:mm')
+    const s = parse(`${startDate} ${startTime}`, 'd.M.yyyy H:mm', new Date())
+    const e = parse(`${endDate} ${endTime}`, 'd.M.yyyy H:mm', new Date())
 
-    if (s.isAfter(e)) {
+    if (isAfter(s, e)) {
       errors.push('Päättymisajankohta ennen alkamisajankohtaa')
     }
 
