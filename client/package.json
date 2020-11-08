@@ -31,7 +31,6 @@
     "axios": "^0.19.2",
     "date-fns": "^2.16.1",
     "ics": "^2.25.0",
-    "moment": "^2.27.0",
     "react": "^16.13.1",
     "react-big-calendar": "^0.28.3",
     "react-dom": "^16.13.1",
