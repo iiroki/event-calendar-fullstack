@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
+import { parseISO, format } from 'date-fns'
 import moment from 'moment'
 import {
   addNewEvent,
@@ -28,16 +29,16 @@ const getFieldValues = eventObject => {
     return defaultValues
   }
 
-  const start = moment(eventObject.start)
-  const end = moment(eventObject.end)
+  const s = parseISO(eventObject.start)
+  const e = parseISO(eventObject.end)
 
   return {
     title: eventObject.title,
     location: eventObject.location,
-    startDate: start.format('DD.MM.YYYY'),
-    startTime: start.format('HH:mm'),
-    endDate: end.format('DD.MM.YYYY'),
-    endTime: end.format('HH:mm'),
+    startDate: format(s, 'd.M.yyyy'),
+    startTime: format(s, 'H:mm'),
+    endDate: format(e, 'd.M.yyyy'),
+    endTime: format(e, 'H:mm'),
     multi: eventObject.multi,
     description: eventObject.description
   }
