@@ -7,7 +7,6 @@ import {
   isValid,
   isAfter
 } from 'date-fns'
-import moment from 'moment'
 import {
   addNewEvent,
   editExistingEvent
@@ -72,10 +71,10 @@ const EventForm = ({ eventoToModify = null, editDoneHandler = null }) => {
     return `${d} ${t}`
   }
   // Checks that given date is valid
-  const validateDate = date => moment(date, 'D.M.YYYY', true).isValid()
+  const validateDate = date => isValid(parse(date, 'd.M.yyyy', new Date()))
 
   // Checks that given time is valid
-  const validateTime = time => moment(time, 'H:mm', true).isValid()
+  const validateTime = time => isValid(parse(time, 'H:mm', new Date()))
 
   // Validates all the fields and returns all errors in array
   const validateFields = () => {
