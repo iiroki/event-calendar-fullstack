@@ -34,6 +34,11 @@ subscribeRouter.get('/teekkarikalenteri.ics', async (request, response, next) =>
     })
   })
 
+  // No events
+  if (eventArray.length === 0) {
+    return response.status(404).end()
+  }
+
   const { error, value } = ics.createEvents(eventArray)
 
   if (error) {
