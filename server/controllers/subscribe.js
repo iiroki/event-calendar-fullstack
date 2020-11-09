@@ -16,18 +16,18 @@ subscribeRouter.get('/teekkarikalenteri.ics', async (request, response, next) =>
       title: row.title,
       location: row.location,
       start: [
-        s.getUTCFullYear(),
-        s.getUTCMonth() + 1,
-        s.getUTCDate(),
-        s.getUTCHours(),
-        s.getUTCMinutes()
+        s.getFullYear(),
+        s.getMonth() + 1,
+        s.getDate(),
+        s.getHours(),
+        s.getMinutes()
       ],
       end: [
-        e.getUTCFullYear(),
-        e.getUTCMonth() + 1,
-        e.getUTCDate(),
-        e.getUTCHours(),
-        e.getUTCMinutes()
+        e.getFullYear(),
+        e.getMonth() + 1,
+        e.getDate(),
+        e.getHours(),
+        e.getMinutes()
       ],
       description: row.description,
       productId: 'teekkarikalenteri/ics'
