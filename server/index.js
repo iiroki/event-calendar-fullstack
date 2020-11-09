@@ -6,6 +6,7 @@ const { PORT } = require('./utils/config')
 const eventRouter = require('./controllers/events')
 const userRouter = require('./controllers/users')
 const loginRouter = require('./controllers/login')
+const subscribeRouter = require('./controllers/subscribe')
 
 const app = express()
 app.use(express.json())
@@ -20,6 +21,7 @@ if (process.env.NODE_ENV === 'development') {
 app.use('/api/events', eventRouter)
 app.use('/api/users', userRouter)
 app.use('/api/login', loginRouter)
+app.use('/api/subscribe', subscribeRouter)
 
 app.use(middleware.unknownEndpoint)
 app.use(middleware.errorHandler)

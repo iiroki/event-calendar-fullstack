@@ -2,8 +2,7 @@ const mysql = require('mysql2/promise')
 const { DB_CREDENTIALS } = require('../utils/config')
 
 const db = mysql.createPool({
-  ...DB_CREDENTIALS,
-  timezone: 'Z'
+  ...DB_CREDENTIALS
 })
 
 const initDb = async () => {
