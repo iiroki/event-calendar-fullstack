@@ -1,6 +1,12 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
-import moment from 'moment'
+import {
+  parseISO,
+  parse,
+  format,
+  isValid,
+  isAfter
+} from 'date-fns'
 import {
   addNewEvent,
   editExistingEvent
@@ -28,16 +34,16 @@ const getFieldValues = eventObject => {
     return defaultValues
   }
 
-  const start = moment(eventObject.start).utc()
-  const end = moment(eventObject.end).utc()
+  const s = parseISO(eventObject.start)
+  const e = parseISO(eventObject.end)
 
   return {
     title: eventObject.title,
     location: eventObject.location,
-    startDate: start.format('DD.MM.YYYY'),
-    startTime: start.format('HH:mm'),
-    endDate: end.format('DD.MM.YYYY'),
-    endTime: end.format('HH:mm'),
+    startDate: format(s, 'd.M.yyyy'),
+    startTime: format(s, 'H:mm'),
+    endDate: format(e, 'd.M.yyyy'),
+    endTime: format(e, 'H:mm'),
     multi: eventObject.multi,
     description: eventObject.description
   }
@@ -65,10 +71,10 @@ const EventForm = ({ eventoToModify = null, editDoneHandler = null }) => {
     return `${d} ${t}`
   }
   // Checks that given date is valid
-  const validateDate = date => moment(date, 'D.M.YYYY', true).isValid()
+  const validateDate = date => isValid(parse(date, 'd.M.yyyy', new Date()))
 
   // Checks that given time is valid
-  const validateTime = time => moment(time, 'H:mm', true).isValid()
+  const validateTime = time => isValid(parse(time, 'H:mm', new Date()))
 
   // Validates all the fields and returns all errors in array
   const validateFields = () => {
@@ -96,6 +102,13 @@ const EventForm = ({ eventoToModify = null, editDoneHandler = null }) => {
 
     if (!validateTime(endTime)) {
       errors.push('Virheellinen päättymiskellonaika')
+    }
+
+    const s = parse(`${startDate} ${startTime}`, 'd.M.yyyy H:mm', new Date())
+    const e = parse(`${endDate} ${endTime}`, 'd.M.yyyy H:mm', new Date())
+
+    if (isAfter(s, e)) {
+      errors.push('Päättymisajankohta ennen alkamisajankohtaa')
     }
 
     return errors

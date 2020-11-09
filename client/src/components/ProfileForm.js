@@ -38,9 +38,7 @@ const UserInformationForm = ({ profile, handleHide = null }) => {
 
     if (bgColor.length !== 6 || fgColor.length !== 6) {
       errors.push('Värien HEX-arvot tulee olla kuusimerkkisiä')
-    }
-
-    else if (!hexRegex.test(bgColor) || !hexRegex.test(fgColor)) {
+    } else if (!hexRegex.test(bgColor) || !hexRegex.test(fgColor)) {
       errors.push('Virheellinen värin HEX-arvo')
     }
 

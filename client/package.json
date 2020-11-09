@@ -24,19 +24,20 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "lint": "eslint src"
+    "lint": "eslint src",
+    "reinstall:dependancies": "rm -rf node_modules && rm package-lock.json && npm i"
   },
   "dependencies": {
     "axios": "^0.19.2",
+    "date-fns": "^2.16.1",
     "ics": "^2.25.0",
-    "moment": "^2.27.0",
     "react": "^16.13.1",
-    "react-big-calendar": "^0.26.0",
+    "react-big-calendar": "^0.28.3",
     "react-dom": "^16.13.1",
     "react-linkify": "^1.0.0-alpha",
     "react-redux": "^7.2.1",
     "react-router-dom": "^5.2.0",
-    "react-scripts": "^3.4.4",
+    "react-scripts": "^3.4.0",
     "redux": "^4.0.5",
     "redux-devtools-extension": "^2.13.8",
     "redux-thunk": "^2.3.0"

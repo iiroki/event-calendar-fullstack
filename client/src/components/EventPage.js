@@ -1,7 +1,8 @@
 import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import Linkify from 'react-linkify'
-import moment from 'moment'
+import { parseISO, format } from 'date-fns'
+import { fi } from 'date-fns/locale'
 import { setNotification, notificationTypes } from '../reducers/notificationReducer'
 import eventToIcs from '../utils/icsConverter'
 
@@ -26,18 +27,23 @@ const EventPage = ({ id }) => {
 
   // Formatting date based on the length of the event
   const formatDate = () => {
-    if (moment(event.start).utc().format('D') === moment(event.end).utc().format('D')) {
+    const s = parseISO(event.start)
+    const e = parseISO(event.end)
+
+    if (s.getDate() === e.getDate()) {
+      const sf = format(s, 'EEEEEE d.M.yyyy H:mm', { locale: fi })
+      const ef = format(e, 'H:mm', { locale: fi })
+
       return (
-        `${moment(event.start).utc().format('dd D.M.YYYY H:mm')}
-         - 
-         ${moment(event.end).utc().format('H:mm')}`
+        `${sf} - ${ef}`
       )
     }
 
+    const sf = format(s, 'EEEEEE d.M.yyyy H:mm', { locale: fi })
+    const ef = format(e, 'EEEEEE d.M.yyyy H:mm', { locale: fi })
+
     return (
-      `${moment(event.start).utc().format('dd D.M.YYYY H:mm')}
-       - 
-       ${moment(event.end).utc().format('dd D.M.YYYY H:mm')}`
+      `${sf} - ${ef}`
     )
   }
 
