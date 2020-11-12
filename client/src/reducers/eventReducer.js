@@ -1,6 +1,17 @@
+import { parseISO } from 'date-fns'
 import eventService from '../services/events'
 
 const initialEvents = []
+const offsetHoursUTC = new Date().getTimezoneOffset() / 60
+
+const parseHoursUTC = e => {
+  const start = parseISO(e.start)
+  const end = parseISO(e.end)
+  start.setHours(start.getHours() + offsetHoursUTC)
+  end.setHours(end.getHours() + offsetHoursUTC)
+  e.start = start
+  e.end = end
+}
 
 const eventReducer = (state = initialEvents, action) => {
   switch (action.type) {
@@ -28,6 +39,7 @@ const eventReducer = (state = initialEvents, action) => {
 export const initEvents = () => (
   async thunk => {
     const events = await eventService.getAll()
+    events.forEach(e => parseHoursUTC(e))
 
     thunk({
       type: 'INIT_EVENTS',
@@ -39,6 +51,7 @@ export const initEvents = () => (
 export const addNewEvent = eventObject => (
   async thunk => {
     const newEvent = await eventService.addNew(eventObject)
+    parseHoursUTC(newEvent)
 
     thunk({
       type: 'ADD_EVENT',
@@ -50,6 +63,7 @@ export const addNewEvent = eventObject => (
 export const editExistingEvent = eventObject => (
   async thunk => {
     const editedEvent = await eventService.editExisting(eventObject)
+    parseHoursUTC(editedEvent)
 
     thunk({
       type: 'EDIT_EVENT',
