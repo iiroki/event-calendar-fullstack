@@ -393,7 +393,7 @@ const EventForm = ({ eventoToModify = null, editDoneHandler = null }) => {
           * = Pakollinen kenttä
         </div>
 
-        <button type='submit' className='btn btn-danger'>
+        <button type='submit' className='btn  btn-treekkari'>
           {
             eventoToModify === null
               ? 'Lisää tapahtuma'
@@ -442,7 +442,7 @@ const EventForm = ({ eventoToModify = null, editDoneHandler = null }) => {
             <div className='modal-footer modal-center'>
               <button
                 type='button'
-                className='btn btn-danger'
+                className='btn '
                 data-dismiss='modal'
               >
                 Sulje
