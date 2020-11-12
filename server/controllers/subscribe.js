@@ -7,7 +7,7 @@ const { getAllEvents } = require('../database/queries')
 subscribeRouter.get('/teekkarikalenteri.ics', async (request, response, next) => { // eslint-disable-line
   const result = await db.query(getAllEvents)
   const eventArray = []
-  const offsetHoursUTC = new Date().getTimezoneOffset / 60
+  const offsetHoursUTC = new Date().getTimezoneOffset() / 60
 
   result[0].forEach(row => {
     const s = row.start
@@ -45,6 +45,7 @@ subscribeRouter.get('/teekkarikalenteri.ics', async (request, response, next) =>
   const { error, value } = ics.createEvents(eventArray)
 
   if (error) {
+    console.log(error)
     return response.status(500).end()
   }
 
