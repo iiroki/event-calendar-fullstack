@@ -7,10 +7,13 @@ const { getAllEvents } = require('../database/queries')
 subscribeRouter.get('/teekkarikalenteri.ics', async (request, response, next) => { // eslint-disable-line
   const result = await db.query(getAllEvents)
   const eventArray = []
+  const offsetHoursUTC = new Date().getTimezoneOffset / 60
 
   result[0].forEach(row => {
     const s = row.start
     const e = row.end
+    s.setHours(s.getHours() + offsetHoursUTC)
+    e.setHours(e.getHours() + offsetHoursUTC)
 
     eventArray.push({
       title: row.title,
