@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import {
-  parseISO,
   parse,
   format,
   isValid,
@@ -34,16 +33,13 @@ const getFieldValues = eventObject => {
     return defaultValues
   }
 
-  const s = parseISO(eventObject.start)
-  const e = parseISO(eventObject.end)
-
   return {
     title: eventObject.title,
     location: eventObject.location,
-    startDate: format(s, 'd.M.yyyy'),
-    startTime: format(s, 'H:mm'),
-    endDate: format(e, 'd.M.yyyy'),
-    endTime: format(e, 'H:mm'),
+    startDate: format(eventObject.start, 'd.M.yyyy'),
+    startTime: format(eventObject.start, 'H:mm'),
+    endDate: format(eventObject.end, 'd.M.yyyy'),
+    endTime: format(eventObject.end, 'H:mm'),
     multi: eventObject.multi,
     description: eventObject.description
   }
@@ -393,7 +389,7 @@ const EventForm = ({ eventoToModify = null, editDoneHandler = null }) => {
           * = Pakollinen kenttä
         </div>
 
-        <button type='submit' className='btn btn-danger'>
+        <button type='submit' className='btn  btn-treekkari'>
           {
             eventoToModify === null
               ? 'Lisää tapahtuma'
@@ -442,7 +438,7 @@ const EventForm = ({ eventoToModify = null, editDoneHandler = null }) => {
             <div className='modal-footer modal-center'>
               <button
                 type='button'
-                className='btn btn-danger'
+                className='btn '
                 data-dismiss='modal'
               >
                 Sulje

@@ -248,7 +248,10 @@ const UserInformationForm = ({ profile, handleHide = null }) => {
       </div>
 
       <div>
-        <button type='submit' className='btn btn-danger'>
+        <button
+          type='submit'
+          className='btn btn-treekkari'
+        >
           Vahvista
         </button>
       </div>
@@ -379,7 +382,10 @@ const NewPasswordForm = ({ id, handleHide = null }) => {
       </div>
 
       <div>
-        <button type='submit' className='btn btn-danger'>
+        <button
+          type='submit'
+          className='btn btn-treekkari'
+        >
           Vahvista
         </button>
       </div>
@@ -396,7 +402,7 @@ const ProfileForm = ({ profile, handleHide }) => {
     <div>
       <div className='btn-group btn-group-toggle button-group' data-toggle='buttons'>
         <label // eslint-disable-line
-          className='btn btn-danger active'
+          className='btn btn-treekkari active'
           onClick={() => setEditPassword(false)}
         >
           <input type='radio' name='options' id='option1' autoComplete='off' />
@@ -404,7 +410,7 @@ const ProfileForm = ({ profile, handleHide }) => {
         </label>
 
         <label // eslint-disable-line
-          className='btn btn-danger'
+          className='btn btn-treekkari'
           onClick={() => setEditPassword(true)}
         >
           <input type='radio' name='options' id='option2' autoComplete='off' />
