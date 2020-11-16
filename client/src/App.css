@@ -370,6 +370,30 @@ div.container {
   padding-bottom: 10px;
 }
 
+.ad-container {
+  width: 200px;
+}
+
+.ad {
+  max-height: 8rem;
+  max-width: 100%;
+}
+
+/* Center ad images vertically */
+.slick-initialized .slick-track {
+  display: flex;
+  align-items: center;
+}
+
+/* the slides */
+.slick-slide {
+  margin: 0 10px;
+}
+/* the parent */
+.slick-list {
+  margin: 0 -10px;
+}
+
 /* React Big Calendar: react-big-calendar/lib/css/react-big-calendar.css */
 /* Own modifications below have Own-comment, so calendar can be returned
  * to original state. */
