@@ -10,7 +10,6 @@ import {
   notificationTypes
 } from './reducers/notificationReducer'
 import { initialized } from './reducers/initReducer'
-
 import NavigationMenu from './components/NavigationMenu'
 import EventCalendar from './components/EventCalendar'
 import EventPage from './components/EventPage'
@@ -23,8 +22,10 @@ import LinksPage from './components/LinksPage'
 import AdBox from './components/AdBox'
 import Footer from './components/Footer'
 import LoadingIcon from './components/LoadingIcon'
-
 import './App.css'
+
+// Show ads or not
+const SHOW_ADS = true
 
 const App = () => {
   const init = useSelector(state => state.init)
@@ -123,9 +124,17 @@ const App = () => {
             </Route>
 
           </Switch>
-
-          <hr />
-          <AdBox />
+          
+          {
+            SHOW_ADS
+              ? (
+                <div>
+                  <hr />
+                  <AdBox />
+                </div>
+              )
+              : null
+          }
           <hr />
           <Footer />
         </div>
