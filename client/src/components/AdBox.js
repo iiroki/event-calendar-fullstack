@@ -7,10 +7,12 @@ const AdBox = () => (
       infinite
       autoplay
       autoplaySpeed={3000}
+      speed={1000}
       pauseOnHover
-      slidesPerRow={2}
+      slidesToShow={3}
       dots
       arrows={false}
+      centerMode
     >
       <div>
         1
