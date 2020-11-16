@@ -331,10 +331,6 @@ div.container {
   justify-content: space-between;
 }
 
-.footer-item {
-  display: inline;
-}
-
 /* Modal (overlay) content centered */
 .modal-center {
   justify-content: center;
