@@ -7,6 +7,12 @@ const Footer = () => (
       <CopyrightIcon />
       Teekkarikalenteri.fi
     </div>
+
+    <div className='footer-item' style={{ color: '#999999' }}>
+      <i>
+        Sivuston toteutus: Iiro Kiviluoma
+      </i>
+    </div>
   </div>
 )
 

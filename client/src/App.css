@@ -130,6 +130,15 @@ div.container {
   white-space: pre-wrap;
 }
 
+.about-box {
+  text-align: left;
+  font-size: 1.1rem
+}
+
+.subscribe-link {
+  word-break: break-all;
+}
+
 .login-page {
   text-align: center;
   display: inline-block;
@@ -331,10 +340,6 @@ div.container {
   justify-content: space-between;
 }
 
-.footer-item {
-  display: inline;
-}
-
 /* Modal (overlay) content centered */
 .modal-center {
   justify-content: center;
@@ -364,6 +369,37 @@ div.container {
   width: 20px;
   height: 20px;
   border: 1px solid black;
+}
+
+.adbox {
+  padding-bottom: 10px;
+}
+
+.ad-container {
+  width: 100%;
+}
+
+.ad {
+  max-height: 8rem;
+  max-width: 100%;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Center ad images vertically */
+.slick-initialized .slick-track {
+  display: flex;
+  align-items: center;
+}
+
+/* the slides */
+.slick-slide {
+  margin: 0 10px;
+}
+/* the parent */
+.slick-list {
+  margin: 0 -10px;
 }
 
 /* React Big Calendar: react-big-calendar/lib/css/react-big-calendar.css */
