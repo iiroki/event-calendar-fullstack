@@ -371,12 +371,15 @@ div.container {
 }
 
 .ad-container {
-  width: 200px;
+  width: 100%;
 }
 
 .ad {
   max-height: 8rem;
   max-width: 100%;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 /* Center ad images vertically */
