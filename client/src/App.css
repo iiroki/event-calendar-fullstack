@@ -130,6 +130,15 @@ div.container {
   white-space: pre-wrap;
 }
 
+.about-box {
+  text-align: left;
+  font-size: 1.1rem
+}
+
+.subscribe-link {
+  word-break: break-all;
+}
+
 .login-page {
   text-align: center;
   display: inline-block;
