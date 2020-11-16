@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { parseISO, format } from 'date-fns'
+import { format } from 'date-fns'
 import EditEventPage from './EditEventPage'
 import { deleteExistingEvent } from '../reducers/eventReducer'
 import {
@@ -21,7 +21,7 @@ const ManageEventsListItem = ({ eventObject, editHandler, deleteHandler }) => (
       <b>{eventObject.title}</b>
     </Link>
     (
-    {format(parseISO(eventObject.start), 'd.M.yyyy')}
+    {format(eventObject.start, 'd.M.yyyy')}
     )
     [
     <button

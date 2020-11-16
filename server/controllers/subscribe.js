@@ -7,27 +7,30 @@ const { getAllEvents } = require('../database/queries')
 subscribeRouter.get('/teekkarikalenteri.ics', async (request, response, next) => { // eslint-disable-line
   const result = await db.query(getAllEvents)
   const eventArray = []
+  const offsetHoursUTC = new Date().getTimezoneOffset() / 60
 
   result[0].forEach(row => {
     const s = row.start
     const e = row.end
+    s.setHours(s.getHours() + offsetHoursUTC)
+    e.setHours(e.getHours() + offsetHoursUTC)
 
     eventArray.push({
       title: row.title,
       location: row.location,
       start: [
-        s.getUTCFullYear(),
-        s.getUTCMonth() + 1,
-        s.getUTCDate(),
-        s.getUTCHours(),
-        s.getUTCMinutes()
+        s.getFullYear(),
+        s.getMonth() + 1,
+        s.getDate(),
+        s.getHours(),
+        s.getMinutes()
       ],
       end: [
-        e.getUTCFullYear(),
-        e.getUTCMonth() + 1,
-        e.getUTCDate(),
-        e.getUTCHours(),
-        e.getUTCMinutes()
+        e.getFullYear(),
+        e.getMonth() + 1,
+        e.getDate(),
+        e.getHours(),
+        e.getMinutes()
       ],
       description: row.description,
       productId: 'teekkarikalenteri/ics'
@@ -42,6 +45,7 @@ subscribeRouter.get('/teekkarikalenteri.ics', async (request, response, next) =>
   const { error, value } = ics.createEvents(eventArray)
 
   if (error) {
+    console.log(error)
     return response.status(500).end()
   }
 

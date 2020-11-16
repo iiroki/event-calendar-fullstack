@@ -37,7 +37,7 @@ const ManagePage = () => {
       </h2>
 
       <button
-        className='btn btn-danger'
+        className='btn btn-treekkari'
         type='button'
         onClick={handleLogout}
       >

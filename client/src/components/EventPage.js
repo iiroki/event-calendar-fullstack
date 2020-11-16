@@ -1,7 +1,7 @@
 import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import Linkify from 'react-linkify'
-import { parseISO, format } from 'date-fns'
+import { format } from 'date-fns'
 import { fi } from 'date-fns/locale'
 import { setNotification, notificationTypes } from '../reducers/notificationReducer'
 import eventToIcs from '../utils/icsConverter'
@@ -27,24 +27,15 @@ const EventPage = ({ id }) => {
 
   // Formatting date based on the length of the event
   const formatDate = () => {
-    const s = parseISO(event.start)
-    const e = parseISO(event.end)
-
-    if (s.getDate() === e.getDate()) {
-      const sf = format(s, 'EEEEEE d.M.yyyy H:mm', { locale: fi })
-      const ef = format(e, 'H:mm', { locale: fi })
-
-      return (
-        `${sf} - ${ef}`
-      )
+    if (event.start.getDate() === event.end.getDate()) {
+      const sf = format(event.start, 'EEEEEE d.M.yyyy H:mm', { locale: fi })
+      const ef = format(event.end, 'H:mm', { locale: fi })
+      return `${sf} - ${ef}`
     }
 
-    const sf = format(s, 'EEEEEE d.M.yyyy H:mm', { locale: fi })
-    const ef = format(e, 'EEEEEE d.M.yyyy H:mm', { locale: fi })
-
-    return (
-      `${sf} - ${ef}`
-    )
+    const sf = format(event.start, 'EEEEEE d.M.yyyy H:mm', { locale: fi })
+    const ef = format(event.end, 'EEEEEE d.M.yyyy H:mm', { locale: fi })
+    return `${sf} - ${ef}`
   }
 
   // Allows .ics-file downloads

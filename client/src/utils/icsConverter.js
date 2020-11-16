@@ -1,9 +1,8 @@
 import * as ics from 'ics'
-import { parseISO } from 'date-fns'
 
 const eventToIcs = eventObject => {
-  const s = parseISO(eventObject.start) // start date in UTC
-  const e = parseISO(eventObject.end) // end date in UTC
+  const s = eventObject.start
+  const e = eventObject.end
 
   const eventForIcs = {
     title: eventObject.title,

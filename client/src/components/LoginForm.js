@@ -81,7 +81,7 @@ const LoginForm = () => {
               <td>
                 <button
                   type='submit'
-                  className='btn btn-danger login-form-button'
+                  className='btn btn-treekkari login-form-button'
                 >
                   Kirjaudu
                 </button>
