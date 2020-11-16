@@ -366,6 +366,10 @@ div.container {
   border: 1px solid black;
 }
 
+.adbox {
+  padding-bottom: 10px;
+}
+
 /* React Big Calendar: react-big-calendar/lib/css/react-big-calendar.css */
 /* Own modifications below have Own-comment, so calendar can be returned
  * to original state. */

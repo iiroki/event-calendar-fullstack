@@ -20,7 +20,7 @@ import Banner from './components/Banner'
 import Notification from './components/Notification'
 import AboutPage from './components/AboutPage'
 import LinksPage from './components/LinksPage'
-// import AdBox from './components/AdBox'
+import AdBox from './components/AdBox'
 import Footer from './components/Footer'
 import LoadingIcon from './components/LoadingIcon'
 
@@ -124,6 +124,8 @@ const App = () => {
 
           </Switch>
 
+          <hr />
+          <AdBox />
           <hr />
           <Footer />
         </div>
