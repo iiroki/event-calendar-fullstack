@@ -11,11 +11,14 @@ const AboutPage = () => (
       </b>
     </h4>
     <p>
-      Teekkarikalenteri on Tampereen Teekkarien PerinneSeuran toimittama ja
+      Teekkarikalenteri on Tampereen teekkarien PerinneSeuran toimittama ja
       Tampereen Teekkarien julkaisema tamperelainen teekkarikalenteri, joka
       pyrkii tuomaan kaikki Tampereen teekkaritapahtumat yhteen paikkaan.
       Teekkarikalenteri-käyttäjätili myönnetään kaikille Tampereen Teekkarien
-      jäsenille, jotka ovat siihen oikeutettuja.
+      jäsenille, jotka ovat siihen oikeutettuja. Käyttäjätilin avulla on
+      mahdollista lisätä, muokata ja poistaa omia tapahtumia. Myös
+      käyttäjätiliin sidottua ulkopuolisille näkyvää profiilia on mahdollisuus
+      muokata nimen, linkin ja teemavärien muodossa.
     </p>
 
     <h4>
@@ -27,7 +30,7 @@ const AboutPage = () => (
       Teekkarikalenterin voi tilata toiseen kalenteriin alla olevalla
       URL-osoitteella:
       <br />
-      <span className='subscribe-link'>
+      <span className='about-link subscribe-link'>
         <i>
           https://teekkarikalenteri.fi/api/subscribe/teekkarikalenteri.ics
         </i>
@@ -55,6 +58,7 @@ const AboutPage = () => (
       uuden käyttäjätilin toimesta, voit ottaa yhteyttä seuraavaan sähköpostiin:
       <br />
       <a
+        className='about-link'
         href={`mailto:${HELP_EMAIL}`}
       >
         {HELP_EMAIL}

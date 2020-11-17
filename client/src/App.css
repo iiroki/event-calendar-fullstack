@@ -135,6 +135,10 @@ div.container {
   font-size: 1.1rem
 }
 
+.about-link {
+  margin-left: 1rem;
+}
+
 .subscribe-link {
   word-break: break-all;
 }
