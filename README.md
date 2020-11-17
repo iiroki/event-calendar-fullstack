@@ -3,6 +3,11 @@ The idea of the app is to display all the events added by users in the calendar.
 
 This app has the frontend built with React + Redux and runs Node.js + Express in the backend. Data is stored into a MySQL-database.
 
+### TODO
+- Date picker
+- Color picker
+- Events as a list with filter function
+
 ### Features
 
 All users:
