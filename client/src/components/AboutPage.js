@@ -14,6 +14,8 @@ const AboutPage = () => (
       Teekkarikalenteri on Tampereen teekkarien PerinneSeuran toimittama ja
       Tampereen Teekkarien julkaisema tamperelainen teekkarikalenteri, joka
       pyrkii tuomaan kaikki Tampereen teekkaritapahtumat yhteen paikkaan.
+    </p>
+    <p>
       Teekkarikalenteri-käyttäjätili myönnetään kaikille Tampereen Teekkarien
       jäsenille, jotka ovat siihen oikeutettuja. Käyttäjätilin avulla on
       mahdollista lisätä, muokata ja poistaa omia tapahtumia. Myös
