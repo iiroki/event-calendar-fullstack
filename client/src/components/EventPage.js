@@ -114,6 +114,8 @@ const EventPage = ({ id }) => {
                 ? null
                 : `//${organizer.link}`
             }
+            target='_blank'
+            rel='noopener noreferrer'
           >
             {organizer.name}
           </a>

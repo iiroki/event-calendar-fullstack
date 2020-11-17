@@ -32,6 +32,8 @@ const Profile = ({ profile }) => (
             <a
               id='profileLink'
               href={`//${profile.link}`}
+              target='_blank'
+              rel='noopener noreferrer'
             >
               {profile.link}
             </a>

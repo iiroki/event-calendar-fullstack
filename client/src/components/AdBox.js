@@ -1,7 +1,7 @@
 import React from 'react'
 import Slider from 'react-slick'
 
-const AdImage = ({ path, link, alt}) => (
+const AdImage = ({ path, link, alt }) => (
   <div className='ad-container'>
     <a
       href={`//${link}`}

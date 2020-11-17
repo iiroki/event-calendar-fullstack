@@ -10,7 +10,7 @@ const Footer = () => (
 
     <div className='footer-item' style={{ color: '#999999' }}>
       <i>
-        Sivuston toteutus: Iiro Kiviluoma
+        Toteutus: Iiro Kiviluoma
       </i>
     </div>
   </div>
