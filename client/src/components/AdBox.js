@@ -27,25 +27,25 @@ const AdBox = () => (
       centerPadding='10px'
     >
       <AdImage
-        path='/ads/ad_tek.png'
+        path='/media/tek.png'
         link='www.tek.fi'
         alt='Tekniikan Akateemiset'
       />
 
       <AdImage
-        path='/ads/ad_kattosauna.png'
+        path='/media/kattosauna.png'
         link='kattosauna.fi'
         alt='Hämpin Kattosauna'
       />
 
       <AdImage
-        path='/ads/ad_tk.png'
+        path='/media/tk.png'
         link='tekniikankutsu.com'
         alt='Tekniikan Kutsu'
       />
 
       <AdImage
-        path='/ads/ad_np.png'
+        path='/media/np.png'
         link='nokianpanimo.fi'
         alt='Nokian Panimo'
       />
