@@ -6,7 +6,7 @@ import getDay from 'date-fns/getDay'
 import { fi } from 'date-fns/locale'
 
 const formatFixWeekday = (d, f, l) => {
-  // maanantai -> ma
+  // e.g. maanantai -> ma
   if (f === 'cccc') {
     return format(d, 'cccccc', l)
   }

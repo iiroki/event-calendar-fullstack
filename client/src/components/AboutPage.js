@@ -2,7 +2,7 @@ import React from 'react'
 
 const SUBSCRIBE_URL = 'https://teekkarikalenteri.fi/api/subscribe/teekkarikalenteri.ics'
 const HELP_EMAIL = 'tuki(at)teekkarikalenteri.fi'
-const FEEDBACK_FORMS = 'www.jaynakisa.fi'
+const FEEDBACK_FORMS = 'forms.gle/7g8qLtxNvmJpjZzo8'
 
 const AboutPage = () => (
   <div className='about-box'>
