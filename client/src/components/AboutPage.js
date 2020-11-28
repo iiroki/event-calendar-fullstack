@@ -47,7 +47,7 @@ const AboutPage = () => (
     </h4>
     <p>
       Teekkarikalenteria voi käyttää myös PWA-mobiilisovelluksen muodossa. Avaa
-      mobiiliselaimen valikko osoitapalkista ja paina &quot;Lisää aloitusnäyttöön&quot;
+      mobiiliselaimen valikko osoitepalkista ja paina &quot;Lisää aloitusnäyttöön&quot;
       (Chrome/Safari) tai &quot;Asenna&quot; (Firefox).
     </p>
 
