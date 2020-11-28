@@ -68,14 +68,14 @@ const AboutPage = () => (
     </p>
     <p>
       Löysitkö Teekkarikalenterista bugin? Onko sinulla kehitysehdotuksia? Voit
-      ilmoittaa niistä seuraavaan
+      ilmoittaa niistä
       {' '}
       <a
         href={`//${FEEDBACK_FORMS}`}
         target='_blank'
         rel='noopener noreferrer'
       >
-        Google Formsiin
+        palautelomakkeella
       </a>
       .
     </p>
