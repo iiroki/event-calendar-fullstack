@@ -19,7 +19,7 @@ const AdBox = () => (
       autoplay
       autoplaySpeed={5000}
       speed={1800}
-      slidesToShow={3}
+      slidesToShow={2}
       pauseOnHover
       dots
       arrows={false}
@@ -27,27 +27,21 @@ const AdBox = () => (
       centerPadding='10px'
     >
       <AdImage
-        path='/ads/ad_tek.png'
-        link='www.tek.fi'
-        alt='Tekniikan Akateemiset'
+        path='/media/demo2.png'
+        link='www.jaynakisa.fi'
+        alt='Demo 2'
       />
 
       <AdImage
-        path='/ads/ad_kattosauna.png'
-        link='kattosauna.fi'
-        alt='Hämpin Kattosauna'
+        path='/media/demo1.png'
+        link='www.jaynakisa.fi'
+        alt='Demo 1'
       />
 
       <AdImage
-        path='/ads/ad_tk.png'
-        link='tekniikankutsu.com'
-        alt='Tekniikan Kutsu'
-      />
-
-      <AdImage
-        path='/ads/ad_np.png'
-        link='nokianpanimo.fi'
-        alt='Nokian Panimo'
+        path='/media/pseura.png'
+        link='www.jaynakisa.fi'
+        alt='PerinneSeura'
       />
     </Slider>
   </div>

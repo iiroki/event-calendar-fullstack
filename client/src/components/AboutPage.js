@@ -1,7 +1,8 @@
 import React from 'react'
 
-const HELP_EMAIL = 'tuki@teekkarikalenteri.fi'
-const FEEDBACK_FORMS = 'www.jaynakisa.fi'
+const SUBSCRIBE_URL = 'https://teekkarikalenteri.fi/api/subscribe/teekkarikalenteri.ics'
+const HELP_EMAIL = 'tuki(at)teekkarikalenteri.fi'
+const FEEDBACK_FORMS = 'forms.gle/7g8qLtxNvmJpjZzo8'
 
 const AboutPage = () => (
   <div className='about-box'>
@@ -34,7 +35,7 @@ const AboutPage = () => (
       <br />
       <span className='about-link subscribe-link'>
         <i>
-          https://teekkarikalenteri.fi/api/subscribe/teekkarikalenteri.ics
+          {SUBSCRIBE_URL}
         </i>
       </span>
     </p>
@@ -46,7 +47,7 @@ const AboutPage = () => (
     </h4>
     <p>
       Teekkarikalenteria voi käyttää myös PWA-mobiilisovelluksen muodossa. Avaa
-      mobiiliselaimen valikko osoitapalkista ja paina &quot;Lisää aloitusnäyttöön&quot;
+      mobiiliselaimen valikko osoitepalkista ja paina &quot;Lisää aloitusnäyttöön&quot;
       (Chrome/Safari) tai &quot;Asenna&quot; (Firefox).
     </p>
 
@@ -59,23 +60,22 @@ const AboutPage = () => (
       Mikäli tarvitset Teekkarikalenteriin liittyen, esimerkiksi unohtuneen salasanan tai
       uuden käyttäjätilin toimesta, voit ottaa yhteyttä seuraavaan sähköpostiin:
       <br />
-      <a
-        className='about-link'
-        href={`mailto:${HELP_EMAIL}`}
-      >
-        {HELP_EMAIL}
-      </a>
+      <span className='about-link subscribe-link'>
+        <i>
+          {HELP_EMAIL}
+        </i>
+      </span>
     </p>
     <p>
       Löysitkö Teekkarikalenterista bugin? Onko sinulla kehitysehdotuksia? Voit
-      ilmoittaa niistä seuraavaan
+      ilmoittaa niistä
       {' '}
       <a
         href={`//${FEEDBACK_FORMS}`}
         target='_blank'
         rel='noopener noreferrer'
       >
-        Google Formsiin
+        palautelomakkeella
       </a>
       .
     </p>

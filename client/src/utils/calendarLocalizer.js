@@ -5,8 +5,17 @@ import startOfWeek from 'date-fns/startOfWeek'
 import getDay from 'date-fns/getDay'
 import { fi } from 'date-fns/locale'
 
+const formatFixWeekday = (d, f, l) => {
+  // e.g. maanantai -> ma
+  if (f === 'cccc') {
+    return format(d, 'cccccc', l)
+  }
+
+  return format(d, f, l)
+}
+
 const calendarLocalizer = dateFnsLocalizer({
-  format,
+  format: (d, f, l) => formatFixWeekday(d, f, l),
   parse,
   startOfWeek,
   getDay,

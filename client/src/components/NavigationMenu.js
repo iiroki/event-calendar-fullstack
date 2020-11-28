@@ -10,7 +10,7 @@ import {
 
 const NavigationMenu = () => (
   <div>
-    <nav className='navbar navbar-expand-md navbar-dark nav-shape'>
+    <nav className='navbar navbar-expand-md navbar-dark'>
 
       <span className='navbar-brand'>
         <Link className='link' to='/'>
