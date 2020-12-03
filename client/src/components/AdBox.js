@@ -4,7 +4,7 @@ import Slider from 'react-slick'
 const AdImage = ({ path, link, alt }) => (
   <div className='ad-container'>
     <a
-      href={`//${link}`}
+      href={link}
       target='_blank'
       rel='noopener noreferrer'
     >
@@ -28,19 +28,19 @@ const AdBox = () => (
     >
       <AdImage
         path='/media/demo2.png'
-        link='www.jaynakisa.fi'
+        link='http://www.jaynakisa.fi'
         alt='Demo 2'
       />
 
       <AdImage
         path='/media/demo1.png'
-        link='www.jaynakisa.fi'
+        link='http://www.tek.fi'
         alt='Demo 1'
       />
 
       <AdImage
         path='/media/pseura.png'
-        link='www.jaynakisa.fi'
+        link='http://www.jaynakisa.fi'
         alt='PerinneSeura'
       />
     </Slider>

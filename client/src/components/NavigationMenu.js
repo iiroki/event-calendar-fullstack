@@ -19,7 +19,7 @@ const NavigationMenu = () => (
       </span>
 
       <button
-        className='navbar-toggler'
+        className='navbar-toggler animated-toggler collapsed'
         type='button'
         data-toggle='collapse'
         data-target='#navbar'
@@ -27,7 +27,9 @@ const NavigationMenu = () => (
         aria-expanded='false'
         aria-label='Toggle navigation'
       >
-        <span className='navbar-toggler-icon' />
+        <span className='toggler-bar top-bar' />
+        <span className='toggler-bar mid-bar' />
+        <span className='toggler-bar bot-bar' />
       </button>
 
       <div className='collapse navbar-collapse' id='navbar'>

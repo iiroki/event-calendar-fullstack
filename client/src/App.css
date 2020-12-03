@@ -49,16 +49,9 @@ hr {
 /* Banner on top of the page */
 .banner {
   display: block;
-  max-width: 100%;
+  max-width: 99%;
   margin-left: auto;
   margin-right: auto;
-}
-
-/* Little margins and curves */
-.nav-shape{
-  margin-left: 0.5%;
-  margin-right: 0.5%;
-  border-radius: 5px;
 }
 
 /* Navbar base style */
@@ -66,6 +59,44 @@ hr {
   background-color: #991C38;
   margin-top: 5px;
   margin-bottom: 10px;
+}
+
+/* Animation for hamburger button */
+.animated-toggler {
+  border: none;
+}
+
+.animated-toggler:focus {
+  outline: none;
+}
+
+.animated-toggler .toggler-bar {
+  background-color: #ffffff;
+  transform: rotate(0deg) translate(0px, 0px);
+  transition: ease all .2s;
+  display: block;
+  width: 30px;
+  height: 3px;
+  border-radius: 1px;
+}
+
+.animated-toggler .toggler-bar+.toggler-bar {
+  margin-top: 6px;
+}
+
+.animated-toggler:not(.collapsed) .toggler-bar:nth-child(1) {
+  transform: rotate(45deg) translate(7.5px, 6px);
+  transition: ease all .2s;
+}
+
+.animated-toggler:not(.collapsed) .toggler-bar:nth-child(2) {
+  opacity: 0;
+  transition: ease all .2s;
+}
+
+.animated-toggler:not(.collapsed) .toggler-bar:nth-child(3) {
+  transform: rotate(-45deg) translate(6px, -6px);
+  transition: ease all .2s;
 }
 
 /* Brand at the start of the navabr */
