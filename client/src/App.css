@@ -54,13 +54,6 @@ hr {
   margin-right: auto;
 }
 
-/* Little margins and curves */
-.nav-shape{
-  margin-left: 0.5%;
-  margin-right: 0.5%;
-  border-radius: 5px;
-}
-
 /* Navbar base style */
 .navbar {
   background-color: #991C38;

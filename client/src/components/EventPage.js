@@ -112,7 +112,7 @@ const EventPage = ({ id }) => {
             href={
               organizer.link === null
                 ? null
-                : `//${organizer.link}`
+                : organizer.link
             }
             target='_blank'
             rel='noopener noreferrer'
