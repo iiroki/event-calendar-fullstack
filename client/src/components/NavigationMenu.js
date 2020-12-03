@@ -8,102 +8,83 @@ import {
   AboutIcon
 } from '../assets/icons'
 
-const openTime = 500 // ms
+const NavigationMenu = () => (
+  <div>
+    <nav className='navbar navbar-expand-md navbar-dark'>
 
-const NavigationMenu = () => {
-  // Only toggles animation when navbar is not collapsing
-  const toggleOpenAnimation = () => {
-    let btn = document.getElementById('navbar-toggle-btn')
-    const collapsing = document.getElementById('navbar').classList.contains('collapsing')
-    if (!collapsing) btn.classList.toggle('open')
-  }
+      <span className='navbar-brand'>
+        <Link className='link' to='/'>
+          <Icon />
+        </Link>
+      </span>
 
-  return (
-    <div>
-      <nav className='navbar navbar-expand-md navbar-dark'>
+      <button
+        className='navbar-toggler animated-toggler collapsed'
+        type='button'
+        data-toggle='collapse'
+        data-target='#navbar'
+        aria-controls='navbar'
+        aria-expanded='false'
+        aria-label='Toggle navigation'
+      >
+        <span className='toggler-bar top-bar' />
+        <span className='toggler-bar mid-bar' />
+        <span className='toggler-bar bot-bar' />
+      </button>
 
-        <span className='navbar-brand'>
+      <div className='collapse navbar-collapse' id='navbar'>
+
+        <span>
+          <hr />
+        </span>
+
+        <span
+          className='nav-item nav-item-first'
+          data-toggle='collapse'
+          data-target='.navbar-collapse.show'
+        >
           <Link className='link' to='/'>
-            <Icon />
+            <CalendarIcon />
+            Kalenteri
           </Link>
         </span>
 
-        <button
-          className='navbar-toggler'
-          type='button'
+        <span
+          className='nav-item'
           data-toggle='collapse'
-          data-target='#navbar'
-          aria-controls='navbar'
-          aria-expanded='false'
-          aria-label='Toggle navigation'
+          data-target='.navbar-collapse.show'
         >
-          <div
-            className="animated-navbar-toggler-icon"
-            id='navbar-toggle-btn'
-            onClick={toggleOpenAnimation}
-          >
-            <span /><span /><span />
-          </div>
-        </button>
+          <Link className='link' to='/about'>
+            <AboutIcon />
+            Yleistä
+          </Link>
+        </span>
 
-        <div className='collapse navbar-collapse' id='navbar'>
+        <span
+          className='nav-item'
+          data-toggle='collapse'
+          data-target='.navbar-collapse.show'
+        >
+          <Link className='link' to='/links'>
+            <CompassIcon />
+            Linkkejä
+          </Link>
+        </span>
 
-          <span>
-            <hr />
-          </span>
+        <span
+          className='nav-item ml-auto'
+          data-toggle='collapse'
+          data-target='.navbar-collapse.show'
+        >
+          <Link className='link' to='/manage'>
+            <ManageIcon />
+            Hallinta
+          </Link>
+        </span>
 
-          <span
-            className='nav-item nav-item-first'
-            data-toggle='collapse'
-            data-target='.navbar-collapse.show'
-            onClick={toggleOpenAnimation}
-          >
-            <Link className='link' to='/'>
-              <CalendarIcon />
-              Kalenteri
-            </Link>
-          </span>
-
-          <span
-            className='nav-item'
-            data-toggle='collapse'
-            data-target='.navbar-collapse.show'
-            onClick={toggleOpenAnimation}
-          >
-            <Link className='link' to='/about'>
-              <AboutIcon />
-              Yleistä
-            </Link>
-          </span>
-
-          <span
-            className='nav-item'
-            data-toggle='collapse'
-            data-target='.navbar-collapse.show'
-            onClick={toggleOpenAnimation}
-          >
-            <Link className='link' to='/links'>
-              <CompassIcon />
-              Linkkejä
-            </Link>
-          </span>
-
-          <span
-            className='nav-item ml-auto'
-            data-toggle='collapse'
-            data-target='.navbar-collapse.show'
-            onClick={toggleOpenAnimation}
-          >
-            <Link className='link' to='/manage'>
-              <ManageIcon />
-              Hallinta
-            </Link>
-          </span>
-
-        </div>
-      </nav>
-    </div>
-  )
-}
+      </div>
+    </nav>
+  </div>
+)
 
 export default NavigationMenu

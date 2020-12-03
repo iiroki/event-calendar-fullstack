@@ -49,7 +49,7 @@ hr {
 /* Banner on top of the page */
 .banner {
   display: block;
-  max-width: 100%;
+  max-width: 99%;
   margin-left: auto;
   margin-right: auto;
 }
@@ -68,78 +68,43 @@ hr {
   margin-bottom: 10px;
 }
 
-.animated-navbar-toggler-icon {
-  width: 30px;
-  height: 20px;
-  position: relative;
-  margin: 0px;
-  -webkit-transform: rotate(0deg);
-  -moz-transform: rotate(0deg);
-  -o-transform: rotate(0deg);
-  transform: rotate(0deg);
-  -webkit-transition: .5s ease-in-out;
-  -moz-transition: .5s ease-in-out;
-  -o-transition: .5s ease-in-out;
-  transition: .5s ease-in-out;
-  cursor: pointer;
+/* Animation for hamburger button */
+.animated-toggler {
+  border: none;
 }
 
-.animated-navbar-toggler-icon span {
+.animated-toggler:focus {
+  outline: none;
+}
+
+.animated-toggler .toggler-bar {
+  background-color: #ffffff;
+  transform: rotate(0deg) translate(0px, 0px);
+  transition: ease all .2s;
   display: block;
-  position: absolute;
+  width: 30px;
   height: 3px;
-  width: 100%;
-  border-radius: 9px;
-  opacity: 1;
-  left: 0;
-  -webkit-transform: rotate(0deg);
-  -moz-transform: rotate(0deg);
-  -o-transform: rotate(0deg);
-  transform: rotate(0deg);
-  -webkit-transition: .25s ease-in-out;
-  -moz-transition: .25s ease-in-out;
-  -o-transition: .25s ease-in-out;
-  transition: .25s ease-in-out;
-  background: #e3f2fd;
+  border-radius: 1px;
 }
 
-.animated-navbar-toggler-icon span:nth-child(1) {
-  top: 0px;
+.animated-toggler .toggler-bar+.toggler-bar {
+  margin-top: 6px;
 }
 
-.animated-navbar-toggler-icon span:nth-child(2) {
-  top: 10px;
+.animated-toggler:not(.collapsed) .toggler-bar:nth-child(1) {
+  transform: rotate(45deg) translate(7.5px, 6px);
+  transition: ease all .2s;
 }
 
-.animated-navbar-toggler-icon span:nth-child(3) {
-  top: 20px;
+.animated-toggler:not(.collapsed) .toggler-bar:nth-child(2) {
+  opacity: 0;
+  transition: ease all .2s;
 }
 
-.animated-navbar-toggler-icon.open span:nth-child(1) {
-  top: 11px;
-  width: 0%;
-  left: 50%;
-  }
-  
-  .animated-navbar-toggler-icon.open span:nth-child(2) {
-  -webkit-transform: rotate(45deg);
-  -moz-transform: rotate(45deg);
-  -o-transform: rotate(45deg);
-  transform: rotate(45deg);
-  }
-  
-  .animated-navbar-toggler-icon.open span:nth-child(3) {
-  -webkit-transform: rotate(-45deg);
-  -moz-transform: rotate(-45deg);
-  -o-transform: rotate(-45deg);
-  transform: rotate(-45deg);
-  }
-  
-  .animated-navbar-toggler-icon.open span:nth-child(4) {
-  top: 11px;
-  width: 0%;
-  left: 50%;
-  }
+.animated-toggler:not(.collapsed) .toggler-bar:nth-child(3) {
+  transform: rotate(-45deg) translate(6px, -6px);
+  transition: ease all .2s;
+}
 
 /* Brand at the start of the navabr */
 .navbar-brand {
