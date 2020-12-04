@@ -4,8 +4,6 @@ The idea of the app is to display all the events added by users in the calendar.
 This app has the frontend built with React + Redux and runs Node.js + Express in the backend. Data is stored into a MySQL-database.
 
 ### TODO
-- Date picker
-- Color picker
 - Events as a list with filter function
 
 ### Features
@@ -20,12 +18,13 @@ All users:
 Users with account:
   - [x] Log in/out
   - [x] Add events
+    - [x] Date and time pickers
   - [x] Update own events
   - [x] Remove own events
-  - [x] Update profile name
-  - [x] Update profile username
-  - [x] Update profile password
-  - [x] Custom color for own events
+  - [x] Update profile
+    - [x] Name, username, password
+    - [x] Profile colors
+      - [x] Color picker
 
 Misc:
   - [x] Notifications when actions succeed/fail
