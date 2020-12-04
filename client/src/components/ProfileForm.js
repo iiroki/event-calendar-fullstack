@@ -7,7 +7,8 @@ import {
   expiredTokenNotification,
   notificationTypes
 } from '../reducers/notificationReducer'
-import { AlertIcon } from '../assets/icons'
+import { AlertIcon, CloseColorPickerIcon } from '../assets/icons'
+import ColorPicker from './ColorPicker'
 
 // Form where user information can be changed
 // handleHide can be provided to hide the form after successful submit
@@ -21,6 +22,8 @@ const UserInformationForm = ({ profile, handleHide = null }) => {
   const [link, setLink] = useState(profile.link)
   const [bgColor, setBgColor] = useState(profile.bgColor)
   const [fgColor, setFgColor] = useState(profile.fgColor)
+  const [showBgCp, setShowBgCp] = useState(false)
+  const [showFgCp, setShowFgCp] = useState(false)
   const [password, setPassword] = useState('')
   const dispatch = useDispatch()
 
@@ -115,6 +118,16 @@ const UserInformationForm = ({ profile, handleHide = null }) => {
     }
   }
 
+  const toggleBgColorPicker = () => {
+    if (!showBgCp && showFgCp) setShowFgCp(false)
+    setShowBgCp(!showBgCp)
+  }
+
+  const toggleFgColorPicker = () => {
+    if (!showFgCp && showBgCp) setShowBgCp(false)
+    setShowFgCp(!showFgCp)
+  }
+
   return (
     <form className='input-form' onSubmit={handleSubmit}>
       <div className='row form-row'>
@@ -184,6 +197,7 @@ const UserInformationForm = ({ profile, handleHide = null }) => {
             <div className='input-group-prepend'>
               <div className='input-group-text preinput-label'>#</div>
             </div>
+
             <input
               type='text'
               className='form-control hex preinput-text'
@@ -192,7 +206,35 @@ const UserInformationForm = ({ profile, handleHide = null }) => {
               onChange={({ target }) => setBgColor(target.value)}
               placeholder='ffffff'
             />
+
+            <div className='input-group-append'>
+              <span className='input-group-text preinput-label'>
+                {
+                  showBgCp
+                    ? (
+                      <span
+                        onClick={toggleBgColorPicker}
+                      >
+                        <CloseColorPickerIcon />
+                      </span>
+                    )
+                    : (
+                      <span
+                        className='color-square'
+                        style={{ backgroundColor: `#${bgColor}` }}
+                        onClick={toggleBgColorPicker}
+                      />
+                    )
+                }
+              </span>
+            </div>
           </div>
+
+          <ColorPicker
+            show={showBgCp}
+            handleShow={toggleBgColorPicker}
+            onSelect={setBgColor}
+          />
         </div>
       </div>
 
@@ -208,6 +250,7 @@ const UserInformationForm = ({ profile, handleHide = null }) => {
             <div className='input-group-prepend'>
               <div className='input-group-text preinput-label'>#</div>
             </div>
+
             <input
               type='text'
               className='form-control hex preinput-text'
@@ -216,7 +259,35 @@ const UserInformationForm = ({ profile, handleHide = null }) => {
               onChange={({ target }) => setFgColor(target.value)}
               placeholder='000000'
             />
+
+            <div className='input-group-append'>
+              <span className='input-group-text preinput-label'>
+              {
+                showFgCp
+                  ? (
+                    <span
+                      onClick={toggleFgColorPicker}
+                    >
+                      <CloseColorPickerIcon />
+                    </span>
+                  )
+                  : (
+                    <span
+                      className='color-square'
+                      style={{ backgroundColor: `#${fgColor}` }}
+                      onClick={toggleFgColorPicker}
+                    />
+                  )
+              }
+              </span>
+            </div>
           </div>
+
+          <ColorPicker
+            show={showFgCp}
+            handleShow={toggleFgColorPicker}
+            onSelect={setFgColor}
+          />
         </div>
       </div>
 
