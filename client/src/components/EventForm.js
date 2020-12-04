@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
+import DatePicker, { setDefaultLocale } from 'react-datepicker'
 import {
   parse,
   format,
@@ -16,6 +17,9 @@ import {
   notificationTypes
 } from '../reducers/notificationReducer'
 import { HelpIcon, AlertIcon } from '../assets/icons'
+import { fi } from 'date-fns/locale'
+
+setDefaultLocale(fi)
 
 const defaultValues = {
   title: '',
@@ -291,24 +295,30 @@ const EventForm = ({ eventoToModify = null, editDoneHandler = null }) => {
           >
             Alkamisajankohta*
           </label>
-          <div className='col-lg-4'>
-            <i>pvm</i>
-            <input
-              type='text'
+          <div className='col-lg-2'>
+          <i>pvm</i>
+            <DatePicker
               className='form-control date'
-              id='startDateInput'
-              value={startDate}
-              onChange={({ target }) => setStartDate(target.value)}
-              placeholder='pp.kk.vvvv'
+              //dayClassName='datepicker-day'
+              dateFormat='dd.MM.yyyy'
+              selected={startDate}
+              onChange={date => setStartDate(date)}
+              placeholderText='pp.kk.vvvv'
+              showWeekNumbers
             />
+          </div>
+          <div className='col-lg-2'>
             <i>klo</i>
-            <input
-              type='text'
+            <DatePicker
               className='form-control time'
-              id='startTimeInput'
-              value={startTime}
-              onChange={({ target }) => setStartTime(target.value)}
-              placeholder='hh:mm'
+              dateFormat='HH:mm'
+              selected={startTime}
+              onChange={time => setStartTime(time)}
+              placeholderText='hh:mm'
+              showTimeSelect
+              showTimeSelectOnly
+              timeIntervals={15}
+              timeCaption='Aika'
             />
           </div>
         </div>
@@ -320,24 +330,29 @@ const EventForm = ({ eventoToModify = null, editDoneHandler = null }) => {
           >
             Päättymisajankohta*
           </label>
-          <div className='col-lg-4'>
+          <div className='col-lg-2'>
             <i>pvm</i>
-            <input
-              type='text'
+            <DatePicker
               className='form-control date'
-              id='endDateInput'
-              value={endDate}
-              onChange={({ target }) => setEndDate(target.value)}
-              placeholder='pp.kk.vvvv'
+              dateFormat='dd.MM.yyyy'
+              selected={endDate}
+              onChange={date => setEndDate(date)}
+              placeholderText='pp.kk.vvvv'
+              showWeekNumbers
             />
+          </div>
+          <div className='col-lg-2'>
             <i>klo</i>
-            <input
-              type='text'
+            <DatePicker
               className='form-control time'
-              id='endTimeInput'
-              value={endTime}
-              onChange={({ target }) => setEndTime(target.value)}
-              placeholder='hh:mm'
+              dateFormat='HH:mm'
+              selected={endTime}
+              onChange={time => setEndTime(time)}
+              placeholderText='hh:mm'
+              showTimeSelect
+              showTimeSelectOnly
+              timeIntervals={15}
+              timeCaption='Aika'
             />
           </div>
         </div>
