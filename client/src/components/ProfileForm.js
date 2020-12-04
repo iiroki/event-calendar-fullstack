@@ -7,7 +7,7 @@ import {
   expiredTokenNotification,
   notificationTypes
 } from '../reducers/notificationReducer'
-import { AlertIcon } from '../assets/icons'
+import { AlertIcon, CloseColorPickerIcon } from '../assets/icons'
 import ColorPicker from './ColorPicker'
 
 // Form where user information can be changed
@@ -119,10 +119,12 @@ const UserInformationForm = ({ profile, handleHide = null }) => {
   }
 
   const toggleBgColorPicker = () => {
+    if (!showBgCp && showFgCp) setShowFgCp(false)
     setShowBgCp(!showBgCp)
   }
 
   const toggleFgColorPicker = () => {
+    if (!showFgCp && showBgCp) setShowBgCp(false)
     setShowFgCp(!showFgCp)
   }
 
@@ -207,11 +209,23 @@ const UserInformationForm = ({ profile, handleHide = null }) => {
 
             <div className='input-group-append'>
               <span className='input-group-text preinput-label'>
-                <span
-                  className='color-square'
-                  style={{ backgroundColor: `#${bgColor}` }}
-                  onClick={toggleBgColorPicker}
-                />
+                {
+                  showBgCp
+                    ? (
+                      <span
+                        onClick={toggleBgColorPicker}
+                      >
+                        <CloseColorPickerIcon />
+                      </span>
+                    )
+                    : (
+                      <span
+                        className='color-square'
+                        style={{ backgroundColor: `#${bgColor}` }}
+                        onClick={toggleBgColorPicker}
+                      />
+                    )
+                }
               </span>
             </div>
           </div>
@@ -248,11 +262,23 @@ const UserInformationForm = ({ profile, handleHide = null }) => {
 
             <div className='input-group-append'>
               <span className='input-group-text preinput-label'>
-                <span
-                  className='color-square'
-                  style={{ backgroundColor: `#${fgColor}` }}
-                  onClick={toggleFgColorPicker}
-                />
+              {
+                showFgCp
+                  ? (
+                    <span
+                      onClick={toggleFgColorPicker}
+                    >
+                      <CloseColorPickerIcon />
+                    </span>
+                  )
+                  : (
+                    <span
+                      className='color-square'
+                      style={{ backgroundColor: `#${fgColor}` }}
+                      onClick={toggleFgColorPicker}
+                    />
+                  )
+              }
               </span>
             </div>
           </div>
