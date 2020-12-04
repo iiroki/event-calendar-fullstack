@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
-import DatePicker, { setDefaultLocale } from 'react-datepicker'
+import { setDefaultLocale } from 'react-datepicker'
 import {
   parse,
   format,
@@ -18,6 +18,7 @@ import {
 } from '../reducers/notificationReducer'
 import { HelpIcon, AlertIcon } from '../assets/icons'
 import { fi } from 'date-fns/locale'
+import CustomDatePicker from './CustomDatePicker'
 
 setDefaultLocale(fi)
 
@@ -297,28 +298,17 @@ const EventForm = ({ eventoToModify = null, editDoneHandler = null }) => {
           </label>
           <div className='col-lg-2'>
           <i>pvm</i>
-            <DatePicker
-              className='form-control date'
-              //dayClassName='datepicker-day'
-              dateFormat='dd.MM.yyyy'
-              selected={startDate}
-              onChange={date => setStartDate(date)}
-              placeholderText='pp.kk.vvvv'
-              showWeekNumbers
+            <CustomDatePicker
+              current={startDate}
+              onSelect={setStartDate}
             />
           </div>
           <div className='col-lg-2'>
             <i>klo</i>
-            <DatePicker
-              className='form-control time'
-              dateFormat='HH:mm'
-              selected={startTime}
-              onChange={time => setStartTime(time)}
-              placeholderText='hh:mm'
-              showTimeSelect
-              showTimeSelectOnly
-              timeIntervals={15}
-              timeCaption='Aika'
+            <CustomDatePicker
+              pickTime
+              current={startTime}
+              onSelect={setStartTime}
             />
           </div>
         </div>
@@ -332,27 +322,17 @@ const EventForm = ({ eventoToModify = null, editDoneHandler = null }) => {
           </label>
           <div className='col-lg-2'>
             <i>pvm</i>
-            <DatePicker
-              className='form-control date'
-              dateFormat='dd.MM.yyyy'
-              selected={endDate}
-              onChange={date => setEndDate(date)}
-              placeholderText='pp.kk.vvvv'
-              showWeekNumbers
+            <CustomDatePicker
+              current={endDate}
+              onSelect={setEndDate}
             />
           </div>
           <div className='col-lg-2'>
             <i>klo</i>
-            <DatePicker
-              className='form-control time'
-              dateFormat='HH:mm'
-              selected={endTime}
-              onChange={time => setEndTime(time)}
-              placeholderText='hh:mm'
-              showTimeSelect
-              showTimeSelectOnly
-              timeIntervals={15}
-              timeCaption='Aika'
+            <CustomDatePicker
+              pickTime
+              current={endTime}
+              onSelect={setEndTime}
             />
           </div>
         </div>
