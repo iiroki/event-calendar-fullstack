@@ -118,6 +118,14 @@ const UserInformationForm = ({ profile, handleHide = null }) => {
     }
   }
 
+  const toggleBgColorPicker = () => {
+    setShowBgCp(!showBgCp)
+  }
+
+  const toggleFgColorPicker = () => {
+    setShowFgCp(!showFgCp)
+  }
+
   return (
     <form className='input-form' onSubmit={handleSubmit}>
       <div className='row form-row'>
@@ -202,10 +210,17 @@ const UserInformationForm = ({ profile, handleHide = null }) => {
                 <span
                   className='color-square'
                   style={{ backgroundColor: `#${bgColor}` }}
+                  onClick={toggleBgColorPicker}
                 />
               </span>
             </div>
           </div>
+
+          <ColorPicker
+            show={showBgCp}
+            handleShow={toggleBgColorPicker}
+            onSelect={setBgColor}
+          />
         </div>
       </div>
 
@@ -236,13 +251,15 @@ const UserInformationForm = ({ profile, handleHide = null }) => {
                 <span
                   className='color-square'
                   style={{ backgroundColor: `#${fgColor}` }}
+                  onClick={toggleFgColorPicker}
                 />
               </span>
             </div>
           </div>
 
           <ColorPicker
-            show={false}
+            show={showFgCp}
+            handleShow={toggleFgColorPicker}
             onSelect={setFgColor}
           />
         </div>
