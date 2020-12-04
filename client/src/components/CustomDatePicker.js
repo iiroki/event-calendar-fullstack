@@ -11,10 +11,11 @@ const CustomDatePicker = ({ pickTime, current, onSelect }) => {
         onChange={date => onSelect(date)}
         placeholderText='pp.kk.vvvv'
         showWeekNumbers
+        popperPlacement='top-start'
         popperModifiers={{
           offset: {
             enabled: true,
-            offset: '-25 0'
+            offset: '-50 0'
           }
         }}
       />
@@ -32,6 +33,7 @@ const CustomDatePicker = ({ pickTime, current, onSelect }) => {
       showTimeSelectOnly
       timeIntervals={15}
       timeCaption='Aika'
+      popperPlacement='top-start'
     />
   )
 }
