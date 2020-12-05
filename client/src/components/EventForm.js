@@ -66,19 +66,10 @@ const EventForm = ({ eventoToModify = null, editDoneHandler = null }) => {
   const dispatch = useDispatch()
 
   // Parses Dates and times to correct form for the server
-  const parseDateTime = (date, time) => {
-    const d = date.split('.').reverse().join('-')
-    const t = time.split('.').join(':')
-    return `${d} ${t}`
-  }
-  // Checks that given date is valid
-  const validateDate = date => isValid(parse(date, 'd.M.yyyy', new Date()))
-
-  // Checks that given time is valid
-  const validateTime = time => isValid(parse(time, 'H:mm', new Date()))
+  const parseDate = date => format(date, 'y-M-d H:mm')
 
   // Validates all the fields and returns all errors in array
-  const validateFields = () => {
+  const validateFields = (start, end) => {
     const errors = []
 
     if (title.length === 0) {
@@ -89,26 +80,7 @@ const EventForm = ({ eventoToModify = null, editDoneHandler = null }) => {
       errors.push('Tapahtumapaikka ei voi olla tyhjä')
     }
 
-    if (!validateDate(startDate)) {
-      errors.push('Virheellinen alkamispäivämäärä')
-    }
-
-    if (!validateTime(startTime)) {
-      errors.push('Virheellinen alkamiskellonaika')
-    }
-
-    if (!validateDate(endDate)) {
-      errors.push('Virheellinen päättymispäivämäärä')
-    }
-
-    if (!validateTime(endTime)) {
-      errors.push('Virheellinen päättymiskellonaika')
-    }
-
-    const s = parse(`${startDate} ${startTime}`, 'd.M.yyyy H:mm', new Date())
-    const e = parse(`${endDate} ${endTime}`, 'd.M.yyyy H:mm', new Date())
-
-    if (isAfter(s, e)) {
+    if (isAfter(start, end)) {
       errors.push('Päättymisajankohta ennen alkamisajankohtaa')
     }
 
@@ -118,7 +90,18 @@ const EventForm = ({ eventoToModify = null, editDoneHandler = null }) => {
   const handleAddNew = async event => {
     event.preventDefault()
 
-    const errors = validateFields()
+    debugger
+    const start = startDate
+    const end = endDate
+    start.setHours(startTime.getHours())
+    start.setMinutes(startTime.getMinutes())
+    end.setHours(endTime.getHours())
+    end.setMinutes(endTime.getMinutes())
+
+    const errors = validateFields(start, end)
+
+    console.log(parseDate(start))
+    console.log(parseDate(end))
 
     if (errors.length !== 0) {
       const errorMsgs = errors.join('\n')
@@ -131,15 +114,12 @@ const EventForm = ({ eventoToModify = null, editDoneHandler = null }) => {
       return
     }
 
-    const start = parseDateTime(startDate, startTime)
-    const end = parseDateTime(endDate, endTime)
-
     try {
       await dispatch(addNewEvent({
         title,
         location,
-        start,
-        end,
+        start: parseDate(start),
+        end: parseDate(end),
         multi,
         description
       }))
@@ -169,6 +149,7 @@ const EventForm = ({ eventoToModify = null, editDoneHandler = null }) => {
     }
   }
 
+  // TODO: New validations! (check handleAddNew)
   const handleEdit = async event => {
     event.preventDefault()
 
@@ -206,8 +187,8 @@ const EventForm = ({ eventoToModify = null, editDoneHandler = null }) => {
       return
     }
 
-    const start = parseDateTime(startDate, startTime)
-    const end = parseDateTime(endDate, endTime)
+    const start = parseDate(startDate, startTime)
+    const end = parseDate(endDate, endTime)
 
     try {
       await dispatch(editExistingEvent({
