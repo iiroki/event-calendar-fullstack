@@ -213,6 +213,7 @@ const UserInformationForm = ({ profile, handleHide = null }) => {
                   showBgCp
                     ? (
                       <span
+                        className='color-pointer'
                         onClick={toggleBgColorPicker}
                       >
                         <CloseColorPickerIcon />
@@ -220,7 +221,7 @@ const UserInformationForm = ({ profile, handleHide = null }) => {
                     )
                     : (
                       <span
-                        className='color-square'
+                        className='color-square color-pointer'
                         style={{ backgroundColor: `#${bgColor}` }}
                         onClick={toggleBgColorPicker}
                       />
@@ -266,6 +267,7 @@ const UserInformationForm = ({ profile, handleHide = null }) => {
                 showFgCp
                   ? (
                     <span
+                      className='color-pointer'
                       onClick={toggleFgColorPicker}
                     >
                       <CloseColorPickerIcon />
@@ -273,7 +275,7 @@ const UserInformationForm = ({ profile, handleHide = null }) => {
                   )
                   : (
                     <span
-                      className='color-square'
+                      className='color-square color-pointer'
                       style={{ backgroundColor: `#${fgColor}` }}
                       onClick={toggleFgColorPicker}
                     />
