@@ -18,7 +18,7 @@ const CustomDatePicker = ({ pickTime, current, onSelect }) => {
         popperModifiers={{
           offset: {
             enabled: true,
-            offset: '-50 0'
+            offset: '-50, 0'
           }
         }}
       />
