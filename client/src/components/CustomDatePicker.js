@@ -1,5 +1,8 @@
 import React from 'react'
-import DatePicker from 'react-datepicker'
+import DatePicker, { setDefaultLocale } from 'react-datepicker'
+import { fi } from 'date-fns/locale'
+
+setDefaultLocale(fi)
 
 const CustomDatePicker = ({ pickTime, current, onSelect }) => {
   if (!pickTime) {

@@ -1,10 +1,7 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { setDefaultLocale } from 'react-datepicker'
 import {
-  parse,
   format,
-  isValid,
   isAfter
 } from 'date-fns'
 import {
@@ -16,19 +13,17 @@ import {
   expiredTokenNotification,
   notificationTypes
 } from '../reducers/notificationReducer'
-import { HelpIcon, AlertIcon } from '../assets/icons'
-import { fi } from 'date-fns/locale'
 import CustomDatePicker from './CustomDatePicker'
+import { HelpIcon, AlertIcon } from '../assets/icons'
 
-setDefaultLocale(fi)
-
+// Default values when no event is provided
 const defaultValues = {
   title: '',
   location: '',
-  startDate: '',
-  startTime: '',
-  endDate: '',
-  endTime: '',
+  startDate: null,
+  startTime: null,
+  endDate: null,
+  endTime: null,
   multi: false,
   description: ''
 }
@@ -41,10 +36,10 @@ const getFieldValues = eventObject => {
   return {
     title: eventObject.title,
     location: eventObject.location,
-    startDate: format(eventObject.start, 'd.M.yyyy'),
-    startTime: format(eventObject.start, 'H:mm'),
-    endDate: format(eventObject.end, 'd.M.yyyy'),
-    endTime: format(eventObject.end, 'H:mm'),
+    startDate: eventObject.start,
+    startTime: eventObject.start,
+    endDate: eventObject.end,
+    endTime: eventObject.end,
     multi: eventObject.multi,
     description: eventObject.description
   }
@@ -65,8 +60,22 @@ const EventForm = ({ eventoToModify = null, editDoneHandler = null }) => {
 
   const dispatch = useDispatch()
 
-  // Parses Dates and times to correct form for the server
-  const parseDate = date => format(date, 'y-M-d H:mm')
+  // Combines date and time to a single date
+  const combineDateAndTime = (date, time) => {
+    if (!date || !time) {
+      return null
+    }
+
+    return (
+      new Date(
+        date.getFullYear(), date.getMonth(), date.getDate(),
+        time.getHours(), time.getMinutes()
+      )
+    )
+  }
+
+  // Formats dates and times to correct format for the server
+  const formatDate = date => format(date, 'y-M-d H:mm')
 
   // Validates all the fields and returns all errors in array
   const validateFields = (start, end) => {
@@ -80,6 +89,14 @@ const EventForm = ({ eventoToModify = null, editDoneHandler = null }) => {
       errors.push('Tapahtumapaikka ei voi olla tyhjä')
     }
 
+    if (!start) {
+      errors.push('Virheellinen alkamisajankohta')
+    }
+
+    if (!end) {
+      errors.push('Virheellinen päättymisajankohta')
+    }
+
     if (isAfter(start, end)) {
       errors.push('Päättymisajankohta ennen alkamisajankohtaa')
     }
@@ -87,30 +104,23 @@ const EventForm = ({ eventoToModify = null, editDoneHandler = null }) => {
     return errors
   }
 
+  const showEventErrors = errors => {
+    const errorMsgs = errors.join('\n')
+
+    dispatch(setNotification(
+      `Tapahtuman tiedoissa virheitä:\n${errorMsgs}`,
+      notificationTypes.ERROR
+    ))
+  }
+
   const handleAddNew = async event => {
     event.preventDefault()
-
-    debugger
-    const start = startDate
-    const end = endDate
-    start.setHours(startTime.getHours())
-    start.setMinutes(startTime.getMinutes())
-    end.setHours(endTime.getHours())
-    end.setMinutes(endTime.getMinutes())
-
+    const start = combineDateAndTime(startDate, startTime)
+    const end = combineDateAndTime(endDate, endTime)
     const errors = validateFields(start, end)
 
-    console.log(parseDate(start))
-    console.log(parseDate(end))
-
     if (errors.length !== 0) {
-      const errorMsgs = errors.join('\n')
-
-      dispatch(setNotification(
-        `Tapahtuman tiedoissa virheitä:\n${errorMsgs}`,
-        notificationTypes.ERROR
-      ))
-
+      showEventErrors(errors)
       return
     }
 
@@ -118,8 +128,8 @@ const EventForm = ({ eventoToModify = null, editDoneHandler = null }) => {
       await dispatch(addNewEvent({
         title,
         location,
-        start: parseDate(start),
-        end: parseDate(end),
+        start: formatDate(start),
+        end: formatDate(end),
         multi,
         description
       }))
@@ -149,7 +159,6 @@ const EventForm = ({ eventoToModify = null, editDoneHandler = null }) => {
     }
   }
 
-  // TODO: New validations! (check handleAddNew)
   const handleEdit = async event => {
     event.preventDefault()
 
@@ -173,30 +182,22 @@ const EventForm = ({ eventoToModify = null, editDoneHandler = null }) => {
 
       return
     }
-
-    const errors = validateFields()
+    const start = combineDateAndTime(startDate, startTime)
+    const end = combineDateAndTime(endDate, endTime)
+    const errors = validateFields(start, end)
 
     if (errors.length !== 0) {
-      const errorMsgs = errors.join('\n')
-
-      dispatch(setNotification(
-        `Tapahtuman tiedoissa virheitä:\n${errorMsgs}`,
-        notificationTypes.ERROR
-      ))
-
+      showEventErrors(errors)
       return
     }
-
-    const start = parseDate(startDate, startTime)
-    const end = parseDate(endDate, endTime)
 
     try {
       await dispatch(editExistingEvent({
         id: eventoToModify.id,
         title,
         location,
-        start,
-        end,
+        start: formatDate(start),
+        end: formatDate(end),
         multi,
         description
       }))
@@ -278,7 +279,7 @@ const EventForm = ({ eventoToModify = null, editDoneHandler = null }) => {
             Alkamisajankohta*
           </label>
           <div className='col-lg-2'>
-          <i>pvm</i>
+            <i>pvm</i>
             <CustomDatePicker
               current={startDate}
               onSelect={setStartDate}
