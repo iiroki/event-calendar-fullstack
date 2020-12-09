@@ -4,6 +4,7 @@ import Linkify from 'react-linkify'
 import { format } from 'date-fns'
 import { fi } from 'date-fns/locale'
 import { setNotification, notificationTypes } from '../reducers/notificationReducer'
+import eventDateFormat from '../utils/eventDateFormat'
 import eventToIcs from '../utils/icsConverter'
 
 const EventPage = ({ id }) => {
@@ -24,19 +25,6 @@ const EventPage = ({ id }) => {
   }
 
   const organizer = users.find(u => u.id === event.organizer_id)
-
-  // Formatting date based on the length of the event
-  const formatDate = () => {
-    if (event.start.getDate() === event.end.getDate()) {
-      const sf = format(event.start, 'EEEEEE d.M.yyyy H:mm', { locale: fi })
-      const ef = format(event.end, 'H:mm', { locale: fi })
-      return `${sf} - ${ef}`
-    }
-
-    const sf = format(event.start, 'EEEEEE d.M.yyyy H:mm', { locale: fi })
-    const ef = format(event.end, 'EEEEEE d.M.yyyy H:mm', { locale: fi })
-    return `${sf} - ${ef}`
-  }
 
   // Allows .ics-file downloads
   const downloadIcs = () => {
@@ -88,7 +76,7 @@ const EventPage = ({ id }) => {
 
       <div className='event-information-box'>
         <div>
-          <b>{formatDate()}</b>
+          <b>{eventDateFormat(event.start, event.end)}</b>
         </div>
 
         <div className='form-row'>

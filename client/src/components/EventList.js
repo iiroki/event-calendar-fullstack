@@ -1,18 +1,25 @@
 import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
-import { Link } from 'react-router-dom'
-import { format } from 'date-fns'
-import { fi } from 'date-fns/locale'
+import { useHistory } from 'react-router-dom'
+import eventDateFormat from '../utils/eventDateFormat'
 
-const EventListItem = ({ e }) => (
-  <div
-    className='event-list-item'
-    style={{
-      backgroundColor: `#${e.bgColor}`
-    }}
-  >
-    <Link to={`/events/${e.id}`}>
-      <span
+const EventListItem = ({ e }) => {
+  const history = useHistory()
+
+  const handleEventSelect = () => {
+    history.push(`/events/${e.id}`)
+  }
+
+  return (
+    <div
+      className='event-list-item'
+      role='button'
+      style={{
+        backgroundColor: `#${e.bgColor}`
+      }}
+      onClick={handleEventSelect}
+    >
+      <div
         className='event-list-item-box'
         style={{ color: `#${e.fgColor}` }}
       >
@@ -20,13 +27,12 @@ const EventListItem = ({ e }) => (
           {`${e.title}`}
         </div>
         <div className='event-list-item-date'>
-          {`${format(e.start, 'd.M.yyyy', { locale: fi })}`}
+          {eventDateFormat(e.start, e.end)}
         </div>
-      </span>
-    </Link>
-  </div>
-)
-
+      </div>
+    </div>
+  )
+}
 const EventList = () => {
   const [search, setSearch] = useState('') // Search by event name
   const [userFilter, setUserFilter] = useState('') // Filter events by user
