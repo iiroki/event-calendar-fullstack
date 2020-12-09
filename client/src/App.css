@@ -186,6 +186,14 @@ div.container {
   font-size: 0.9rem;
 }
 
+.user-dropdown {
+  display: inline;
+}
+
+.user-dropdown-item {
+  cursor: pointer;
+}
+
 .about-box {
   text-align: left;
   font-size: 1.1rem
