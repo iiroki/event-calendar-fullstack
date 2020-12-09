@@ -161,6 +161,29 @@ div.container {
   white-space: pre-wrap;
 }
 
+.event-list {
+  width: 60%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.event-list-item {
+  margin: 10px 0px;
+}
+
+.event-list-item-box {
+  padding: 10px 20px;
+}
+
+.event-list-item-title {
+  font-size: 1.3rem;
+  font-weight: bold;
+}
+
+.event-list-item-date {
+  font-size: 1.1rem;
+}
+
 .about-box {
   text-align: left;
   font-size: 1.1rem
