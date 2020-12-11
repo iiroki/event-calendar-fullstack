@@ -66,13 +66,11 @@ const UserDropdown = ({ users, filter, handleSelect }) => {
   const user = users.find(u => u.id === current)
 
   return (
-    <div className='user-dropdown'>
+    <div>
       <button className='btn dropdown-toggle btn-treekkari user-filter' type='button' id='dropdownMenuButton' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>
         {
-          current // eslint-disable-line
-            ? user
-              ? user.name
-              : 'Tuntematon järjestäjä'
+          current
+            ? user.name
             : 'Etsi tapahtuman järjestäjällä'
         }
       </button>
@@ -104,25 +102,31 @@ const EventSearchBar = ({ users, filter, setFilter }) => {
   }
 
   return (
-    <div>
-      <input
-        type='text'
-        className='form-control'
-        id='searchInput'
-        value={titleFilter}
-        onChange={({ target }) => setTitleFilter(target.value)}
-        placeholder='Etsi tapahtuman nimellä'
-      />
+    <div className='row form-row'>
+      <div className='col-lg-4'>
+        <input
+          type='text'
+          className='form-control'
+          id='searchInput'
+          value={titleFilter}
+          onChange={({ target }) => setTitleFilter(target.value)}
+          placeholder='Etsi tapahtuman nimellä'
+        />
+      </div>
 
-      <UserDropdown users={users} filter={userFilter} handleSelect={setUserFilter} />
+      <div className='col-lg-4'>
+        <UserDropdown users={users} filter={userFilter} handleSelect={setUserFilter} />
+      </div>
 
-      <button
-        className='btn btn-treekkari'
-        type='button'
-        onClick={handleSearch}
-      >
-        Hae
-      </button>
+      <div className='col-lg-8'>
+        <button
+          className='btn btn-treekkari search-button'
+          type='button'
+          onClick={handleSearch}
+        >
+          Hae
+        </button>
+      </div>
     </div>
   )
 }
@@ -133,8 +137,6 @@ const EventList = () => {
   const filter = useSelector(state => state.search)
 
   const dispatch = useDispatch()
-
-  const search = filter.title || filter.user
 
   // Filters events based on current filter options
   const applyFilters = allEvents => {
@@ -188,11 +190,7 @@ const EventList = () => {
           <SearchIcon />
         </a>
         <div
-          className={
-            search
-              ? 'collapse collapsible show'
-              : 'collapse collapsible'
-          }
+          className='collapse collapsible'
           id='eventSearchCollapsible'
         >
           <EventSearchBar users={users} filter={filter} setFilter={handleFilter} />
