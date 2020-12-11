@@ -168,6 +168,11 @@ div.container {
   margin-right: auto;
 }
 
+.event-list-events {
+  max-height: 800px;
+  overflow: auto;
+}
+
 .event-list-item {
   margin: 10px 0px;
   border-radius: 8px;
@@ -190,6 +195,10 @@ div.container {
   width: 280px;
   padding-left: 20px;
   padding-right: 20px;
+}
+
+.unfilter-button {
+  padding-bottom: 4px;
 }
 
 .unfilter-icon {

@@ -115,11 +115,7 @@ const EventSearchBar = ({ users, setFilter }) => {
   )
 }
 
-const FilterButton = ({ title, user }) => {
-
-}
-
-const EventList = () => {
+const EventList = ({ search = false }) => {
   const [filter, setFilter] = useState({
     title: '',
     user: null
@@ -189,7 +185,7 @@ const EventList = () => {
           ? (
             <div>
               <button
-                className='btn btn-treekkari'
+                className='btn btn-treekkari unfilter-button'
                 type='button'
                 onClick={resetFilter}
               >
@@ -200,11 +196,13 @@ const EventList = () => {
           )
           : null
       }
-      {
-        showedEvents.length !== 0
-          ? showedEvents.map(e => <EventListItem key={e.id} e={e} />)
-          : 'Tapahtumia ei löytynyt :('
-      }
+      <div className='event-list-events'>
+        {
+          showedEvents.length !== 0
+            ? showedEvents.map(e => <EventListItem key={e.id} e={e} />)
+            : 'Tapahtumia ei löytynyt :('
+        }
+      </div>
     </div>
   )
 }
