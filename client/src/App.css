@@ -186,6 +186,16 @@ div.container {
   font-size: 0.9rem;
 }
 
+.user-filter {
+  width: 280px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.unfilter-icon {
+  margin-bottom: 2px;
+}
+
 .user-dropdown {
   display: inline;
 }

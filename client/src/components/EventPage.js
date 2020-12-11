@@ -1,8 +1,6 @@
 import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import Linkify from 'react-linkify'
-import { format } from 'date-fns'
-import { fi } from 'date-fns/locale'
 import { setNotification, notificationTypes } from '../reducers/notificationReducer'
 import eventDateFormat from '../utils/eventDateFormat'
 import eventToIcs from '../utils/icsConverter'

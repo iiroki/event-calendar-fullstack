@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 import eventDateFormat from '../utils/eventDateFormat'
+import { SearchIcon, UnfilterIcon } from '../assets/icons'
 
 const EventListItem = ({ e }) => {
   const history = useHistory()
@@ -36,47 +37,173 @@ const EventListItem = ({ e }) => {
   )
 }
 
-const UserDropdownItem = ({ u }) => (
-  <span className='dropdown-item user-dropdown-item'>
+const UserDropdownItem = ({ u, handleSelect }) => (
+  <span
+    className='dropdown-item user-dropdown-item'
+    role='button'
+    onClick={() => {
+      handleSelect(u.id)
+    }}
+    tabIndex={0}
+    onKeyPress={() => handleSelect(u.id)}
+  >
     {u.name}
   </span>
 )
 
-const EventList = () => {
-  const [search, setSearch] = useState('') // Search by event name
-  const [userFilter, setUserFilter] = useState('Etsi käyttäjää') // Filter events by user
+const UserDropdown = ({ users, handleSelect }) => {
+  const [current, setCurrent] = useState(null)
 
-  const users = useSelector(state => state.users)
-  const events = useSelector(state => state.events)
+  const updateFilter = id => {
+    setCurrent(id)
+    handleSelect(id)
+  }
 
   return (
-    <div className='event-list'>
+    <div className='user-dropdown'>
+      <button className='btn dropdown-toggle btn-treekkari user-filter' type='button' id='dropdownMenuButton' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>
+        {
+          current
+            ? users.find(u => u.id === current).name
+            : 'Etsi tapahtuman järjestäjällä'
+        }
+      </button>
+      <div className='dropdown-menu' aria-labelledby='dropdownMenuButton'>
+        <span
+          className='dropdown-item user-dropdown-item'
+          role='button'
+          onClick={() => updateFilter(null)}
+          tabIndex={0}
+          onKeyPress={() => updateFilter(null)}
+        >
+          Ei valittu
+        </span>
+        <hr style={{ margin: '2px 10px' }} />
+        {
+          users.map(u => <UserDropdownItem key={u.id} u={u} handleSelect={updateFilter} />)
+        }
+      </div>
+    </div>
+  )
+}
+
+const EventSearchBar = ({ users, setFilter }) => {
+  const [titleFilter, setTitleFilter] = useState('')
+  const [userFilter, setUserFilter] = useState(null)
+
+  return (
+    <div>
       <input
         type='text'
         className='form-control'
         id='searchInput'
-        value={search}
-        onChange={({ target }) => setSearch(target.value)}
+        value={titleFilter}
+        onChange={({ target }) => setTitleFilter(target.value)}
         placeholder='Etsi tapahtuman nimellä'
       />
 
-      <div className='user-dropdown'>
-        <button className='btn dropdown-toggle btn-treekkari' type='button' id='dropdownMenuButton' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>
-          {userFilter}
-        </button>
-        <div className='dropdown-menu' aria-labelledby='dropdownMenuButton'>
-          <span className='dropdown-item user-dropdown-item'>
-            Ei valittu
-          </span>
-          <hr style={{ margin: '2px 10px' }} />
-          {
-            users.map(u => <UserDropdownItem key={u.id} u={u} />)
-          }
+      <UserDropdown users={users} handleSelect={setUserFilter} />
+
+      <button
+        className='btn btn-treekkari'
+        type='button'
+        onClick={() => setFilter(titleFilter, userFilter)}
+      >
+        Hae
+      </button>
+    </div>
+  )
+}
+
+const FilterButton = ({ title, user }) => {
+
+}
+
+const EventList = () => {
+  const [filter, setFilter] = useState({
+    title: '',
+    user: null
+  })
+
+  const users = useSelector(state => state.users)
+  const events = useSelector(state => state.events)
+
+  const applyFilters = allEvents => {
+    if (filter.user) {
+      const userFiltered = allEvents.filter(e => e.organizer_id === filter.user)
+
+      if (filter.title) {
+        return userFiltered.filter(e => e.title.toLowerCase().includes(filter.title))
+      }
+
+      return userFiltered
+    }
+
+    if (filter.title) {
+      return allEvents.filter(e => e.title.toLowerCase().includes(filter.title))
+    }
+
+    return allEvents
+  }
+
+  const showedEvents = filter
+    ? applyFilters(events)
+    : events
+
+  const handleFilter = (titleFilter, userFilter) => {
+    setFilter({
+      title: titleFilter,
+      user: userFilter
+    })
+  }
+
+  const resetFilter = () => {
+    setFilter({
+      title: '',
+      user: null
+    })
+  }
+
+  return (
+    <div className='event-list'>
+      <div className='collapsible-wrapper'>
+        <a
+          className='btn btn-light collapsible-menu-button'
+          data-toggle='collapse'
+          href='#eventSearchCollapsible'
+          aria-expanded='false'
+          aria-controls='eventSearchCollapsible'
+        >
+          <SearchIcon />
+        </a>
+        <div className='collapse collapsible' id='eventSearchCollapsible'>
+          <EventSearchBar users={users} setFilter={handleFilter} />
         </div>
       </div>
-
+      <hr />
+      <h4>
+        Tapahtumat:
+      </h4>
       {
-        events.map(e => <EventListItem key={e.id} e={e} />)
+        filter.title || filter.user
+          ? (
+            <div>
+              <button
+                className='btn btn-treekkari'
+                type='button'
+                onClick={resetFilter}
+              >
+                Suodatin
+                <UnfilterIcon />
+              </button>
+            </div>
+          )
+          : null
+      }
+      {
+        showedEvents.length !== 0
+          ? showedEvents.map(e => <EventListItem key={e.id} e={e} />)
+          : 'Tapahtumia ei löytynyt :('
       }
     </div>
   )

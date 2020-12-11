@@ -72,6 +72,22 @@ export const PrevIcon = () => (
   </svg>
 )
 
+export const SearchIcon = () => (
+  <svg xmlns='http://www.w3.org/2000/svg' className='icon icon-tabler icon-tabler-search' width='28' height='28' viewBox='0 0 24 24' strokeWidth='1.5' stroke='#000000' fill='none' strokeLinecap='round' strokeLinejoin='round'>
+    <path stroke='none' d='M0 0h24v24H0z' fill='none' />
+    <circle cx='10' cy='10' r='7' />
+    <line x1='21' y1='21' x2='15' y2='15' />
+  </svg>
+)
+
+export const UnfilterIcon = () => (
+  <svg xmlns='http://www.w3.org/2000/svg' className='icon icon-tabler icon-tabler-backspace unfilter-icon' width='28' height='28' viewBox='0 0 24 24' strokeWidth='1.5' stroke='#ffffff' fill='none' strokeLinecap='round' strokeLinejoin='round'>
+    <path stroke='none' d='M0 0h24v24H0z' fill='none' />
+    <path d='M20 6a1 1 0 0 1 1 1v10a1 1 0 0 1 -1 1h-11l-5 -5a1.5 1.5 0 0 1 0 -2l5 -5z' />
+    <path d='M12 10l4 4m0 -4l-4 4' />
+  </svg>
+)
+
 export const HelpIcon = () => (
   <svg xmlns='http://www.w3.org/2000/svg' className='icon icon-tabler icon-tabler-help navbar-icon' width='20' height='20' viewBox='0 0 24 24' strokeWidth='1.5' stroke='#000000' fill='none' strokeLinecap='round' strokeLinejoin='round'>
     <path stroke='none' d='M0 0h24v24H0z' />
