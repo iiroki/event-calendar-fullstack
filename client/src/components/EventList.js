@@ -130,6 +130,7 @@ const EventList = () => {
   const params = {}
 
   if (match) {
+    // Fetch filter options from URL
     const queryParams = queryString.parse(window.location.search)
 
     params.title = queryParams.title
@@ -149,9 +150,10 @@ const EventList = () => {
   const events = useSelector(state => state.events)
   const history = useHistory()
 
+  // Filters events based on current filter options
   const applyFilters = allEvents => {
-    const checkTitleMatch = (title, includes) => (
-      title.toLowerCase().includes(includes.toLowerCase())
+    const checkTitleMatch = (title, searchFor) => (
+      title.toLowerCase().includes(searchFor.toLowerCase())
     )
 
     if (filter.user) {
@@ -171,6 +173,7 @@ const EventList = () => {
     return allEvents
   }
 
+  // Is called when new filter is applied
   const handleFilter = (titleFilter, userFilter) => {
     const searchParams = []
 
@@ -220,10 +223,13 @@ const EventList = () => {
           <EventSearchBar users={users} filter={filter} setFilter={handleFilter} />
         </div>
       </div>
+
       <hr />
+
       <h4>
         Tapahtumat:
       </h4>
+
       {
         filter.title || filter.user
           ? (
@@ -240,6 +246,7 @@ const EventList = () => {
           )
           : null
       }
+
       <div className='event-list-events'>
         {
           showedEvents.length !== 0
