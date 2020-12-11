@@ -1,7 +1,10 @@
 import React, { useState } from 'react'
-import { useSelector } from 'react-redux'
-import { useHistory, useRouteMatch } from 'react-router-dom'
-import queryString from 'query-string'
+import { useSelector, useDispatch } from 'react-redux'
+import { useHistory } from 'react-router-dom'
+import {
+  setSearch,
+  resetSearch
+} from '../reducers/searchReducer'
 import eventDateFormat from '../utils/eventDateFormat'
 import { SearchIcon, UnfilterIcon } from '../assets/icons'
 
@@ -125,30 +128,13 @@ const EventSearchBar = ({ users, filter, setFilter }) => {
 }
 
 const EventList = () => {
-  const match = useRouteMatch('/list/search')
-  const search = match !== null
-  const params = {}
-
-  if (match) {
-    // Fetch filter options from URL
-    const queryParams = queryString.parse(window.location.search)
-
-    params.title = queryParams.title
-      ? queryParams.title
-      : ''
-
-    params.user = queryParams.user !== undefined
-      ? Number(queryParams.user)
-      : null
-  } else {
-    params.title = ''
-    params.user = null
-  }
-
-  const filter = params
   const users = useSelector(state => state.users)
   const events = useSelector(state => state.events)
-  const history = useHistory()
+  const filter = useSelector(state => state.search)
+
+  const dispatch = useDispatch()
+
+  const search = filter.title || filter.user
 
   // Filters events based on current filter options
   const applyFilters = allEvents => {
@@ -175,25 +161,14 @@ const EventList = () => {
 
   // Is called when new filter is applied
   const handleFilter = (titleFilter, userFilter) => {
-    const searchParams = []
-
-    if (titleFilter) {
-      searchParams.push(`title=${titleFilter}`)
-    }
-
-    if (userFilter) {
-      searchParams.push(`user=${userFilter}`)
-    }
-
-    if (searchParams.length !== 0) {
-      history.push(`/list/search?${searchParams.join('&')}`)
-    } else {
-      history.push('/list/search')
-    }
+    dispatch(setSearch({
+      title: titleFilter,
+      user: userFilter
+    }))
   }
 
   const resetFilter = () => {
-    history.push('/list/search')
+    dispatch(resetSearch())
   }
 
   const showedEvents = filter
