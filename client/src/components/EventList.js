@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
-import { useHistory } from 'react-router-dom'
+import { useHistory, useRouteMatch } from 'react-router-dom'
 import eventDateFormat from '../utils/eventDateFormat'
 import { SearchIcon, UnfilterIcon } from '../assets/icons'
 
@@ -115,7 +115,12 @@ const EventSearchBar = ({ users, setFilter }) => {
   )
 }
 
-const EventList = ({ search = false }) => {
+const EventList = () => {
+  const match = useRouteMatch('/list/search')
+  console.log(match)
+
+  const search = match !== null
+
   const [filter, setFilter] = useState({
     title: '',
     user: null
@@ -172,7 +177,14 @@ const EventList = ({ search = false }) => {
         >
           <SearchIcon />
         </a>
-        <div className='collapse collapsible' id='eventSearchCollapsible'>
+        <div
+          className={
+            search
+              ? 'collapse collapsible show'
+              : 'collapse collapsible'
+          }
+          id='eventSearchCollapsible'
+        >
           <EventSearchBar users={users} setFilter={handleFilter} />
         </div>
       </div>
