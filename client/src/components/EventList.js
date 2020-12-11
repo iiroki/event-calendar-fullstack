@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
 import { useHistory, useRouteMatch } from 'react-router-dom'
+import queryString from 'query-string'
 import eventDateFormat from '../utils/eventDateFormat'
 import { SearchIcon, UnfilterIcon } from '../assets/icons'
 
@@ -51,20 +52,24 @@ const UserDropdownItem = ({ u, handleSelect }) => (
   </span>
 )
 
-const UserDropdown = ({ users, handleSelect }) => {
-  const [current, setCurrent] = useState(null)
+const UserDropdown = ({ users, filter, handleSelect }) => {
+  const [current, setCurrent] = useState(filter)
 
   const updateFilter = id => {
     setCurrent(id)
     handleSelect(id)
   }
 
+  const user = users.find(u => u.id === current)
+
   return (
     <div className='user-dropdown'>
       <button className='btn dropdown-toggle btn-treekkari user-filter' type='button' id='dropdownMenuButton' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>
         {
-          current
-            ? users.find(u => u.id === current).name
+          current // eslint-disable-line
+            ? user
+              ? user.name
+              : 'Tuntematon järjestäjä'
             : 'Etsi tapahtuman järjestäjällä'
         }
       </button>
@@ -87,9 +92,13 @@ const UserDropdown = ({ users, handleSelect }) => {
   )
 }
 
-const EventSearchBar = ({ users, setFilter }) => {
-  const [titleFilter, setTitleFilter] = useState('')
-  const [userFilter, setUserFilter] = useState(null)
+const EventSearchBar = ({ users, filter, setFilter }) => {
+  const [titleFilter, setTitleFilter] = useState(filter.title)
+  const [userFilter, setUserFilter] = useState(filter.user)
+
+  const handleSearch = () => {
+    setFilter(titleFilter, userFilter)
+  }
 
   return (
     <div>
@@ -102,12 +111,12 @@ const EventSearchBar = ({ users, setFilter }) => {
         placeholder='Etsi tapahtuman nimellä'
       />
 
-      <UserDropdown users={users} handleSelect={setUserFilter} />
+      <UserDropdown users={users} filter={userFilter} handleSelect={setUserFilter} />
 
       <button
         className='btn btn-treekkari'
         type='button'
-        onClick={() => setFilter(titleFilter, userFilter)}
+        onClick={handleSearch}
       >
         Hae
       </button>
@@ -117,53 +126,76 @@ const EventSearchBar = ({ users, setFilter }) => {
 
 const EventList = () => {
   const match = useRouteMatch('/list/search')
-  console.log(match)
-
   const search = match !== null
+  const params = {}
 
-  const [filter, setFilter] = useState({
-    title: '',
-    user: null
-  })
+  if (match) {
+    const queryParams = queryString.parse(window.location.search)
 
+    params.title = queryParams.title
+      ? queryParams.title
+      : ''
+
+    params.user = queryParams.user !== undefined
+      ? Number(queryParams.user)
+      : null
+  } else {
+    params.title = ''
+    params.user = null
+  }
+
+  const filter = params
   const users = useSelector(state => state.users)
   const events = useSelector(state => state.events)
+  const history = useHistory()
 
   const applyFilters = allEvents => {
+    const checkTitleMatch = (title, includes) => (
+      title.toLowerCase().includes(includes.toLowerCase())
+    )
+
     if (filter.user) {
       const userFiltered = allEvents.filter(e => e.organizer_id === filter.user)
 
       if (filter.title) {
-        return userFiltered.filter(e => e.title.toLowerCase().includes(filter.title))
+        return userFiltered.filter(e => checkTitleMatch(e.title, filter.title))
       }
 
       return userFiltered
     }
 
     if (filter.title) {
-      return allEvents.filter(e => e.title.toLowerCase().includes(filter.title))
+      return allEvents.filter(e => checkTitleMatch(e.title, filter.title))
     }
 
     return allEvents
   }
 
-  const showedEvents = filter
-    ? applyFilters(events)
-    : events
-
   const handleFilter = (titleFilter, userFilter) => {
-    setFilter({
-      title: titleFilter,
-      user: userFilter
-    })
+    const searchParams = []
+
+    if (titleFilter) {
+      searchParams.push(`title=${titleFilter}`)
+    }
+
+    if (userFilter) {
+      searchParams.push(`user=${userFilter}`)
+    }
+
+    if (searchParams.length !== 0) {
+      history.push(`/list/search?${searchParams.join('&')}`)
+    } else {
+      history.push('/list/search')
+    }
   }
 
   const resetFilter = () => {
-    setFilter({
-      title: '',
-      user: null
-    })
+    history.push('/list/search')
   }
+
+  const showedEvents = filter
+    ? applyFilters(events)
+    : events
 
   return (
     <div className='event-list'>
@@ -185,7 +217,7 @@ const EventList = () => {
           }
           id='eventSearchCollapsible'
         >
-          <EventSearchBar users={users} setFilter={handleFilter} />
+          <EventSearchBar users={users} filter={filter} setFilter={handleFilter} />
         </div>
       </div>
       <hr />
