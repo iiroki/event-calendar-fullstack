@@ -183,7 +183,7 @@ div.container {
 }
 
 .event-list-item-title {
-  font-size: 1.1rem;
+  font-size: 1.2rem;
   font-weight: bold;
 }
 
@@ -193,8 +193,7 @@ div.container {
 
 .user-filter {
   width: 300px;
-  padding-left: 20px;
-  padding-right: 20px;
+  margin: 5px;
   overflow: hidden;
 }
 

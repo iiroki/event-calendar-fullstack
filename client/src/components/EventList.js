@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useHistory } from 'react-router-dom'
+import { isAfter } from 'date-fns'
 import {
   setSearch,
   resetSearch
@@ -131,7 +132,11 @@ const EventSearchBar = ({ users, filter, setFilter }) => {
   )
 }
 
+const getToday = () => new Date()
+
 const EventList = () => {
+  const [showUpcoming, setShowUpcoming] = useState(true)
+
   const users = useSelector(state => state.users)
   const events = useSelector(state => state.events)
   const filter = useSelector(state => state.search)
@@ -144,8 +149,12 @@ const EventList = () => {
       title.toLowerCase().includes(searchFor.toLowerCase())
     )
 
+    const dateFiltered = showUpcoming
+      ? allEvents.filter(e => isAfter(e.end, getToday()))
+      : allEvents.filter(e => isAfter(getToday(), e.end)).reverse()
+
     if (filter.user) {
-      const userFiltered = allEvents.filter(e => e.organizer_id === filter.user)
+      const userFiltered = dateFiltered.filter(e => e.organizer_id === filter.user)
 
       if (filter.title) {
         return userFiltered.filter(e => checkTitleMatch(e.title, filter.title))
@@ -155,10 +164,10 @@ const EventList = () => {
     }
 
     if (filter.title) {
-      return allEvents.filter(e => checkTitleMatch(e.title, filter.title))
+      return dateFiltered.filter(e => checkTitleMatch(e.title, filter.title))
     }
 
-    return allEvents
+    return dateFiltered
   }
 
   // Is called when new filter is applied
@@ -202,6 +211,38 @@ const EventList = () => {
       <h4>
         Tapahtumat:
       </h4>
+
+      <div className='btn-group btn-group-toggle button-group' data-toggle='buttons'>
+        <span
+          className={
+            showUpcoming
+              ? 'btn btn-treekkari active'
+              : 'btn btn-treekkari'
+          }
+          role='button'
+          onClick={() => setShowUpcoming(true)}
+          tabIndex={0}
+          onKeyPress={() => setShowUpcoming(true)}
+        >
+          <input type='radio' name='options' id='option1' autoComplete='off' />
+          Tulevat
+        </span>
+
+        <span
+          className={
+            showUpcoming
+              ? 'btn btn-treekkari'
+              : 'btn btn-treekkari active'
+          }
+          role='button'
+          onClick={() => setShowUpcoming(false)}
+          tabIndex={0}
+          onKeyPress={() => setShowUpcoming(false)}
+        >
+          <input type='radio' name='options' id='option2' autoComplete='off' />
+          Menneet
+        </span>
+      </div>
 
       {
         filter.title || filter.user
