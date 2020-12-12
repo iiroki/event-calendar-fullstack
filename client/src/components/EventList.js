@@ -3,9 +3,10 @@ import { useSelector, useDispatch } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 import { isAfter } from 'date-fns'
 import {
-  setSearch,
-  resetSearch
-} from '../reducers/searchReducer'
+  setEventListFilter,
+  setEventListUpcoming,
+  resetEventListFilter
+} from '../reducers/eventListFilterReducer'
 import eventDateFormat from '../utils/eventDateFormat'
 import { SearchIcon, UnfilterIcon } from '../assets/icons'
 
@@ -135,11 +136,9 @@ const EventSearchBar = ({ users, filter, setFilter }) => {
 const getToday = () => new Date()
 
 const EventList = () => {
-  const [showUpcoming, setShowUpcoming] = useState(true)
-
   const users = useSelector(state => state.users)
   const events = useSelector(state => state.events)
-  const filter = useSelector(state => state.search)
+  const filter = useSelector(state => state.eventListFilter)
 
   const dispatch = useDispatch()
 
@@ -149,7 +148,7 @@ const EventList = () => {
       title.toLowerCase().includes(searchFor.toLowerCase())
     )
 
-    const dateFiltered = showUpcoming
+    const dateFiltered = filter.upcoming
       ? allEvents.filter(e => isAfter(e.end, getToday()))
       : allEvents.filter(e => isAfter(getToday(), e.end)).reverse()
 
@@ -172,14 +171,18 @@ const EventList = () => {
 
   // Is called when new filter is applied
   const handleFilter = (titleFilter, userFilter) => {
-    dispatch(setSearch({
+    dispatch(setEventListFilter({
       title: titleFilter,
       user: userFilter
     }))
   }
 
+  const handleUpcoming = value => {
+    dispatch(setEventListUpcoming(value))
+  }
+
   const resetFilter = () => {
-    dispatch(resetSearch())
+    dispatch(resetEventListFilter())
   }
 
   const showedEvents = filter
@@ -215,14 +218,14 @@ const EventList = () => {
       <div className='btn-group btn-group-toggle button-group' data-toggle='buttons'>
         <span
           className={
-            showUpcoming
+            filter.upcoming
               ? 'btn btn-treekkari active'
               : 'btn btn-treekkari'
           }
           role='button'
-          onClick={() => setShowUpcoming(true)}
+          onClick={() => handleUpcoming(true)}
           tabIndex={0}
-          onKeyPress={() => setShowUpcoming(true)}
+          onKeyPress={() => handleUpcoming(true)}
         >
           <input type='radio' name='options' id='option1' autoComplete='off' />
           Tulevat
@@ -230,14 +233,14 @@ const EventList = () => {
 
         <span
           className={
-            showUpcoming
+            filter.upcoming
               ? 'btn btn-treekkari'
               : 'btn btn-treekkari active'
           }
           role='button'
-          onClick={() => setShowUpcoming(false)}
+          onClick={() => handleUpcoming(false)}
           tabIndex={0}
-          onKeyPress={() => setShowUpcoming(false)}
+          onKeyPress={() => handleUpcoming(false)}
         >
           <input type='radio' name='options' id='option2' autoComplete='off' />
           Menneet
