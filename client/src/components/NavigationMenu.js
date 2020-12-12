@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import {
   Icon,
   CalendarIcon,
+  ListIcon,
   CompassIcon,
   ManageIcon,
   AboutIcon
@@ -46,6 +47,17 @@ const NavigationMenu = () => (
           <Link className='link' to='/'>
             <CalendarIcon />
             Kalenteri
+          </Link>
+        </span>
+
+        <span
+          className='nav-item'
+          data-toggle='collapse'
+          data-target='.navbar-collapse.show'
+        >
+          <Link className='link' to='/list'>
+            <ListIcon />
+            Lista
           </Link>
         </span>
 

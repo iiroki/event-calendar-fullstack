@@ -12,6 +12,7 @@ import {
 import { initialized } from './reducers/initReducer'
 import NavigationMenu from './components/NavigationMenu'
 import EventCalendar from './components/EventCalendar'
+import EventList from './components/EventList'
 import EventPage from './components/EventPage'
 import ManagePage from './components/ManagePage'
 import LoginPage from './components/LoginPage'
@@ -111,6 +112,14 @@ const App = () => {
               {
                 init
                   ? <LoginPage />
+                  : <LoadingIcon />
+              }
+            </Route>
+
+            <Route path='/list'>
+              {
+                init
+                  ? <EventList />
                   : <LoadingIcon />
               }
             </Route>

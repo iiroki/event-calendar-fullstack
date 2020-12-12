@@ -161,6 +161,59 @@ div.container {
   white-space: pre-wrap;
 }
 
+.event-list {
+  width: 90%;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.event-list-events {
+  max-height: 700px;
+  overflow: auto;
+}
+
+.event-list-item {
+  margin: 10px 0px;
+  border-radius: 8px;
+}
+
+.event-list-item-box {
+  padding: 5px 0px;
+}
+
+.event-list-item-title {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.event-list-item-date {
+  font-size: 0.9rem;
+}
+
+.user-filter {
+  width: 300px;
+  margin: 5px;
+  overflow: hidden;
+}
+
+.search-button {
+  font-size: 1.2rem;
+  padding: 10px 25px;
+}
+
+.unfilter-button {
+  padding-bottom: 4px;
+}
+
+.unfilter-icon {
+  margin-bottom: 2px;
+}
+
+.user-dropdown-item {
+  cursor: pointer;
+}
+
 .about-box {
   text-align: left;
   font-size: 1.1rem
@@ -423,6 +476,10 @@ div.container {
   height: 20px;
   border: 1px solid black;
   border-radius: 10%;
+}
+
+.color-pointer {
+  cursor: pointer;
 }
 
 .btn-close-color {

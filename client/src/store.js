@@ -7,6 +7,7 @@ import loginReducer from './reducers/loginReducer'
 import notificationReducer from './reducers/notificationReducer'
 import initReducer from './reducers/initReducer'
 import selectedDateReducer from './reducers/selectedDateReducer'
+import eventListFilterReducer from './reducers/eventListFilterReducer'
 
 const reducers = combineReducers({
   events: eventReducer,
@@ -14,7 +15,8 @@ const reducers = combineReducers({
   login: loginReducer,
   notification: notificationReducer,
   init: initReducer,
-  selectedDate: selectedDateReducer
+  selectedDate: selectedDateReducer,
+  eventListFilter: eventListFilterReducer
 })
 
 const store = createStore(

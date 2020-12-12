@@ -17,6 +17,18 @@ export const CalendarIcon = () => (
   </svg>
 )
 
+export const ListIcon = () => (
+  <svg xmlns='http://www.w3.org/2000/svg' className='icon icon-tabler icon-tabler-list navbar-icon' width='28' height='28' viewBox='0 0 24 24' strokeWidth='1.5' stroke='#ffffff' fill='none' strokeLinecap='round' strokeLinejoin='round'>
+    <path stroke='none' d='M0 0h24v24H0z' fill='none' />
+    <line x1='9' y1='6' x2='20' y2='6' />
+    <line x1='9' y1='12' x2='20' y2='12' />
+    <line x1='9' y1='18' x2='20' y2='18' />
+    <line x1='5' y1='6' x2='5' y2='6.01' />
+    <line x1='5' y1='12' x2='5' y2='12.01' />
+    <line x1='5' y1='18' x2='5' y2='18.01' />
+  </svg>
+)
+
 export const AboutIcon = () => (
   <svg xmlns='http://www.w3.org/2000/svg' className='icon icon-tabler icon-tabler-bulb navbar-icon' width='20' height='20' viewBox='0 0 24 24' strokeWidth='1.5' stroke='#ffffff' fill='none' strokeLinecap='round' strokeLinejoin='round'>
     <path stroke='none' d='M0 0h24v24H0z' />
@@ -57,6 +69,22 @@ export const PrevIcon = () => (
   <svg xmlns='http://www.w3.org/2000/svg' className='icon icon-tabler icon-tabler-chevron-left navbar-icon' width='24' height='24' viewBox='0 0 24 24' strokeWidth='1.5' stroke='#000000' fill='none' strokeLinecap='round' strokeLinejoin='round'>
     <path stroke='none' d='M0 0h24v24H0z' />
     <polyline points='15 6 9 12 15 18' />
+  </svg>
+)
+
+export const SearchIcon = () => (
+  <svg xmlns='http://www.w3.org/2000/svg' className='icon icon-tabler icon-tabler-search' width='28' height='28' viewBox='0 0 24 24' strokeWidth='1.5' stroke='#000000' fill='none' strokeLinecap='round' strokeLinejoin='round'>
+    <path stroke='none' d='M0 0h24v24H0z' fill='none' />
+    <circle cx='10' cy='10' r='7' />
+    <line x1='21' y1='21' x2='15' y2='15' />
+  </svg>
+)
+
+export const UnfilterIcon = () => (
+  <svg xmlns='http://www.w3.org/2000/svg' className='icon icon-tabler icon-tabler-backspace unfilter-icon' width='28' height='28' viewBox='0 0 24 24' strokeWidth='1.5' stroke='#ffffff' fill='none' strokeLinecap='round' strokeLinejoin='round'>
+    <path stroke='none' d='M0 0h24v24H0z' fill='none' />
+    <path d='M20 6a1 1 0 0 1 1 1v10a1 1 0 0 1 -1 1h-11l-5 -5a1.5 1.5 0 0 1 0 -2l5 -5z' />
+    <path d='M12 10l4 4m0 -4l-4 4' />
   </svg>
 )
 
@@ -129,7 +157,7 @@ export const GitHubIcon = () => (
 
 export const CloseColorPickerIcon = () => (
   <svg xmlns='http://www.w3.org/2000/svg' className='icon icon-tabler icon-tabler-square-x' width='20' height='20' viewBox='0 0 24 24' strokeWidth='1.5' stroke='#000000' fill='none' strokeLinecap='round' strokeLinejoin='round'>
-    <path stroke='none' d='M0 0h24v24H0z' fill='none'/>
+    <path stroke='none' d='M0 0h24v24H0z' fill='none' />
     <rect x='4' y='4' width='16' height='16' rx='2' />
     <path d='M10 10l4 4m0 -4l-4 4' />
   </svg>

@@ -213,6 +213,7 @@ const UserInformationForm = ({ profile, handleHide = null }) => {
                   showBgCp
                     ? (
                       <span
+                        className='color-pointer'
                         onClick={toggleBgColorPicker}
                       >
                         <CloseColorPickerIcon />
@@ -220,7 +221,7 @@ const UserInformationForm = ({ profile, handleHide = null }) => {
                     )
                     : (
                       <span
-                        className='color-square'
+                        className='color-square color-pointer'
                         style={{ backgroundColor: `#${bgColor}` }}
                         onClick={toggleBgColorPicker}
                       />
@@ -262,23 +263,24 @@ const UserInformationForm = ({ profile, handleHide = null }) => {
 
             <div className='input-group-append'>
               <span className='input-group-text preinput-label'>
-              {
-                showFgCp
-                  ? (
-                    <span
-                      onClick={toggleFgColorPicker}
-                    >
-                      <CloseColorPickerIcon />
-                    </span>
-                  )
-                  : (
-                    <span
-                      className='color-square'
-                      style={{ backgroundColor: `#${fgColor}` }}
-                      onClick={toggleFgColorPicker}
-                    />
-                  )
-              }
+                {
+                  showFgCp
+                    ? (
+                      <span
+                        className='color-pointer'
+                        onClick={toggleFgColorPicker}
+                      >
+                        <CloseColorPickerIcon />
+                      </span>
+                    )
+                    : (
+                      <span
+                        className='color-square color-pointer'
+                        style={{ backgroundColor: `#${fgColor}` }}
+                        onClick={toggleFgColorPicker}
+                      />
+                    )
+                }
               </span>
             </div>
           </div>
@@ -472,21 +474,27 @@ const ProfileForm = ({ profile, handleHide }) => {
   return (
     <div>
       <div className='btn-group btn-group-toggle button-group' data-toggle='buttons'>
-        <label // eslint-disable-line
+        <span
           className='btn btn-treekkari active'
+          role='button'
           onClick={() => setEditPassword(false)}
+          tabIndex={0}
+          onKeyPress={() => setEditPassword(false)}
         >
           <input type='radio' name='options' id='option1' autoComplete='off' />
           Tiedot
-        </label>
+        </span>
 
-        <label // eslint-disable-line
+        <span
           className='btn btn-treekkari'
+          role='button'
           onClick={() => setEditPassword(true)}
+          tabIndex={0}
+          onKeyPress={() => setEditPassword(true)}
         >
           <input type='radio' name='options' id='option2' autoComplete='off' />
           Salasana
-        </label>
+        </span>
       </div>
 
       {
