@@ -43,7 +43,7 @@ export const initEvents = () => (
 
     thunk({
       type: 'INIT_EVENTS',
-      data: events
+      data: events.sort((e1, e2) => e1.start - e2.start)
     })
   }
 )
