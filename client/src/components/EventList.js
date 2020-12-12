@@ -178,7 +178,9 @@ const EventList = () => {
   }
 
   const handleUpcoming = value => {
-    dispatch(setEventListUpcoming(value))
+    if (filter.upcoming !== value) {
+      dispatch(setEventListUpcoming(value))
+    }
   }
 
   const resetFilter = () => {
