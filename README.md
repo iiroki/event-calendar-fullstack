@@ -1,5 +1,7 @@
 # Event Calendar Fullstack App
 
+![](./misc/screenshot_main.png)
+
 Production version of the app can be found on [Heroku](https://event-calendar-fullstack.herokuapp.com/).
 
 You can log in with a test user with following credentials (can't be changed!):  

@@ -153,7 +153,7 @@ const EventList = () => {
       : allEvents.filter(e => isAfter(getToday(), e.end)).reverse()
 
     if (filter.user) {
-      const userFiltered = dateFiltered.filter(e => e.organizer_id === filter.user)
+      const userFiltered = dateFiltered.filter(e => e.organizerId === filter.user)
 
       if (filter.title) {
         return userFiltered.filter(e => checkTitleMatch(e.title, filter.title))

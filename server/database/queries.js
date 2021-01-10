@@ -1,10 +1,10 @@
 // MySQL queries
 
-const getAllEvents = 'SELECT event.id, title, location, start, end, multi, description, organizer_id, bgColor, fgColor FROM event INNER JOIN user ON event.organizer_id = user.id;'
+const getAllEvents = 'SELECT event.id, title, location, start, end, multi, description, organizerId, bgColor, fgColor FROM event INNER JOIN user ON event.organizerId = user.id;'
 
-const getEventById = 'SELECT event.id, title, location, start, end, multi, description, organizer_id, bgColor, fgColor FROM event INNER JOIN user ON event.organizer_id = user.id WHERE event.id = ?;'
+const getEventById = 'SELECT event.id, title, location, start, end, multi, description, organizerId, bgColor, fgColor FROM event INNER JOIN user ON event.organizerId = user.id WHERE event.id = ?;'
 
-const addNewEvent = 'INSERT INTO event (title, location, start, end, multi, description, organizer_id) VALUES (?, ?, ?, ?, ?, ?, ?);'
+const addNewEvent = 'INSERT INTO event (title, location, start, end, multi, description, organizerId) VALUES (?, ?, ?, ?, ?, ?, ?);'
 
 const deleteEventById = 'DELETE FROM event WHERE id = ?;'
 

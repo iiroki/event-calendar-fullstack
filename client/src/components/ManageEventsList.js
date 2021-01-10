@@ -47,7 +47,7 @@ const ManageEventsListItem = ({ eventObject, editHandler, deleteHandler }) => (
 const ManageEventsList = () => {
   const userId = useSelector(state => state.login.id)
   const events = useSelector(state => state.events)
-    .filter(e => e.organizer_id === userId)
+    .filter(e => e.organizerId === userId)
     // Sort by dates (descending)
     .sort((e1, e2) => e2.start - e1.start)
 

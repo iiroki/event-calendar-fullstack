@@ -84,7 +84,7 @@ eventRouter.post('/:id', async (request, response, next) => { // eslint-disable-
   const decodedToken = jwt.verify(request.token, JWT_SERCET)
 
   // Request was made by someone else than the organizer
-  if (event.organizer_id !== decodedToken.id) {
+  if (event.organizerId !== decodedToken.id) {
     return response.status(401).json({
       error: {
         code: 3,
@@ -135,7 +135,7 @@ eventRouter.delete('/:id', async (request, response, next) => { //eslint-disable
   const decodedToken = jwt.verify(request.token, JWT_SERCET)
 
   // Token doesn't belong to the organizer
-  if (decodedToken.id !== event.organizer_id) {
+  if (decodedToken.id !== event.organizerId) {
     return response.status(401).json({
       error: {
         code: 3,

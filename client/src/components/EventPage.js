@@ -22,7 +22,7 @@ const EventPage = ({ id }) => {
     )
   }
 
-  const organizer = users.find(u => u.id === event.organizer_id)
+  const organizer = users.find(u => u.id === event.organizerId)
 
   // Allows .ics-file downloads
   const downloadIcs = () => {
