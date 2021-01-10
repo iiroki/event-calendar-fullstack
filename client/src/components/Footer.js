@@ -7,7 +7,7 @@ const Footer = () => (
   <div className='footer'>
     <div className='footer-item'>
       <CopyrightIcon />
-      Iiro
+      Iiro Kiviluoma
     </div>
 
     <div className='footer-item'>

@@ -4,7 +4,7 @@ const { writeFileSync } = require('fs')
 const { db } = require('../database/db')
 const { getAllEvents } = require('../database/queries')
 
-subscribeRouter.get('/teekkarikalenteri.ics', async (request, response, next) => { // eslint-disable-line
+subscribeRouter.get('/events.ics', async (request, response, next) => { // eslint-disable-line
   const result = await db.query(getAllEvents)
   const eventArray = []
   const offsetHoursUTC = new Date().getTimezoneOffset() / 60
@@ -33,7 +33,7 @@ subscribeRouter.get('/teekkarikalenteri.ics', async (request, response, next) =>
         e.getMinutes()
       ],
       description: row.description,
-      productId: 'teekkarikalenteri/ics'
+      productId: 'event-calendar-fullstack/ics'
     })
   })
 
@@ -49,7 +49,7 @@ subscribeRouter.get('/teekkarikalenteri.ics', async (request, response, next) =>
     return response.status(500).end()
   }
 
-  const filePath = `${__dirname}/teekkarikalenteri.ics`
+  const filePath = `${__dirname}/events.ics`
   writeFileSync(filePath, value)
   response.sendFile(filePath)
 })
