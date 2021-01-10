@@ -10,12 +10,15 @@ const DB_CREDENTIALS = {
 }
 
 const SALT_ROUNDS = 10
-
 const JWT_SERCET = process.env.SECRET
+const CLEARDB = process.env.CLEARDB === '1'
+const TEST_USER = process.env.TEST_USER === '1'
 
 module.exports = {
   PORT,
   DB_CREDENTIALS,
   SALT_ROUNDS,
-  JWT_SERCET
+  JWT_SERCET,
+  CLEARDB,
+  TEST_USER
 }

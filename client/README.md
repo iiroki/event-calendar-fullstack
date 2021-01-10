@@ -1,2 +1,1 @@
-# Teekkarikalenteri client
-
+# Event Calendar Fullstack Client

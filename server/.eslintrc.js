@@ -18,6 +18,10 @@ module.exports = {
       'error',
       'never'
     ],
+    'arrow-parens': [
+      'error',
+      'as-needed'
+    ],
     'comma-dangle': 'off',
     'no-console': 'off'
   }

@@ -9,7 +9,14 @@ const {
   modifyUserPasswordById,
   getAllUsers
 } = require('../database/queries')
-const { JWT_SERCET, SALT_ROUNDS } = require('../utils/config')
+const {
+  JWT_SERCET,
+  SALT_ROUNDS,
+  TEST_USER
+} = require('../utils/config')
+
+// Forbid user from changing test user credentials
+const checkIfTestUser = user => TEST_USER && user.username === 'testi'
 
 // GET all users
 userRouter.get('/', async (request, response, next) => { //eslint-disable-line
@@ -51,7 +58,8 @@ userRouter.post('/:id', async (request, response, next) => { //eslint-disable-li
     return response.status(404).end()
   }
 
-  const correctPw = await bcrypt.compare(reqBody.password, result[0][0].passwordHash)
+  const user = result[0][0]
+  const correctPw = await bcrypt.compare(reqBody.password, user.passwordHash)
 
   // Password didn't match
   if (!correctPw) {
@@ -69,6 +77,15 @@ userRouter.post('/:id', async (request, response, next) => { //eslint-disable-li
 
   // No password change
   if (reqBody.passwordChange === 0) {
+    if (checkIfTestUser(user) && user.username !== reqBody.username) {
+      return response.status(403).json({
+        error: {
+          code: 3,
+          message: 'Changing test user credentials not allowed.'
+        }
+      })
+    }
+
     // Testing if the HEX-values are valid
     const re = new RegExp(/^[0-9A-F]{6}$/i)
 
@@ -94,6 +111,15 @@ userRouter.post('/:id', async (request, response, next) => { //eslint-disable-li
     const newUserResult = await db.query(getUserById, [id])
     response.json(newUserResult[0][0])
   } else if (reqBody.passwordChange === 1) {
+    if (checkIfTestUser(user)) {
+      return response.status(403).json({
+        error: {
+          code: 3,
+          message: 'Changing test user credentials not allowed.'
+        }
+      })
+    }
+
     if (!reqBody.newPassword || reqBody.newPassword.length < 3) {
       return response.status(400).json({
         error: {
