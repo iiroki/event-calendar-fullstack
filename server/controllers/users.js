@@ -9,7 +9,14 @@ const {
   modifyUserPasswordById,
   getAllUsers
 } = require('../database/queries')
-const { JWT_SERCET, SALT_ROUNDS } = require('../utils/config')
+const {
+  JWT_SERCET,
+  SALT_ROUNDS,
+  TEST_USER
+} = require('../utils/config')
+
+// Forbid user from changing test user credentials
+const checkIfTestUser = user => TEST_USER && user.username === 'testi'
 
 // GET all users
 userRouter.get('/', async (request, response, next) => { //eslint-disable-line
@@ -70,7 +77,7 @@ userRouter.post('/:id', async (request, response, next) => { //eslint-disable-li
 
   // No password change
   if (reqBody.passwordChange === 0) {
-    if (user.username === 'testi' && user.username !== reqBody.username) {
+    if (checkIfTestUser(user) && user.username !== reqBody.username) {
       return response.status(403).json({
         error: {
           code: 3,
@@ -104,7 +111,7 @@ userRouter.post('/:id', async (request, response, next) => { //eslint-disable-li
     const newUserResult = await db.query(getUserById, [id])
     response.json(newUserResult[0][0])
   } else if (reqBody.passwordChange === 1) {
-    if (user.username === 'testi') {
+    if (checkIfTestUser(user)) {
       return response.status(403).json({
         error: {
           code: 3,
