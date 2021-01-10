@@ -1,11 +1,9 @@
 # Event Calendar Fullstack App
 Production version of the app is running on Heroku: LINK
 
-You can log in with a test user with following credentials:  
+You can log in with a test user with following credentials (can't be changed!):  
 Username: testi  
 Password: testi
-
-Please note that test user credentials can't be changed.
 
 ### About
 The idea of the app is to display events added by users in calendar and list form. Logged-in users can add new and remove existing events from a control panel. Users can also change own profile information and password with the control panel.
