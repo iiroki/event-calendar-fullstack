@@ -1,9 +1,9 @@
 {
-  "short_name": "Teekkarikalenteri",
-  "name": "Tamperelainen teekkarikalenteri",
+  "short_name": "Event Calendar Fullstack App",
+  "name": "Event Calendar Fullstack App",
   "icons": [
     {
-      "src": "logo.ico",
+      "src": "favicon.ico",
       "sizes": "64x64 32x32 24x24 16x16",
       "type": "image/x-icon"
     },

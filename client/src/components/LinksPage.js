@@ -1,8 +1,15 @@
 import React from 'react'
 
 const LinksPage = () => (
-  <div>
-    Linkkejä (TBD)
+  <div className='about-box'>
+    <h4>
+      <b>
+        Linkkejä
+      </b>
+    </h4>
+    <p>
+      TBD
+    </p>
   </div>
 )
 

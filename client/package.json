@@ -1,7 +1,7 @@
 {
-  "name": "teekkarikalenteri-client",
+  "name": "event-calendar-fullstack-client",
   "version": "1.0.0",
-  "description": "Client of Teekkarikalenteri made with React + Redux",
+  "description": "Client made with React + Redux",
   "private": true,
   "license": "MIT",
   "eslintConfig": {
@@ -28,7 +28,7 @@
     "reinstall:dependancies": "rm -rf node_modules && rm package-lock.json && npm i"
   },
   "dependencies": {
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "date-fns": "^2.16.1",
     "ics": "^2.25.0",
     "react": "^16.13.1",

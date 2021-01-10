@@ -1,7 +1,7 @@
 {
-  "name": "teekkarikalenteri-server",
+  "name": "event-calendar-fullstack-server",
   "version": "1.0.0",
-  "description": "Server of Teekkarikalenteri made with Node.js + Express",
+  "description": "Server made with Node.js + Express",
   "author": "Iiro Kiviluoma",
   "license": "MIT",
   "main": "index.js",
