@@ -1,4 +1,4 @@
-# Teekkarikalenteri
+# Event Calendar Fullstack App
 The idea of the app is to display all the events added by users in the calendar. Logged-in users can add new and remove existing events from a control panel. Users can also change own profile information and password with the control panel.
 
 This app has the frontend built with React + Redux and runs Node.js + Express in the backend. Data is stored into a MySQL-database.
