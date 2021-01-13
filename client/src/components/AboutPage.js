@@ -7,11 +7,15 @@ const AboutPage = () => (
         Yleistä kalenterista
       </b>
     </h4>
+
     <p>
-      Kalenterin frontend on toteutettu Reactin ja Reduxin avulla ja
-      backendin päätyökaluina puolestaan toimi Node.js ja Express.
+      Event Calendar Fullstack App:n frontend on toteutettu Reactin ja Reduxin avulla
+      ja backendin päätyökaluina puolestaan toimi Node.js ja Express.
       Kalenterin tietovarastona toimii MySQL-tietokanta.
+      Kalenteri on PWA (progressive web application), jolloin käyttäjäkokemus on laadukas
+      myös mobiililaitteella.
     </p>
+
     <p>
       Kalenterin avulla sisäänkirjautuneet käyttäjät kykenevät luomaan,
       muokkaamaan ja poistamaan tapahtumia. Käyttäjät voivat myös muokata
